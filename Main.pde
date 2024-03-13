@@ -25,4 +25,7 @@ void draw() {
   noStroke();
   fill(200);
   rect(0, 0, 300, SCREENY);
+  // TEST HISTOGRAM
+  Histogram hist = new Histogram();
+  hist.draw();
 }
