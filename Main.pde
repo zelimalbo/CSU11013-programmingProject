@@ -30,6 +30,7 @@ void setup() {
     numberOfFlights++;
   }
   println("There are " + numberOfFlights + " flights in the dataset");
+  //Added NavBar Eoghan Gloster 14/2/23
   NavBar tempNavBar = new NavBar();
   tempNavBar.dateList = new ControlP5(this);
   tempNavBar.originList = new ControlP5(this);
@@ -59,6 +60,7 @@ void setup() {
     .setItemHeight(20)
     .addItems(tempNavBar.Destination)
     ;
+  //Added NavBar Eoghan Gloster 14/2/23^^
     
   usa = loadShape("us.svg");
   texas = usa.getChild("TX");
