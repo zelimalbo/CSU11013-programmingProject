@@ -1,3 +1,8 @@
+import controlP5.*;
+import java.util.*;
+
+
+
 Table data;
 final int SCREENX = 1400;
 final int SCREENY = 800;
@@ -18,6 +23,35 @@ void setup() {
     numberOfFlights++;
   }
   println("There are " + numberOfFlights + " flights in the dataset");
+  NavBar tempNavBar = new NavBar();
+  tempNavBar.dateList = new ControlP5(this);
+  tempNavBar.originList = new ControlP5(this);
+  tempNavBar.destinationList = new ControlP5(this);
+
+  tempNavBar.dateList.addScrollableList("Dates")
+    .setPosition(50, 50)
+    .setSize(100, 100)
+    .setBarHeight(20)
+    .setItemHeight(20)
+    .addItems(tempNavBar.Dates)
+    ;
+
+
+  tempNavBar.originList.addScrollableList("Origin")
+    .setPosition(50, 200)
+    .setSize(100, 100)
+    .setBarHeight(20)
+    .setItemHeight(20)
+    .addItems(tempNavBar.Origin)
+    ;
+
+  tempNavBar.destinationList.addScrollableList("Destination")
+    .setPosition(50, 350)
+    .setSize(100, 100)
+    .setBarHeight(20)
+    .setItemHeight(20)
+    .addItems(tempNavBar.Destination)
+    ;
 }
 
 void draw() {
