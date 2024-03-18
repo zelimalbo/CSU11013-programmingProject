@@ -15,15 +15,15 @@ class pieCharts {
   }
 
   void lateOnly() {
-    int[] lateStatus = {90, 200, 30, 60};
-    color[] colors = {#D32F2F, #03A9F4, #FF0000};
-    drawPieChart(300, 300, colors, 200, lateStatus);
+    int[] lateStatus = {90, 200, 90};
+    color[] colors = {#D32F2F, #03A9F4, #0E7480};
+    drawPieChart(850, 350, colors, 400, lateStatus);
   }
 
   void cancelledOnly() {
     int[] cancelStatus = {120, 240};
     color[] colors = {#D32F2F, #03A9F4};
-    drawPieChart(300, 300, colors, 200, cancelStatus);
+    drawPieChart(850, 350, colors, 200, cancelStatus);
   }
   
 
