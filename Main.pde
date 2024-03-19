@@ -15,10 +15,26 @@ PShape texas; // Test coloring an individual state
 
 void setup() {
   size(1400, 800);
+<<<<<<< Updated upstream
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
   data.setup();
   println("There are " + data.numberOfFlights + " flights in the dataset");
   //Added NavBar Eoghan Gloster 14/2/23
+=======
+  data = loadTable("flights2k.csv", "header");
+  for (TableRow row : data.rows()) {
+    String origin = row.getString("ORIGIN");
+    String date = row.getString("FL_DATE");
+    String carrier = row.getString("MKT_CARRIER");
+    String carrier_flight_number = row.getString("MKT_CARRIER_FL_NUM");
+    String origin_city = row.getString("ORIGIN_CITY_NAME");
+    String origin_state = row.getString("ORIGIN_STATE_ABR");
+    String destination_city = row.getString("DEST");
+    String destination_state = row.getString("DEST_CITY_NAME");
+    numberOfFlights++;
+  }
+  
+>>>>>>> Stashed changes
   NavBar tempNavBar = new NavBar();
   tempNavBar.dateList = new ControlP5(this);
   tempNavBar.originList = new ControlP5(this);
@@ -48,10 +64,21 @@ void setup() {
     .setItemHeight(20)
     .addItems(tempNavBar.Destination)
     ;
+<<<<<<< Updated upstream
   //Added NavBar Eoghan Gloster 14/2/23^^
     
   usa = loadShape("us.svg");
   texas = usa.getChild("TX");
+=======
+    
+    tempNavBar.destinationList.addScrollableList("Delays")
+    .setPosition(50, 500)
+    .setSize(100, 100)
+    .setBarHeight(20)
+    .setItemHeight(20)
+    .addItems(tempNavBar.Delays)
+    ;
+>>>>>>> Stashed changes
 }
 
 void draw() {

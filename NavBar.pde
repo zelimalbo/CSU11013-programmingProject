@@ -22,7 +22,14 @@ class NavBar {
     "IND", "JAX", "JFK", "JAN", "JNU", "KOA", "LAS", "LAX", "LGA", "LIH", "MCO", "MCI", "MEM", "MFE", "MFR", "MIA", "MSP", "MSO", "MSY", "MYR",
     "OAK", "OGG", "ONT", "ORD", "OMA", "PDX", "PBI", "PHL", "PHX", "PIT", "PSP", "RNO", "RDU", "RSW", "SAN", "SAT", "SAV", "SEA", "SFO", "SJC",
     "SJU", "SIT", "SNA", "SMF", "SRQ", "STL", "TPA", "TUL", "VPS", "WRG", "XNA", "YAK");
+    
+  List Delays = Arrays.asList("--All Flights--", "Only Delayed", "Only on Time");
 
+
+  void Delays(int delayIndex){
+    println(delayIndex);
+    println(Delays.get(delayIndex));
+  }
 
 
   void Dates(int dateIndex) {
