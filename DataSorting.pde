@@ -76,6 +76,19 @@ class DataSorting
 
         return result;
     }
+    ArrayList addToArrayList(ArrayList<String> list, String dataPointToBeAdded)
+    {
+      boolean firstInstance = checkIfFirstInstanceOfDataPoint(dataPointToBeAdded, list);
+      if(!firstInstance)
+      {
+        return list;
+      }
+      else
+      {
+      list.add(dataPointToBeAdded);
+      return list;
+      }
+    }
 
      
      
