@@ -2,13 +2,18 @@ import controlP5.*;
 import java.util.*;
 import java.util.Collections;
 
+NavBar tempNavBar;
+
 final int SCREENX = 1400;
 final int SCREENY = 800;
 final int NAV_BAR_WIDTH = 300;
 final int GRAPH_HEIGHT = 600;
 final int GRAPH_WIDTH = 600;
-// Temporary test Data for testing histogram
-int[] testData = new int[]{12, 11, 111, 222, 160, 40, 25, 84, 94, 300, 7, 89};
+
+final int EVENT_NULL = 0;
+final int EVENT_SORT_BY_STATE = 1;
+
+PFont stdFont;
 
 // Shapes for map - Johnny Hancu 13/03
 PShape usa;
@@ -22,6 +27,7 @@ NavBar NavBar;
 NavBar tempNavBar = new NavBar();
 
 void setup() {
+  stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
   data.setup();
@@ -32,10 +38,8 @@ void setup() {
   tempNavBar.dateList = new ControlP5(this);
   tempNavBar.originList = new ControlP5(this);
   tempNavBar.destinationList = new ControlP5(this);
-  tempNavBar.searchButton = new ControlP5(this);
-  tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
-    
+  
   usa = loadShape("us.svg");
   texas = usa.getChild("TX");
   //barCharts = new barCharts();
@@ -47,14 +51,14 @@ void draw() {
   noStroke();
   fill(200);
   rect(0, 0, 300, SCREENY);
- 
+
   // TEST MAP - Johnny 13/03
-  ///*
+  /*
   shape(usa, 300, 100);
   texas.disableStyle();
   fill(#74DBE5);
   shape(texas, 300, 100);
-  //*/
+  */
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
 }
