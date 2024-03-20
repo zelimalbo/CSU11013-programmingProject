@@ -51,26 +51,32 @@ class DataSorting
        
     }
   }
-  ArrayList alphabeticalSorting(ArrayList DataArrayList)
-  {
-    return;
-  }
-  boolean checkIfFirstInstanceOfString(String addedDataPoint, ArrayList DataArrayList)
-  {
-   return  ;
-  }
-  ArrayList addToArrayList(ArrayList List, String dataPointToBeAdded) //Written by Julius 20/03 9:10
-  {
-    boolean firstInstance = checkIfFirstInstanceOfString(dataPointToBeAdded, List);
-    if(!firstInstance)
-    {
-      return List;
+ 
+  ArrayList<String> alphabeticalSorting(ArrayList<String> list) {
+        Collections.sort(list);
+        return list;
     }
-    List.add(dataPointToBeAdded);
-    return List;
+  
+  boolean checkIfFirstInstanceOfDataPoint(String addedDataPoint, ArrayList<String> dataArrayList) {
+        for (int i = 0; i < dataArrayList.size(); i++) {
+            if (addedDataPoint.equals(dataArrayList.get(i))) {
+                return false;
+            }
+        }
+        return true;
   }
-  ArrayList appendOriginAirportWithState(ArrayList airport, ArrayList state)
-  {
-    
-  }
+        
+   ArrayList appendAirportWithState(ArrayList airport, ArrayList state) 
+   {
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 0; i < airport.size(); i++) {
+            String airportWithState = airport.get(i) + ", " + state.get(i);
+            result.add(airportWithState);
+        }
+
+        return result;
+    }
+
+     
+     
 }

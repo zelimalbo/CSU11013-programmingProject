@@ -1,5 +1,6 @@
 import controlP5.*;
 import java.util.*;
+import java.util.Collections;
 
 final int SCREENX = 1400;
 final int SCREENY = 800;
@@ -34,11 +35,11 @@ void setup() {
   tempNavBar.searchButton = new ControlP5(this);
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
-
+    
   usa = loadShape("us.svg");
   texas = usa.getChild("TX");
   //barCharts = new barCharts();
-  pieCharts = new pieCharts();
+  //pieCharts = new pieCharts();
 }
 
 void draw() {
@@ -46,14 +47,7 @@ void draw() {
   noStroke();
   fill(200);
   rect(0, 0, 300, SCREENY);
-  // TEST HISTOGRAM - Johnny 13/03
-  /*
-  Histogram hist = new Histogram(testData,
-   ((SCREENX - NAV_BAR_WIDTH - GRAPH_WIDTH) / 2) + NAV_BAR_WIDTH,
-   (SCREENY - GRAPH_WIDTH) / 2);
-   hist.draw();
-   */
-
+ 
   // TEST MAP - Johnny 13/03
   ///*
   shape(usa, 300, 100);
@@ -64,7 +58,6 @@ void draw() {
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
 }
-
 
 void Dates(int dateIndex) {
   /* request the selected item based on index n */
