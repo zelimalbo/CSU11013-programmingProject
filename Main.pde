@@ -2,8 +2,6 @@ import controlP5.*;
 import java.util.*;
 import java.util.Collections;
 
-NavBar tempNavBar;
-
 final int SCREENX = 1400;
 final int SCREENY = 800;
 final int NAV_BAR_WIDTH = 300;
@@ -38,6 +36,8 @@ void setup() {
   tempNavBar.dateList = new ControlP5(this);
   tempNavBar.originList = new ControlP5(this);
   tempNavBar.destinationList = new ControlP5(this);
+  tempNavBar.searchButton = new ControlP5(this);
+  tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
   
   usa = loadShape("us.svg");
