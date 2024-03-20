@@ -23,8 +23,10 @@ class NavBar {
     "OAK", "OGG", "ONT", "ORD", "OMA", "PDX", "PBI", "PHL", "PHX", "PIT", "PSP", "RNO", "RDU", "RSW", "SAN", "SAT", "SAV", "SEA", "SFO", "SJC",
     "SJU", "SIT", "SNA", "SMF", "SRQ", "STL", "TPA", "TUL", "VPS", "WRG", "XNA", "YAK");
 
-
-
+  void draw() {
+    text("Filter The Data", 100, 100);
+  }
+  
   void Dates(int dateIndex) {
     /* request the selected item based on index n */
     println(dateIndex);
