@@ -14,6 +14,9 @@ int[] testData = new int[]{12, 11, 111, 222, 160, 40, 25, 84, 94, 300, 7, 89};
 PShape usa;
 PShape texas; // Test coloring an individual state
 
+//barCharts barCharts;
+//pieCharts pieCharts;
+
 void setup() {
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
@@ -53,6 +56,8 @@ void setup() {
     
   usa = loadShape("us.svg");
   texas = usa.getChild("TX");
+  //barCharts = new barCharts();
+  //pieCharts = new pieCharts();
 }
 
 void draw() {
@@ -75,6 +80,8 @@ void draw() {
   fill(#74DBE5);
   shape(texas, 300, 100);
   //*/
+  //barCharts.dateOnly();
+  //pieCharts.lateOnly();
 }
 =======
 import controlP5.*;

@@ -1,3 +1,111 @@
+/* Heat Map class by Johnny
+   Work in progress
+*/
 class HeatMap {
-  // To implement - heat map
+  // need to add list of states with their frequencies
+  // Added shapes for usa and every us state - Johnny 15/02
+  PShape usa;
+  PShape alabama;
+  PShape alaska;
+  PShape arizona;
+  PShape arkansas;
+  PShape california;
+  PShape colorado;
+  PShape connecticut;
+  PShape delaware;
+  PShape florida;
+  PShape georgia;
+  PShape hawaii;
+  PShape idaho;
+  PShape illinois;
+  PShape indiana;
+  PShape iowa;
+  PShape kansas;
+  PShape kentucky;
+  PShape louisiana;
+  PShape maine;
+  PShape maryland;
+  PShape massachusetts;
+  PShape michigan;
+  PShape minnesota;
+  PShape mississippi;
+  PShape missouri;
+  PShape montana;
+  PShape nebraska;
+  PShape nevada;
+  PShape newHampshire;
+  PShape newJersey;
+  PShape newMexico;
+  PShape newYork;
+  PShape northCarolina;
+  PShape northDakota;
+  PShape ohio;
+  PShape oklahoma;
+  PShape oregon;
+  PShape pennsylvania;
+  PShape rhodeIsland;
+  PShape southCarolina;
+  PShape southDakota;
+  PShape tennessee;
+  PShape texas;
+  PShape utah;
+  PShape vermont;
+  PShape virginia;
+  PShape washington;
+  PShape westVirginia;
+  PShape wisconsin;
+  PShape wyoming;
+  
+  HeatMap(PShape us) {
+    usa = us;
+    alaska = usa.getChild("AK");
+    arizona = usa.getChild("AZ");
+    arkansas = usa.getChild("AR");
+    california = usa.getChild("CA");
+    colorado = usa.getChild("CO");
+    connecticut = usa.getChild("CT");
+    delaware = usa.getChild("DE");
+    florida = usa.getChild("FL");
+    georgia = usa.getChild("GA");
+    hawaii = usa.getChild("HI");
+    idaho = usa.getChild("ID");
+    illinois = usa.getChild("IL");
+    indiana = usa.getChild("IN");
+    iowa = usa.getChild("IA");
+    kansas = usa.getChild("KS");
+    kentucky = usa.getChild("KY");
+    louisiana = usa.getChild("LA");
+    maine = usa.getChild("ME");
+    maryland = usa.getChild("MD");
+    massachusetts = usa.getChild("MA");
+    michigan = usa.getChild("MI");
+    minnesota = usa.getChild("MN");
+    mississippi = usa.getChild("MS");
+    missouri = usa.getChild("MO");
+    montana = usa.getChild("MT");
+    nebraska = usa.getChild("NE");
+    nevada = usa.getChild("NV");
+    newHampshire = usa.getChild("NH");
+    newJersey = usa.getChild("NJ");
+    newMexico = usa.getChild("NM");
+    newYork = usa.getChild("NY");
+    northCarolina = usa.getChild("NC");
+    northDakota = usa.getChild("ND");
+    ohio = usa.getChild("OH");
+    oklahoma = usa.getChild("OK");
+    oregon = usa.getChild("OR");
+    pennsylvania = usa.getChild("PA");
+    rhodeIsland = usa.getChild("RI");
+    southCarolina = usa.getChild("SC");
+    southDakota = usa.getChild("SD");
+    tennessee = usa.getChild("TN");
+    texas = usa.getChild("TX");
+    utah = usa.getChild("UT");
+    vermont = usa.getChild("VT");
+    virginia = usa.getChild("VA");
+    washington = usa.getChild("WA");
+    westVirginia = usa.getChild("WV");
+    wisconsin = usa.getChild("WI");
+    wyoming = usa.getChild("WY");
+  }
 }

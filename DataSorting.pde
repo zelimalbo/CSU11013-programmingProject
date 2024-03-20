@@ -1,6 +1,5 @@
 class DataSorting
 {
-<<<<<<< Updated upstream
   Table data;
   int numberOfFlights;
   ArrayList<String> originList = new ArrayList<String>();          //ONLY ONE INSTANCE OF EACH IN THESE STRINGS USED FOR DROP DOWN MENUS
@@ -52,46 +51,7 @@ class DataSorting
        
     }
   }
-  ArrayList alphabeticalSorting(ArrayList DataArrayList)
-  {
-    return;
-  }
-  boolean checkIfFirstInstanceOfString(String addedDataPoint, ArrayList DataArrayList)
-  {
-   return  ;
-  }
-  ArrayList addToArrayList(ArrayList List, String dataPointToBeAdded) //Written by Julius 20/03 9:10
-  {
-    boolean firstInstance = checkIfFirstInstanceOfString(dataPointToBeAdded, List);
-    if(!firstInstance)
-    {
-      return List;
-    }
-    List.add(dataPointToBeAdded);
-    return List;
-  }
-  ArrayList appendOriginAirportWithState(ArrayList airport, ArrayList state)
-  {
-    
-  }
-=======
-  Table data; // Implemented DataSorting class Julius Jogela 14/03/24
-  int numberOfFlights;
-  void setup()
-  {
-    data = loadTable("flights2k.csv", "header");
-    for (TableRow row : data.rows()) {
-      String origin = row.getString("ORIGIN");
-      String date = row.getString("FL_DATE");
-      String carrier = row.getString("MKT_CARRIER");
-      String carrier_flight_number = row.getString("MKT_CARRIER_FL_NUM");
-      String origin_city = row.getString("ORIGIN_CITY_NAME");
-      String origin_state = row.getString("ORIGIN_STATE_ABR");
-      String destination_city = row.getString("DEST");
-      String destination_state = row.getString("DEST_CITY_NAME");
-      numberOfFlights++;
-    }
-  }
+ 
   ArrayList<String> alphabeticalSorting(ArrayList<String> list) {
         Collections.sort(list);
         return list;
@@ -119,7 +79,4 @@ class DataSorting
 
      
      
-        
-       
->>>>>>> Stashed changes
 }
