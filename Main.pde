@@ -1,5 +1,6 @@
 import controlP5.*;
 import java.util.*;
+import java.util.Collections;
 
 NavBar tempNavBar;
 
@@ -18,8 +19,12 @@ PFont stdFont;
 PShape usa;
 PShape texas; // Test coloring an individual state
 
-//barCharts barCharts;
-//pieCharts pieCharts;
+barCharts barCharts;
+pieCharts pieCharts;
+
+NavBar NavBar;
+
+NavBar tempNavBar = new NavBar();
 
 void setup() {
   stdFont = loadFont("Calibri-14.vlw");
@@ -27,39 +32,12 @@ void setup() {
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
   data.setup();
   println("There are " + data.numberOfFlights + " flights in the dataset");
+
   //Added NavBar Eoghan Gloster 14/2/23
-  NavBar tempNavBar = new NavBar();
+  //Cleaned up Main by moving back into NavBar 20/2/23
   tempNavBar.dateList = new ControlP5(this);
   tempNavBar.originList = new ControlP5(this);
   tempNavBar.destinationList = new ControlP5(this);
-  
-  tempNavBar.dateList.addScrollableList("Dates")
-    .setPosition(50, 50)
-    .setSize(100, 100)
-    .setBarHeight(20)
-    .setItemHeight(20)
-    .addItems(tempNavBar.Dates)
-    .close()
-    ;
-
-
-  tempNavBar.originList.addScrollableList("Origin")
-    .setPosition(50, 200)
-    .setSize(100, 100)
-    .setBarHeight(20)
-    .setItemHeight(20)
-    .addItems(tempNavBar.Origin)
-    .close()
-    ;
-
-  tempNavBar.destinationList.addScrollableList("Destination")
-    .setPosition(50, 350)
-    .setSize(100, 100)
-    .setBarHeight(20)
-    .setItemHeight(20)
-    .addItems(tempNavBar.Destination)
-    .close()
-    ;
   //Added NavBar Eoghan Gloster 14/2/23^^
   
   usa = loadShape("us.svg");
@@ -73,7 +51,8 @@ void draw() {
   noStroke();
   fill(200);
   rect(0, 0, 300, SCREENY);
-  
+
+  // TEST MAP - Johnny 13/03
   /*
   shape(usa, 300, 100);
   texas.disableStyle();
@@ -82,4 +61,9 @@ void draw() {
   */
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
+}
+
+void Dates(int dateIndex) {
+  /* request the selected item based on index n */
+  println(dateIndex);
 }
