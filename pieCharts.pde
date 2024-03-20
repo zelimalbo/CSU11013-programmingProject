@@ -1,8 +1,6 @@
 //zelim
 class pieCharts {
 
-   void draw(){
-  }
   // Draw a pie chart at a specified position with given colors, diameter, and status values
   void drawPieChart(float pieX, float pieY, color[] colors, float diameter, int[] values) {
     float lastAngle = 0;

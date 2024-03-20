@@ -1,5 +1,7 @@
 import controlP5.*;
 import java.util.*;
+ControlP5 cp5;
+
 
 final int SCREENX = 1400;
 final int SCREENY = 800;
@@ -13,11 +15,12 @@ int[] testData = new int[]{12, 11, 111, 222, 160, 40, 25, 84, 94, 300, 7, 89};
 PShape usa;
 PShape texas; // Test coloring an individual state
 
-//barCharts barCharts;
-//pieCharts pieCharts;
+barCharts barCharts;
+pieCharts pieCharts;
 
 void setup() {
   size(1400, 800);
+
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
   data.setup();
   println("There are " + data.numberOfFlights + " flights in the dataset");
@@ -52,33 +55,43 @@ void setup() {
     .addItems(tempNavBar.Destination)
     ;
   //Added NavBar Eoghan Gloster 14/2/23^^
-    
+
   usa = loadShape("us.svg");
   texas = usa.getChild("TX");
-  //barCharts = new barCharts();
-  //pieCharts = new pieCharts();
+  barCharts = new barCharts();
+  pieCharts = new pieCharts();
+  cp5 = new ControlP5(this);
+
+  barCharts.buttons();
 }
 
 void draw() {
-  background(245);
   noStroke();
-  fill(200);
-  rect(0, 0, 300, SCREENY);
+  background(255);
+
+
   // TEST HISTOGRAM - Johnny 13/03
   /*
-  Histogram hist = new Histogram(testData, 
-    ((SCREENX - NAV_BAR_WIDTH - GRAPH_WIDTH) / 2) + NAV_BAR_WIDTH,
-    (SCREENY - GRAPH_WIDTH) / 2);
-  hist.draw();
-  */
-  
+  Histogram hist = new Histogram(testData,
+   ((SCREENX - NAV_BAR_WIDTH - GRAPH_WIDTH) / 2) + NAV_BAR_WIDTH,
+   (SCREENY - GRAPH_WIDTH) / 2);
+   hist.draw();
+   */
+
   // TEST MAP - Johnny 13/03
   ///*
   shape(usa, 300, 100);
   texas.disableStyle();
-  fill(#74DBE5);
+  fill(#FF0000);
   shape(texas, 300, 100);
   //*/
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
+  barCharts.originOnly();
+  barCharts.draw();
+
+  fill(255);
+  rect(0, 0, 320, SCREENY);
+  fill(200);
+  rect(0, 0, 300, SCREENY);
 }
