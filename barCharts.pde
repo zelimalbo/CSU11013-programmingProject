@@ -1,11 +1,14 @@
 //zelim
 import controlP5.*;
+PFont font1;
 
 class barCharts {
   float chartX = 322;
   ControlP5 cp5;
 
   void setup() {
+    font1 = loadFont("Calibri-14.vlw");
+
     this.cp5.addButton("Previous Page")
       .setValue(0)
       .setPosition(1100, 750)
@@ -55,8 +58,10 @@ class barCharts {
       rect(chartX + i * barWidth, chartY + chartHeight - normalizedHeight, barWidth - 5, normalizedHeight);
 
       fill(0);
+      textFont(font1);
       textAlign(CENTER);
-      text(labels[i], chartX + i * barWidth + barWidth / 2, chartY + chartHeight + 15);
+      text(labels[i], chartX + i * barWidth + barWidth / 2, chartY + chartHeight + 15); // Display label below the bar
+      text(data[i], chartX + i * barWidth + barWidth / 2, chartY + chartHeight - normalizedHeight - 5); // Display data value on top of the bar
     }
   }
 
