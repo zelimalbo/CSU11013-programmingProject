@@ -90,6 +90,13 @@ class DataSorting
       }
     }
 
-     
+     void removeTimeAndYear(ArrayList<String> dates) {
+        for (int i = 0; i < dates.size(); i++) {
+            String date = dates.get(i);
+            String[] parts = date.split(" ");
+            String dateWithoutTimeAndYear = parts[0];
+            dates.set(i, dateWithoutTimeAndYear);
+        }
+    }
      
 }

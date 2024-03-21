@@ -13,6 +13,7 @@ pieCharts pieCharts;
 
 NavBar NavBar;
 NavBar tempNavBar;
+int variableName = 5;
 
 DataTable dataTable;
 
@@ -60,11 +61,6 @@ void draw() {
   currentScreen.draw();
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
-}
-
-void Dates(int dateIndex) {
-  /* request the selected item based on index n */
-  println(dateIndex);
 }
 
 void mousePressed() {
