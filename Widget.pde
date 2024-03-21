@@ -24,7 +24,7 @@ class Widget {
     stroke(lineColor);
     rect(xpos, ypos, widgetWidth, widgetHeight);
     fill(labelColor);
-    text(label, xpos+10, ypos+widgetHeight-10);
+    text(label, xpos+widgetWidth/2, ypos+(widgetHeight/2));
   }
   
   void mouseOver() {
@@ -37,6 +37,7 @@ class Widget {
   
   int getEvent(int mX, int mY) {
     if (mX>xpos && mX < xpos+widgetWidth && mY >ypos && mY <ypos+widgetHeight) {
+      print("yes");
       return event;
     }
     return EVENT_NULL;
