@@ -9,7 +9,7 @@ class barCharts {
   void setup() {
     font1 = loadFont("Calibri-14.vlw");
 
-    this.cp5.addButton("Previous Page")
+    /*this.cp5.addButton("Previous Page")
       .setValue(0)
       .setPosition(1100, 750)
       .setSize(100, 19)
@@ -33,7 +33,7 @@ class barCharts {
         }
       }
     }
-    );
+    );*/
   }
 
 
