@@ -1,6 +1,38 @@
 //zelim
+import controlP5.*;
+
 class barCharts {
   float chartX = 322;
+  ControlP5 cp5;
+
+  void setup() {
+    this.cp5.addButton("Previous Page")
+      .setValue(0)
+      .setPosition(1100, 750)
+      .setSize(100, 19)
+      .addCallback(new CallbackListener() {
+      public void controlEvent(CallbackEvent event) {
+        if (event.getAction() == ControlP5.ACTION_PRESSED) {
+          previousPageButton(); // Call the function to perform the action
+        }
+      }
+    }
+    );
+
+    this.cp5.addButton("Next Page")
+      .setValue(0)
+      .setPosition(1250, 750)
+      .setSize(100, 19)
+      .addCallback(new CallbackListener() {
+      public void controlEvent(CallbackEvent event) {
+        if (event.getAction() == ControlP5.ACTION_PRESSED) {
+          nextPageButton(); // Call the function to perform the action
+        }
+      }
+    }
+    );
+  }
+
 
   void draw() {
     fill(245);
@@ -35,7 +67,7 @@ class barCharts {
 
     drawBarChart(400, 200, 900, 500, data, colors, labels); // Draw the chart with specified parameters
   }
-  
+
   void carrierOnly() {
     int[] data = {1, 3, 6, 42, 45, 32, 43, 12, 27, 50};
     color[] colors = {#800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16};
@@ -50,34 +82,6 @@ class barCharts {
     String[] labels = { "ABE", "ABI", "ABQ", "ABR", "ABY", "ACT", "ACV", "ACY", "ADK", "ADQ", "AEX", "AGS", "AKN", "ALB", "ALO", "ALS", "ALW", "AMA", "ANC", "APN", "ART", "ASE", "ATL", "ATW", "ATY", "AUS", "AVL", "AVP", "AZA", "AZO", "BDL", "BET", "BFF", "BFL", "BGM", "BGR", "BHM", "BIH", "BIL", "BIS", "BJI", "BLI", "BLV", "BMI", "BNA", "BOI", "BOS", "BPT", "BQK", "BQN", "BRD", "BRO", "BRW", "BTM", "BTR", "BTV", "BUF", "BUR", "BWI", "BZN", "CAE", "CAK", "CDC", "CDV", "CGI", "CHA", "CHO", "CHS", "CID", "CIU", "CKB", "CLE", "CLL", "CLT", "CMH", "CMI", "CMX", "CNY", "COD", "COS", "COU", "CPR", "CRP", "CRW", "CSG", "CVG", "CWA", "CYS", "DAB", "DAL", "DAY", "DBQ", "DCA", "DDC", "DEC", "DEN", "DFW", "DHN", "DIK", "DLG", "DLH", "DRO", "DRT", "DSM", "DTW", "DVL", "EAR", "EAT", "EAU", "ECP", "EGE", "EKO", "ELM", "ELP", "ERI", "ESC", "EUG", "EVV", "EWN", "EWR", "EYW", "FAI", "FAR", "FAT", "FAY", "FCA", "FLG", "FLL", "FLO", "FNT", "FOD", "FSD", "FSM", "FWA", "GCC", "GCK", "GEG", "GFK", "GGG", "GJT", "GNV", "GPT", "GRB", "GRI", "GRK", "GRR", "GSO", "GSP", "GTF", "GTR", "GUC", "GUM", "HDN", "HGR", "HHH", "HIB", "HLN", "HNL", "HOB", "HOU", "HPN", "HRL", "HSV", "HTS", "HYS", "IAD", "IAG", "IAH", "ICT", "IDA", "ILG", "ILM", "IMT", "IND", "INL", "ISP", "ITH", "ITO", "JAC", "JAN", "JAX", "JFK", "JLN", "JMS", "JNU", "JST", "KOA", "KTN", "LAN", "LAR", "LAS", "LAW", "LAX", "LBB", "LBE", "LBF", "LBL", "LCH", "LCK", "LEX", "LFT", "LGA", "LGB", "LIH", "LIT", "LNK", "LRD", "LSE", "LWB", "LWS", "LYH", "MAF", "MBS", "MCI", "MCO", "MCW", "MDT", "MDW", "MEI", "MEM", "MFE", "MFR", "MGM", "MHK", "MHT", "MIA", "MKE", "MKG", "MLB", "MLI", "MLU", "MOB", "MOT", "MQT", "MRY", "MSN", "MSO", "MSP", "MSY", "MTJ", "MYR", "OAJ", "OAK", "OGD", "OGG", "OGS", "OKC", "OMA", "OME", "ONT", "ORD", "ORF", "ORH", "OTH", "OTZ", "OWB", "PAE", "PAH", "PBG", "PBI", "PDX", "PGD", "PGV", "PHF", "PHL", "PHX", "PIA", "PIB", "PIE", "PIH", "PIR", "PIT", "PLN", "PNS", "PPG", "PQI", "PRC", "PSC", "PSE", "PSG", "PSM", "PSP", "PUB", "PUW", "PVD", "PVU", "PWM", "RAP", "RDD", "RDM", "RDU", "RFD", "RHI", "RIC", "RIW", "RKS", "RNO", "ROA", "ROC", "ROW", "RST", "RSW", "SAF", "SAN", "SAT", "SAV", "SBA", "SBN", "SBP", "SBY", "SCC", "SCE", "SCK", "SDF", "SEA", "SFB", "SFO", "SGF", "SGU", "SHD", "SHR", "SHV", "SIT", "SJC", "SJT", "SJU", "SLC", "SLN", "SMF", "SMX", "SNA", "SPI", "SPN", "SPS", "SRQ", "STC", "STL", "STS", "STT", "STX", "SUN", "SUX", "SWF", "SWO", "SYR", "TBN", "TLH", "TOL", "TPA", "TRI", "TTN", "TUL", "TUS", "TVC", "TWF", "TXK", "TYR", "TYS", "USA", "VCT", "VEL", "VLD", "VPS", "WRG", "XNA", "XWA", "YAK", "YKM", "YUM"};
 
     drawBarChart(chartX, 200, 20000, 500, data, colors, labels);
-  }
-
-  void buttons() {
-    cp5.addButton("Previous Page")
-      .setValue(0)
-      .setPosition(1100, 750)
-      .setSize(100, 19)
-      .addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        if (event.getAction() == ControlP5.ACTION_PRESSED) {
-          previousPageButton(); // Call the function to perform the action
-        }
-      }
-    }
-    );
-
-    cp5.addButton("Next Page")
-      .setValue(0)
-      .setPosition(1250, 750)
-      .setSize(100, 19)
-      .addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        if (event.getAction() == ControlP5.ACTION_PRESSED) {
-          nextPageButton(); // Call the function to perform the action
-        }
-      }
-    }
-    );
   }
 
   void nextPageButton() {
