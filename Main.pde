@@ -37,7 +37,6 @@ void setup() {
 
   barCharts = new barCharts();
   pieCharts = new pieCharts();
-  barCharts.buttons();
   
   dataTable = new DataTable(totalData, new ArrayList<>(Arrays.asList(1,2,4,5,8,9,16,17,18)));
   
@@ -49,8 +48,8 @@ void draw() {
   background(245);
   noStroke();
   //barCharts.dateOnly();
-  barCharts.originOnly();
-  barCharts.draw();
+  //barCharts.originOnly();
+  //barCharts.draw();
   //pieCharts.lateOnly();
   //pieCharts.drawPieLegend();
   fill(245);
