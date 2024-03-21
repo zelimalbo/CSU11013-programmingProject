@@ -8,12 +8,12 @@ class Screen {
     screenWidgets = new ArrayList();
     this.backgroundColor = backgroundColor;
   }
-  
+
   Screen(DataTable dataTable) {
     isTable = true;
     this.dataTable = dataTable;
   }
-  
+
   void add(Widget w) {
     screenWidgets.add(w);
   }

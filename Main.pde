@@ -13,6 +13,7 @@ pieCharts pieCharts;
 
 NavBar NavBar;
 NavBar tempNavBar;
+int variableName = 5;
 
 DataTable dataTable;
 
@@ -33,30 +34,33 @@ void setup() {
   tempNavBar.searchButton = new ControlP5(this);
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
+
+  barCharts = new barCharts();
+  pieCharts = new pieCharts();
+  barCharts.buttons();
   
   dataTable = new DataTable(totalData, new ArrayList<>(Arrays.asList(1,2,4,5,8,9,16,17,18)));
   
   // Currently the data table is being used as the default main screen
   currentScreen = new Screen(dataTable);
-  
-  //barCharts = new barCharts();
-  //pieCharts = new pieCharts();
 }
 
 void draw() {
   background(245);
   noStroke();
+  //barCharts.dateOnly();
+  barCharts.originOnly();
+  barCharts.draw();
+  //pieCharts.lateOnly();
+  //pieCharts.drawPieLegend();
+  fill(245);
+  rect(0, 0, 320, SCREENY);
   fill(200);
   rect(0, 0, 300, SCREENY);
   
   currentScreen.draw();
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
-}
-
-void Dates(int dateIndex) {
-  /* request the selected item based on index n */
-  println(dateIndex);
 }
 
 void mousePressed() {

@@ -10,27 +10,19 @@ class NavBar {
   ControlP5 searchButton;
   int dateIndexes =0;
 
-  List Dates = Arrays.asList("--All DATES--", "--SELECT RANGE--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
-    "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31");
 
-  List Origin = Arrays.asList("--ALL ORIGINS--", "ANC", "ATL", "ABQ", "BIS", "BUF", "BOS", "BZN", "BUR", "BWI", "CVG", "CID", "CRP",
-    "CHS", "CLE", "DAL", "DCA", "DEN", "DTW", "EWR", "EUG", "FAI", "FAR", "FAT", "FLL", "GEG", "GSP", "GJT", "HNL", "HOU", "HPN", "ITO", "IDA",
-    "IND", "JAX", "JFK", "JAN", "JNU", "KOA", "LAS", "LAX", "LGA", "LIH", "MCO", "MCI", "MEM", "MFE", "MFR", "MIA", "MSP", "MSO", "MSY", "MYR",
-    "OAK", "OGG", "ONT", "ORD", "OMA", "PDX", "PBI", "PHL", "PHX", "PIT", "PSP", "RNO", "RDU", "RSW", "SAN", "SAT", "SAV", "SEA", "SFO", "SJC",
-    "SJU", "SIT", "SNA", "SMF", "SRQ", "STL", "TPA", "TUL", "VPS", "WRG", "XNA", "YAK");
-
-  List Destination = Arrays.asList("--ALL DESTINATIONS--", "ANC", "ATL", "ABQ", "BIS", "BUF", "BOS", "BZN", "BUR", "BWI", "CVG", "CID", "CRP",
-    "CHS", "CLE", "DAL", "DCA", "DEN", "DTW", "EWR", "EUG", "FAI", "FAR", "FAT", "FLL", "GEG", "GSP", "GJT", "HNL", "HOU", "HPN", "ITO", "IDA",
-    "IND", "JAX", "JFK", "JAN", "JNU", "KOA", "LAS", "LAX", "LGA", "LIH", "MCO", "MCI", "MEM", "MFE", "MFR", "MIA", "MSP", "MSO", "MSY", "MYR",
-    "OAK", "OGG", "ONT", "ORD", "OMA", "PDX", "PBI", "PHL", "PHX", "PIT", "PSP", "RNO", "RDU", "RSW", "SAN", "SAT", "SAV", "SEA", "SFO", "SJC",
-    "SJU", "SIT", "SNA", "SMF", "SRQ", "STL", "TPA", "TUL", "VPS", "WRG", "XNA", "YAK");
-
-
+DataSorting data = new DataSorting();
    void setup() {
-    //dateList = new ControlP5(this);
-    //originList = new ControlP5(this);
-    //destinationList = new ControlP5(this);
-    //searchButton = new ControlP5(this);
+     DataSorting data = new DataSorting();
+     data.setup();
+     List Origin = data.originList;
+     Collections.sort(Origin);
+     List Destination = data.destinationList;
+     Collections.sort(Destination);
+     List DatesArray = data.dateList;
+     data.removeTimeAndYear(data.dateList);
+     
+    
 
     this.searchButton.addButton("enter")
       .setPosition(100, 700)
@@ -41,43 +33,19 @@ class NavBar {
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
-      .addItems(tempNavBar.Dates)
+      .addItems(DatesArray)
       .setValue(0)
+      .setFont(createFont("Arial", 15))
+      .align(100,100,100,100)
       .close()
       ;
-
-    this.dateList.addScrollableList("Start-Date")      //creating two different dropdowns that only show up if range of dates is selected
-      .setVisible(false)
-      .setPosition(100, 75)
-      .setSize(100, 100)
-      .setBarHeight(20)
-      .setItemHeight(20)
-      .addItems(tempNavBar.Dates)
-      .close()
-      ;
-
-    //this.dateList.addScrollableList("Start-Date")
-    //  .setVisible(false)
-    //  ;
-
-
-    this.dateList.addScrollableList("End-Date")        //creating two different dropdowns that only show up if range of dates is selected
-      .setVisible(false)
-      .setPosition(100, 100)
-      .setSize(100, 100)
-      .setBarHeight(20)
-      .setItemHeight(20)
-      .addItems(tempNavBar.Dates)
-      .close()
-      ;
-
+      
     this.originList.addScrollableList("Origin")
-
       .setPosition(100, 200)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
-      .addItems(tempNavBar.Origin)
+      .addItems(Origin)
       .setValue(0)
       .close()
       ;
@@ -87,27 +55,68 @@ class NavBar {
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
-      .addItems(tempNavBar.Destination)
+      .addItems(Destination)
       .setValue(0)
       .close()
       ;
   }
+  
+  
+
 
   public void Dates(int dateIndex) {
     /* request the selected item based on index n */
     dateIndexes = dateIndex;
     println(dateIndex);
+    //if(dateIndexes == 2){
+    //      this.dateList.addScrollableList("Start-Date")
+    //  .setVisible(true)
+    //  ;
+    //}
   }
 
   public void Origin(int originIndex) {
     /* request the selected item based on index n */
     println(originIndex);
-    println(Origin.get(originIndex));
+    //println(this.Origin.get(originIndex));
   }
 
   public void Destination(int destinationIndex) {
     /* request the selected item based on index n */
     println(destinationIndex);
-    println(Destination.get(destinationIndex));
+    //println(this.Destination.get(destinationIndex));
   }
 }
+
+//void Dates(int dateIndex) {
+// println(dateIndex, tempNavBar.dateList.get(ScrollableList.class, "Dates"));
+//  //println(dateIndex);
+//  if(dateIndex == 2){
+//          tempNavBar.dateList.getController("Start-Date")
+//      .setVisible(true)
+//      .setPosition(0, 75)
+//      .setSize(100, 100)
+//      .setBarHeight(20)
+//      .setItemHeight(20)
+//      //.addItems(tempNavBar.Destination)
+//      .close()
+//      ;
+//      tempNavBar.dateList.getController("End-Date")        //creating two different dropdowns that only show up if range of dates is selected
+//      .setVisible(true)
+//      .setPosition(200, 75)
+//      .setSize(100, 100)
+//      .setBarHeight(20)
+//      .setItemHeight(20)
+//      //.addItems(Dates)
+//      .close()
+//      ;
+//    }
+//    else{
+//      tempNavBar.dateList.getController("Start-Date")
+//      .setVisible(false)
+//      ;
+//      tempNavBar.dateList.getController("End-Date")        //creating two different dropdowns that only show up if range of dates is selected
+//      .setVisible(false)
+//      ;
+//    }
+//}
