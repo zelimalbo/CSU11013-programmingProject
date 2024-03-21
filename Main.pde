@@ -21,15 +21,15 @@ barCharts barCharts;
 pieCharts pieCharts;
 
 NavBar NavBar;
-
 NavBar tempNavBar = new NavBar();
+int variableName = 5;
 
 void setup() {
   stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
-  DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
-  data.setup();
-  println("There are " + data.numberOfFlights + " flights in the dataset");
+  //DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
+  //data.setup();
+  //println("There are " + data.numberOfFlights + " flights in the dataset");
 
   //Added NavBar Eoghan Gloster 14/2/23
   //Cleaned up Main by moving back into NavBar 20/2/23
@@ -37,7 +37,9 @@ void setup() {
   tempNavBar.originList = new ControlP5(this);
   tempNavBar.destinationList = new ControlP5(this);
   tempNavBar.searchButton = new ControlP5(this);
+  
   tempNavBar.setup();
+  
   //Added NavBar Eoghan Gloster 14/2/23^^
   
   usa = loadShape("us.svg");
@@ -52,6 +54,7 @@ void draw() {
   fill(200);
   rect(0, 0, 300, SCREENY);
 
+
   // TEST MAP - Johnny 13/03
   /*
   shape(usa, 300, 100);
@@ -61,9 +64,11 @@ void draw() {
   */
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
+  
+ //tempNavBar.Dates();
+ 
 }
-
-void Dates(int dateIndex) {
-  /* request the selected item based on index n */
-  println(dateIndex);
+void mousePressed(){
+  
+  println(tempNavBar.dateList.getController("Dates").getValue());
 }
