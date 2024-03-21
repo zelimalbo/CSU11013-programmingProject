@@ -36,6 +36,7 @@ void setup() {
   //Added NavBar Eoghan Gloster 14/2/23^^
 
   barCharts = new barCharts();
+  barCharts.setup();
   pieCharts = new pieCharts();
   
   dataTable = new DataTable(totalData, new ArrayList<>(Arrays.asList(1,2,4,5,8,9,16,17,18)));
