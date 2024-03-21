@@ -35,7 +35,7 @@ class barCharts {
 
     drawBarChart(400, 200, 900, 500, data, colors, labels); // Draw the chart with specified parameters
   }
-
+  
   void carrierOnly() {
     int[] data = {1, 3, 6, 42, 45, 32, 43, 12, 27, 50};
     color[] colors = {#800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16};

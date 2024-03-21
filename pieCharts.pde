@@ -1,4 +1,6 @@
+
 //Adam
+//zelim
 class pieCharts {
 
    void draw(){
@@ -13,7 +15,6 @@ class pieCharts {
       lastAngle += radians(values[i]);
     }
   }
-  
   void drawValues(String[] values, color[] colors, float textSize) {
   // Display each value in the array
   for (int i = 0; i < values.length; i++) {
@@ -33,6 +34,11 @@ class pieCharts {
     float textSize = 20;
     drawPieChart(850, 350, colors, 400, lateStatus);
     drawValues(originList, colors, textSize);
+
+  void lateOnly() {
+    int[] lateStatus = {90, 200, 90};
+    color[] colors = {#D32F2F, #03A9F4, #0E7480};
+    drawPieChart(850, 350, colors, 400, lateStatus);
   }
 
   void cancelledOnly() {
@@ -40,7 +46,7 @@ class pieCharts {
     color[] colors = {#D32F2F, #03A9F4};
     drawPieChart(850, 350, colors, 200, cancelStatus);
   }
-  
+ 
   // void drawPieLegend() {
    // String[] originList = {"ORD", "STL", "AUS"};
     //color[] colors ={#D32F2F, #03A9F4, #0E7480};
@@ -49,4 +55,5 @@ class pieCharts {
     //drawValues(originList, colors, textSize);
 
 //}
+
 }

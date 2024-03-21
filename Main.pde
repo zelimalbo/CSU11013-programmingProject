@@ -1,31 +1,23 @@
 import controlP5.*;
 import java.util.*;
 import java.util.Collections;
-ControlP5 cp5;
 
-final int SCREENX = 1400;
-final int SCREENY = 800;
-final int NAV_BAR_WIDTH = 300;
-final int GRAPH_HEIGHT = 600;
-final int GRAPH_WIDTH = 600;
-
-final int EVENT_NULL = 0;
-final int EVENT_SORT_BY_STATE = 1;
+Screen currentScreen;
 
 PFont stdFont;
 
-// Shapes for map - Johnny Hancu 13/03
-PShape usa;
-PShape texas; // Test coloring an individual state
+Table totalData;
 
 barCharts barCharts;
 pieCharts pieCharts;
 
 NavBar NavBar;
+NavBar tempNavBar;
 
-NavBar tempNavBar = new NavBar();
+DataTable dataTable;
 
 void setup() {
+  totalData = loadTable("flights2k.csv", "header");
   stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
@@ -34,6 +26,7 @@ void setup() {
 
   //Added NavBar Eoghan Gloster 14/2/23
   //Cleaned up Main by moving back into NavBar 20/2/23
+  tempNavBar = new NavBar();
   tempNavBar.dateList = new ControlP5(this);
   tempNavBar.originList = new ControlP5(this);
   tempNavBar.destinationList = new ControlP5(this);
@@ -41,39 +34,87 @@ void setup() {
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
-  usa = loadShape("us.svg");
-  texas = usa.getChild("TX");
-
-  cp5 = new ControlP5(this);
-
   barCharts = new barCharts();
   pieCharts = new pieCharts();
   barCharts.buttons();
+  
+  dataTable = new DataTable(totalData, new ArrayList<>(Arrays.asList(1,2,4,5,8,9,16,17,18)));
+  
+  // Currently the data table is being used as the default main screen
+  currentScreen = new Screen(dataTable);
 }
 
 void draw() {
   background(245);
   noStroke();
-  // TEST MAP - Johnny 13/03
-  /*
-  shape(usa, 300, 100);
-   texas.disableStyle();
-   fill(#74DBE5);
-   shape(texas, 300, 100);
-   */
   //barCharts.dateOnly();
   barCharts.originOnly();
   barCharts.draw();
   //pieCharts.lateOnly();
   //pieCharts.drawPieLegend();
-  
   fill(245);
   rect(0, 0, 320, SCREENY);
   fill(200);
   rect(0, 0, 300, SCREENY);
+  
+  currentScreen.draw();
+  //barCharts.dateOnly();
+  //pieCharts.lateOnly();
 }
 
 void Dates(int dateIndex) {
   /* request the selected item based on index n */
   println(dateIndex);
+}
+
+void mousePressed() {
+  /*
+    Johnny added mouse press method on 20/03
+    Currently being used for buttons to go backward and forward in the table
+  */
+  if (currentScreen.isTable) {
+    currentScreen.getEvent(mouseX, mouseY);
+  }
+}
+
+void keyPressed() {
+  /*
+    Johnny added key press method on 20/03
+    Currently being used for the table to search for pages
+  */
+  TextWidget input = (TextWidget) currentScreen.dataTable.controls.get(2);
+  if (currentScreen.isTable && currentScreen.dataTable.event == 2) {
+    try {
+      int intKey = Integer.parseInt(String.valueOf(key));
+      if (intKey <= 9 && intKey >= 0) {
+        if (input.label != "Find Page") {
+          input.append(key);
+        }
+        else {
+          if (intKey != 0) {
+            input.label = String.valueOf(key);
+          }
+        }
+      }
+    }
+    catch(NumberFormatException e) {
+    }
+    try {
+      int intInput = Integer.parseInt(input.label);
+      if (key == BACKSPACE && intInput >= 1) {
+        intInput /= 10;
+        if (intInput == 0) {
+          input.label = "Find Page";
+        }
+        else { 
+          input.label = String.valueOf(intInput);
+        }
+      }
+      if (key == ENTER && intInput >= 1 && intInput <= input.maxlen) {
+        currentScreen.dataTable.currentPage = intInput;
+      }
+    }
+    catch (NumberFormatException e) {
+    }
+  }
 }
