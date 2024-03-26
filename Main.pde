@@ -49,6 +49,7 @@ void setup() {
   
   usa = loadShape("us.svg");
   Map<String, Integer> frequencies = data.getStateFrequencies(data.fullOriginStateList, data.fullDestinationStateList);
+  data.getDateFrequencies(data.fullDateList);
   heatmap = new HeatMap(usa, frequencies, 300, 100);
 }
 

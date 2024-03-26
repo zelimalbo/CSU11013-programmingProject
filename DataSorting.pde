@@ -166,4 +166,32 @@ class DataSorting
  
     return stateFrequencies;
   }
+  
+  /*
+    Johnny implemented getDateFrequencies method
+    on 26/03
+    This method returns a map containing the total number of flights on each date
+  */
+  Map getDateFrequencies(ArrayList<String> fullDateList) {
+    removeTimeAndYear(fullDateList);
+    Map<String, Integer> dateFrequencies = new HashMap<>();
+    for (String date : fullDateList) {
+      if (dateFrequencies.containsKey(date)) {
+        dateFrequencies.put(date, dateFrequencies.get(date) + 1);
+      }
+      else {
+        dateFrequencies.put(date, 1);
+      }
+    }
+    /* //--- For debugging ---
+    removeTimeAndYear(this.dateList);
+    int totalFlights = 0;
+    for (String date : this.dateList) {
+      print(date + ": " + dateFrequencies.get(date) + "; ");
+      totalFlights += dateFrequencies.get(date);
+    }
+    print("Total Flights: " + totalFlights + ". ");
+    */
+    return dateFrequencies;
+  }
 }
