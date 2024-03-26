@@ -4,6 +4,9 @@ import java.util.Collections;
 
 Screen currentScreen;
 
+PShape usa;
+HeatMap heatmap;
+
 PFont stdFont;
 
 Table totalData;
@@ -43,22 +46,27 @@ void setup() {
   
   // Currently the data table is being used as the default main screen
   currentScreen = new Screen(dataTable);
+  
+  usa = loadShape("us.svg");
+  Map<String, Integer> frequencies = data.getStateFrequencies(data.fullOriginStateList, data.fullDestinationStateList);
+  heatmap = new HeatMap(usa, frequencies, 300, 100);
 }
 
 void draw() {
   background(245);
   noStroke();
+  heatmap.draw();
   //barCharts.dateOnly();
   //barCharts.originOnly();
   //barCharts.draw();
   //pieCharts.lateOnly();
   //pieCharts.drawPieLegend();
   fill(245);
-  rect(0, 0, 320, SCREENY);
+  rect(0, 0, NAV_BAR_WIDTH, SCREENY);
   fill(200);
   rect(0, 0, 300, SCREENY);
   
-  currentScreen.draw();
+  //currentScreen.draw();
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
 }

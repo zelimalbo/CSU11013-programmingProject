@@ -10,3 +10,5 @@ final int GRAPH_WIDTH = 600;
 
 final int EVENT_NULL = 0;
 final int EVENT_SORT_BY_STATE = 1;
+
+final int MARGIN = 10;

@@ -22,7 +22,7 @@ class DataSorting
   void setup()  //Written here by Julius 14/03 9:40
   {
 
-    data = loadTable("flights2k.csv", "header");  //Updated to make arrayLists by Julius 20/03 9:10
+    data = loadTable("flights_full.csv", "header");  //Updated to make arrayLists by Julius 20/03 9:10
     for (TableRow row : data.rows()) {
       String origin = row.getString("ORIGIN");
       originList = addToArrayList(originList, origin);
@@ -47,7 +47,7 @@ class DataSorting
       destinationList = addToArrayList(destinationList, destination);
       fullDestinationList.add(destination);
 
-      String destination_state = row.getString("DEST_CITY_NAME");
+      String destination_state = row.getString("DEST_STATE_ABR");
       destinationStateList = addToArrayList(destinationStateList, destination_state);
       fullDestinationStateList.add(destination_state);
       numberOfFlights++;
@@ -136,4 +136,34 @@ class DataSorting
             dates.set(i, dateWithoutTimeAndYear);
         }
     }
+    
+  /* 
+    Johnny Implemented getStateFrequencies method
+    on 24/03.
+    This method returns a map containing the total number of flights
+    including departures and arrivals in each US state.
+  */
+  Map getStateFrequencies(ArrayList<String> fullOriginStateList, ArrayList<String> fullDestinationStateList) {
+    Map<String, Integer> stateFrequencies = new HashMap<>();
+    for (String state : fullOriginStateList) {
+      if (stateFrequencies.containsKey(state)) {
+        stateFrequencies.put(state, stateFrequencies.get(state) + 1);
+      }
+      else {
+        stateFrequencies.put(state, 1);
+        print(state + ", ");
+      }
+    }
+    for (String state : fullDestinationStateList) {
+      if (stateFrequencies.containsKey(state)) {
+        stateFrequencies.put(state, stateFrequencies.get(state) + 1);
+      }
+      else {
+        stateFrequencies.put(state, 1);
+        print(state + ", ");
+      }
+    }
+ 
+    return stateFrequencies;
+  }
 }
