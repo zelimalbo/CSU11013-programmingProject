@@ -9,31 +9,31 @@ class barCharts {
   void setup() {
     font1 = loadFont("Calibri-14.vlw");
 
-    this.cp5.addButton("Previous Page")
-      .setValue(0)
-      .setPosition(1100, 750)
-      .setSize(100, 19)
-      .addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        if (event.getAction() == ControlP5.ACTION_PRESSED) {
-          previousPageButton(); // Call the function to perform the action
-        }
-      }
-    }
-    );
+    //this.cp5.addButton("Previous Page")
+    //  .setValue(0)
+    //  .setPosition(1100, 750)
+    //  .setSize(100, 19)
+    //  .addCallback(new CallbackListener() {
+    //  public void controlEvent(CallbackEvent event) {
+    //    if (event.getAction() == ControlP5.ACTION_PRESSED) {
+    //      previousPageButton(); // Call the function to perform the action
+    //    }
+    //  }
+    //}
+    //);
 
-    this.cp5.addButton("Next Page")
-      .setValue(0)
-      .setPosition(1250, 750)
-      .setSize(100, 19)
-      .addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        if (event.getAction() == ControlP5.ACTION_PRESSED) {
-          nextPageButton(); // Call the function to perform the action
-        }
-      }
-    }
-    );
+    //this.cp5.addButton("Next Page")
+    //  .setValue(0)
+    //  .setPosition(1250, 750)
+    //  .setSize(100, 19)
+    //  .addCallback(new CallbackListener() {
+    //  public void controlEvent(CallbackEvent event) {
+    //    if (event.getAction() == ControlP5.ACTION_PRESSED) {
+    //      nextPageButton(); // Call the function to perform the action
+    //    }
+    //  }
+    //}
+    //);
   }
 
 

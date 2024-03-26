@@ -3,26 +3,39 @@ import java.util.*;
 class NavBar {
   //Added A functional yet early navBar with three dropdowns. Eoghan Gloster. 13/3/23
   //The Data below is current hardcoded for proof of concept however in later implementations the different arrayLists will be sorted and correctly made in DataSorting
-  
+
   ControlP5 dateList;
   ControlP5 originList;
   ControlP5 destinationList;
   ControlP5 searchButton;
-  int dateIndexes =0;
+  ControlP5 miscLists;
+  String destinationString = null;
+  int destinationInt = 0;
+  String datesString = null;
+  int datesInt = 0;
+  String startDatesString = null;
+  int startDatesInt = 0;
+  String endDatesString = null;
+  int endDatesInt = 0;
+  String originString = null;
+  int originInt = 0;
+  String[] boolArray = {"true", "false"};
+
+  DataSorting data = new DataSorting();
+  void setup() {
 
 
-DataSorting data = new DataSorting();
-   void setup() {
-     DataSorting data = new DataSorting();
-     data.setup();
-     List Origin = data.originList;
-     Collections.sort(Origin);
-     List Destination = data.destinationList;
-     Collections.sort(Destination);
-     List DatesArray = data.dateList;
-     data.removeTimeAndYear(data.dateList);
-     
-    
+
+    DataSorting data = new DataSorting();
+    data.setup();
+    List Origin = data.originList;
+    Collections.sort(Origin);
+    List Destination = data.destinationList;
+    Collections.sort(Destination);
+    List DatesArray = data.dateList;
+    data.removeTimeAndYear(data.dateList);
+
+
 
     this.searchButton.addButton("enter")
       .setPosition(100, 700)
@@ -36,12 +49,34 @@ DataSorting data = new DataSorting();
       .addItems(DatesArray)
       .setValue(0)
       .setFont(createFont("Arial", 15))
-      .align(100,100,100,100)
+      .align(100, 100, 100, 100)
       .close()
       ;
-      
+
+    this.dateList.addScrollableList("Too") //Will only appear when range is selected
+      .setVisible(false)
+      .setPosition(0, 70)
+      .setSize(100, 100)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(DatesArray)
+      //.setValue(0)
+      .close()
+      ;
+
+    this.dateList.addScrollableList("From") //Will only appear when range is selected
+      .setVisible(false)
+      .setPosition(200, 70)
+      .setSize(100, 100)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(DatesArray)
+      //.setValue(0)
+      .close()
+      ;
+
     this.originList.addScrollableList("Origin")
-      .setPosition(100, 200)
+      .setPosition(40, 350)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -51,7 +86,7 @@ DataSorting data = new DataSorting();
       ;
 
     this.destinationList.addScrollableList("Destination")
-      .setPosition(100, 350)
+      .setPosition(160, 350)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -59,32 +94,90 @@ DataSorting data = new DataSorting();
       .setValue(0)
       .close()
       ;
-  }
-  
-  
 
-
-  public void Dates(int dateIndex) {
-    /* request the selected item based on index n */
-    dateIndexes = dateIndex;
-    println(dateIndex);
-    //if(dateIndexes == 2){
-    //      this.dateList.addScrollableList("Start-Date")
-    //  .setVisible(true)
-    //  ;
-    //}
+    this.miscLists.addScrollableList("Is Late")
+      .setPosition(100, 150)
+      .setSize(100, 100)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(boolArray)
+      .close()
+      ;
   }
 
-  public void Origin(int originIndex) {
-    /* request the selected item based on index n */
-    println(originIndex);
-    //println(this.Origin.get(originIndex));
+  void Destination(int index) {
+    destinationString = destinationList.get(ScrollableList.class, "Destination").getItem(index).get("name").toString();
+    destinationInt = (int)destinationList.get(ScrollableList.class, "Destination").getValue();
   }
 
-  public void Destination(int destinationIndex) {
-    /* request the selected item based on index n */
-    println(destinationIndex);
-    //println(this.Destination.get(destinationIndex));
+  void Dates(int index) {
+    datesString = dateList.get(ScrollableList.class, "Dates").getItem(index).get("name").toString();
+    datesInt = (int)dateList.get(ScrollableList.class, "Dates").getValue();
+  }
+
+  void Too(int index) {
+    endDatesString = dateList.get(ScrollableList.class, "Too").getItem(index).get("name").toString();
+    endDatesInt = (int)dateList.get(ScrollableList.class, "Too").getValue();
+  }
+
+  void From(int index) {
+    startDatesString = dateList.get(ScrollableList.class, "From").getItem(index).get("name").toString();
+    startDatesInt = (int)dateList.get(ScrollableList.class, "From").getValue();
+  }
+
+  void Origin(int index) {
+    originString = originList.get(ScrollableList.class, "Origin").getItem(index).get("name").toString();
+    originInt = (int)originList.get(ScrollableList.class, "Origin").getValue();
+  }
+
+  public int getDestinationInt() {
+    Destination(destinationInt);
+    return destinationInt;
+  }
+
+  public int getDatesInt() {
+    Dates(datesInt);
+    return datesInt;
+  }
+
+  public int getTooInt() {
+    Too(endDatesInt);
+    return endDatesInt;
+  }
+
+  public int getFromInt() {
+    From(startDatesInt);
+    return startDatesInt;
+  }
+
+  public int getOriginInt() {
+    Origin(originInt);
+    return originInt;
+  }
+
+  public String getDestinationString() {
+    Destination(destinationInt);
+    return destinationString;
+  }
+
+  public String getDatesString() {
+    Dates(datesInt);
+    return datesString;
+  }
+
+  public String getTooString() {
+    Too(endDatesInt);
+    return endDatesString;
+  }
+
+  public String getFromString() {
+    From(startDatesInt);
+    return startDatesString;
+  }
+
+  public String getOriginString() {
+    Origin(originInt);
+    return originString;
   }
 }
 
