@@ -19,9 +19,12 @@ class NavBar {
   int endDatesInt = 0;
   String originString = null;
   int originInt = 0;
-  String[] boolArray = {"true", "false"};
   String carrierString = null;
   int carrierInt;
+  int screenInt;
+
+  String[] boolArray = {"true", "false"};
+  String[] screenArray = {"Heat Map", "Table", "Line Graph"};
 
   DataSorting data = new DataSorting();
   void setup() {
@@ -36,10 +39,19 @@ class NavBar {
     Collections.sort(Destination);
     List DatesArray = data.dateList;
     data.removeTimeAndYear(data.dateList);
+    DatesArray.add(0, "--Select Range--");
     List Carriers = data.carrierList;
     Collections.sort(Carriers);
 
-
+    this.miscLists.addScrollableList("PickScreens")
+      .setPosition(100, 500)
+      .setSize(100, 100)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(screenArray)
+      .setValue(0)
+      .close()
+      ;
 
     this.searchButton.addButton("enter")
       .setPosition(100, 700)
@@ -51,7 +63,7 @@ class NavBar {
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(DatesArray)
-      //.setValue(0)
+      .setValue(0)
       //.setFont(createFont("Arial", 15))
       .align(100, 100, 100, 100)
       .close()
@@ -118,6 +130,16 @@ class NavBar {
       .close()
       ;
   }
+  
+  void PickScreens(){
+    screenInt = (int)miscLists.get(ScrollableList.class, "PickScreens").getValue();
+  }
+  
+  public int getPickScreensInt(){
+    PickScreens();
+    return screenInt;
+  }
+  
   void Carriers(int index) {
     carrierString = miscLists.get(ScrollableList.class, "Carriers").getItem(index).get("name").toString();
     carrierInt = (int)miscLists.get(ScrollableList.class, "Carriers").getValue();

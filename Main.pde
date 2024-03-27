@@ -24,7 +24,7 @@ DataTable dataTable;
 LineGraph lineGraph;
 
 void setup() {
-  totalData = loadTable("flights2k.csv", "header");
+  totalData = loadTable("flights2k.csv", "header");          //Already loaded in DataSorting. Could be moved around
   stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
@@ -83,8 +83,8 @@ void draw() {
   currentScreen.draw();
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
-  println(tempNavBar.getDatesInt());
-  disappearingDates(tempNavBar.getDatesInt());
+  println(tempNavBar.getPickScreensInt());
+  changeScreen(tempNavBar.getPickScreensInt());
 }
 
 
@@ -148,4 +148,17 @@ void disappearingDates(int dateSelection) {                     //ADDED BY EOGHA
     tempNavBar.dateList.getController("Too").setVisible(false);
     tempNavBar.dateList.getController("From").setVisible(false);
   }
+}
+
+void changeScreen(int screenSelection){
+  if(screenSelection == 0){
+    currentScreen = heatMapScreen;
+  }
+  if(screenSelection == 1){
+    currentScreen = tableScreen;
+  }
+  if(screenSelection == 2){
+    currentScreen = lineGraphScreen;
+  }
+   
 }
