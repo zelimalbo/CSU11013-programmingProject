@@ -1,8 +1,12 @@
 class Screen {
   ArrayList<Widget> screenWidgets;
   boolean isTable;
+  boolean isHeatMap;
+  boolean isLineGraph;
   color backgroundColor;
   DataTable dataTable;
+  HeatMap heatMap;
+  LineGraph lineGraph;
 
   Screen(color backgroundColor) {
     screenWidgets = new ArrayList();
@@ -13,6 +17,16 @@ class Screen {
     isTable = true;
     this.dataTable = dataTable;
   }
+  
+  Screen(HeatMap heatMap) {
+    isHeatMap = true;
+    this.heatMap = heatMap;
+  }
+  
+  Screen(LineGraph lineGraph) {
+    isLineGraph = true;
+    this.lineGraph = lineGraph;
+  }
 
   void add(Widget w) {
     screenWidgets.add(w);
@@ -21,6 +35,12 @@ class Screen {
   void draw() {
     if (isTable) {
       dataTable.draw();
+    }
+    else if (isHeatMap) {
+      heatMap.draw();
+    }
+    else if (isLineGraph) {
+      lineGraph.draw();
     }
     else {
       background(backgroundColor);
