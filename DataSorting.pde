@@ -21,7 +21,6 @@ class DataSorting
 
   void setup()  //Written here by Julius 14/03 9:40
   {
-
     data = loadTable("flights_full.csv", "header");  //Updated to make arrayLists by Julius 20/03 9:10
     for (TableRow row : data.rows()) {
       String origin = row.getString("ORIGIN");
