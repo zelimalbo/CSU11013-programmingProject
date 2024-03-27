@@ -18,6 +18,7 @@ NavBar NavBar;
 NavBar tempNavBar;
 int variableName = 5;
 
+
 DataTable dataTable;
 
 LineGraph lineGraph;
@@ -37,6 +38,7 @@ void setup() {
   tempNavBar.originList = new ControlP5(this);
   tempNavBar.destinationList = new ControlP5(this);
   tempNavBar.searchButton = new ControlP5(this);
+  tempNavBar.miscLists = new ControlP5(this);
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
@@ -81,9 +83,17 @@ void draw() {
   currentScreen.draw();
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
+  println(tempNavBar.getDatesInt());
+}
+
+void mouseReleased(){
+  tempNavBar.dateList.getController("Too").setVisible(false);
+  tempNavBar.dateList.getController("From").setVisible(false);
 }
 
 void mousePressed() {
+  tempNavBar.dateList.getController("Too").setVisible(true);
+  tempNavBar.dateList.getController("From").setVisible(true);
   /*
     Johnny added mouse press method on 20/03
     Currently being used for buttons to go backward and forward in the table
