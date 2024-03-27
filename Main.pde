@@ -84,16 +84,11 @@ void draw() {
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
   println(tempNavBar.getDatesInt());
+  disappearingDates(tempNavBar.getDatesInt());
 }
 
-void mouseReleased(){
-  tempNavBar.dateList.getController("Too").setVisible(false);
-  tempNavBar.dateList.getController("From").setVisible(false);
-}
 
 void mousePressed() {
-  tempNavBar.dateList.getController("Too").setVisible(true);
-  tempNavBar.dateList.getController("From").setVisible(true);
   /*
     Johnny added mouse press method on 20/03
     Currently being used for buttons to go backward and forward in the table
@@ -142,5 +137,15 @@ void keyPressed() {
     }
     catch (NumberFormatException e) {
     }
+  }
+}
+
+void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
+  if (dateSelection==0) {
+    tempNavBar.dateList.getController("Too").setVisible(true);
+    tempNavBar.dateList.getController("From").setVisible(true);
+  } else {
+    tempNavBar.dateList.getController("Too").setVisible(false);
+    tempNavBar.dateList.getController("From").setVisible(false);
   }
 }
