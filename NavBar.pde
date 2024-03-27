@@ -20,6 +20,8 @@ class NavBar {
   String originString = null;
   int originInt = 0;
   String[] boolArray = {"true", "false"};
+  String carrierString = null;
+  int carrierInt;
 
   DataSorting data = new DataSorting();
   void setup() {
@@ -34,6 +36,8 @@ class NavBar {
     Collections.sort(Destination);
     List DatesArray = data.dateList;
     data.removeTimeAndYear(data.dateList);
+    List Carriers = data.carrierList;
+    Collections.sort(Carriers);
 
 
 
@@ -47,8 +51,8 @@ class NavBar {
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(DatesArray)
-      .setValue(0)
-      .setFont(createFont("Arial", 15))
+      //.setValue(0)
+      //.setFont(createFont("Arial", 15))
       .align(100, 100, 100, 100)
       .close()
       ;
@@ -81,7 +85,7 @@ class NavBar {
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(Origin)
-      .setValue(0)
+      //.setValue(0)
       .close()
       ;
 
@@ -91,7 +95,7 @@ class NavBar {
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(Destination)
-      .setValue(0)
+      //.setValue(0)
       .close()
       ;
 
@@ -103,7 +107,27 @@ class NavBar {
       .addItems(boolArray)
       .close()
       ;
+
+    this.miscLists.addScrollableList("Carriers")
+      .setPosition(100, 230)
+      .setSize(100, 100)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(Carriers)
+      .setValue(0)
+      .close()
+      ;
   }
+  void Carriers(int index) {
+    carrierString = miscLists.get(ScrollableList.class, "Carriers").getItem(index).get("name").toString();
+    carrierInt = (int)miscLists.get(ScrollableList.class, "Carriers").getValue();
+  }
+
+  public int getCarrierInt() {
+    Carriers(carrierInt);
+    return carrierInt;
+  }
+
 
   void Destination(int index) {
     destinationString = destinationList.get(ScrollableList.class, "Destination").getItem(index).get("name").toString();
@@ -153,6 +177,11 @@ class NavBar {
   public int getOriginInt() {
     Origin(originInt);
     return originInt;
+  }
+
+  public String getCarrierString() {
+    Carriers(carrierInt);
+    return carrierString;
   }
 
   public String getDestinationString() {
