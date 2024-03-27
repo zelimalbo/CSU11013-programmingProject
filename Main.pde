@@ -85,6 +85,7 @@ void draw() {
   //pieCharts.lateOnly();
   println(tempNavBar.getPickScreensInt());
   changeScreen(tempNavBar.getPickScreensInt());
+  disappearingDates(tempNavBar.getDatesInt());
 }
 
 
