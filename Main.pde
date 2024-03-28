@@ -63,7 +63,7 @@ void setup() {
   
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
-  currentScreen = lineGraphScreen;
+   currentScreen = lineGraphScreen;
 }
 
 void draw() {
@@ -75,8 +75,8 @@ void draw() {
   //barCharts.draw();
   //pieCharts.lateOnly();
   //pieCharts.drawPieLegend();
-  fill(245);
-  rect(0, 0, NAV_BAR_WIDTH, SCREENY);
+  //fill(245);
+  //rect(0, 0, NAV_BAR_WIDTH, SCREENY);
   fill(200);
   rect(0, 0, 300, SCREENY);
   

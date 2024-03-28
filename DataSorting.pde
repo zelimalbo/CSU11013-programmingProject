@@ -1,5 +1,32 @@
 class DataSorting
 {
+  NavBar navBar;
+  DataSorting(NavBar navBar) {
+    this.navBar = navBar;
+  }
+  boolean isNavBarInitialized() {
+    return navBar != null;
+  }
+
+  void processSelection() {
+    if (isNavBarInitialized()) {
+
+      String selectedOrigin = navBar.getOriginString();
+      String selectedDestination = navBar.getDestinationString();
+
+
+      if (selectedOrigin != null && !selectedOrigin.isEmpty() && selectedDestination != null && !selectedDestination.isEmpty()) {
+        filteredFlightsByOrigin(selectedOrigin);
+        filteredFlightsByDestination(selectedDestination);
+      } else {
+
+        System.out.println("No selections made in NavBar.");
+      }
+    } else {
+
+      System.out.println("NavBar is not initialized.");
+    }
+  }
   Table data;
   int numberOfFlights;
   ArrayList<String> originList = new ArrayList<String>();          //ONLY ONE INSTANCE OF EACH IN THESE STRINGS USED FOR DROP DOWN MENUS
@@ -18,6 +45,29 @@ class DataSorting
   ArrayList<String> fullCarrierList = new ArrayList<String>();
   ArrayList<String> fullDestinationList = new ArrayList<String>();
   ArrayList<String> fullDestinationStateList = new ArrayList<String>();
+
+  ArrayList<String> filteredOrigins = new ArrayList<>();
+  ArrayList<String> filteredDates = new ArrayList<>();
+  ArrayList<String> filteredCarrier = new ArrayList<>();
+  ArrayList<String> filteredOriginCityName = new ArrayList<>();
+  ArrayList<String> filteredDestination = new ArrayList<>();
+  ArrayList<String> filteredDestinationCityName = new ArrayList<>();
+
+  ArrayList<String> filteredOriginsforDestination = new ArrayList<>();
+  ArrayList<String> filteredDatesforDestination = new ArrayList<>();
+  ArrayList<String> filteredCarrierforDestination = new ArrayList<>();
+  ArrayList<String> filteredOriginCityNameforDestination = new ArrayList<>();
+  ArrayList<String> filteredDestinationforDestination = new ArrayList<>();
+  ArrayList<String> filteredDestinationCityNameforDestination = new ArrayList<>();
+  ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>();
+  ArrayList<String> filteredOriginsforOriginAndDestination = new ArrayList<>();
+  ArrayList<String> filteredDatesforOriginAndDestination = new ArrayList<>();
+  ArrayList<String> filteredCarrierforOriginAndDestination = new ArrayList<>();
+  ArrayList<String> filteredOriginCityNameforOriginAndDestination = new ArrayList<>();
+  ArrayList<String> filteredDestinationforOriginAndDestination = new ArrayList<>();
+  ArrayList<String> filteredDestinationCityNameforOriginAndDestination = new ArrayList<>();
+  public DataSorting() {
+  }
 
   void setup()  //Written here by Julius 14/03 9:40
   {
@@ -129,27 +179,26 @@ class DataSorting
     return isOnTimeOrEarly;
   }
   void removeTimeAndYear(ArrayList<String> dates) {
-        for (int i = 0; i < dates.size(); i++) {
-            String date = dates.get(i);
-            String[] parts = date.split(" ");
-            String dateWithoutTimeAndYear = parts[0];
-            dates.set(i, dateWithoutTimeAndYear);
-        }
+    for (int i = 0; i < dates.size(); i++) {
+      String date = dates.get(i);
+      String[] parts = date.split(" ");
+      String dateWithoutTimeAndYear = parts[0];
+      dates.set(i, dateWithoutTimeAndYear);
     }
-    
-  /* 
+  }
+
+  /*
     Johnny Implemented getStateFrequencies method
-    on 24/03.
-    This method returns a map containing the total number of flights
-    including departures and arrivals in each US state.
-  */
+   on 24/03.
+   This method returns a map containing the total number of flights
+   including departures and arrivals in each US state.
+   */
   Map getStateFrequencies(ArrayList<String> fullOriginStateList, ArrayList<String> fullDestinationStateList) {
     Map<String, Integer> stateFrequencies = new HashMap<>();
     for (String state : fullOriginStateList) {
       if (stateFrequencies.containsKey(state)) {
         stateFrequencies.put(state, stateFrequencies.get(state) + 1);
-      }
-      else {
+      } else {
         stateFrequencies.put(state, 1);
         print(state + ", ");
       }
@@ -157,41 +206,99 @@ class DataSorting
     for (String state : fullDestinationStateList) {
       if (stateFrequencies.containsKey(state)) {
         stateFrequencies.put(state, stateFrequencies.get(state) + 1);
-      }
-      else {
+      } else {
         stateFrequencies.put(state, 1);
         print(state + ", ");
       }
     }
- 
+
     return stateFrequencies;
   }
-  
+
+  // functions for getting the ArrayLists implemented by jude
+  void filteredFlightsByOrigin(String selectedOrigin) {
+    for (int i = 0; i < fullOriginList.size(); i++) {
+      if (fullOriginList.get(i).equals(selectedOrigin))
+      {
+        filteredOrigins.add(selectedOrigin); //Implemented By Julius 28/03/24
+        String date = fullDateList.get(i);
+        filteredDates.add(date);
+        String carrier= fullCarrierList.get(i);
+        filteredCarrier.add(carrier);
+        String OriginState = fullOriginStateList.get(i);
+        filteredOriginCityName.add(OriginState);
+        String dest = fullDestinationList.get(i);
+        filteredDestination.add(dest);
+        String destinationCityName = fullDestinationStateList.get(i);
+        filteredDestinationCityName.add(destinationCityName);
+      }
+    }
+  }
+
+  void filteredFlightsByDestination(String selectedDestination) {
+    for (int i = 0; i < fullDestinationList.size(); i++) {
+      if (fullDestinationList.get(i).equals(selectedDestination))
+      {
+        filteredDestinationforDestination.add(selectedDestination); //Implemented By Julius 28/03/24
+        String date = fullDateList.get(i);
+        filteredDatesforDestination.add(date);
+        String carrier= fullCarrierList.get(i);
+        filteredCarrierforDestination.add(carrier);
+        String OriginState = fullOriginStateList.get(i);
+        filteredOriginCityNameforDestination.add(OriginState);
+        String dest = fullDestinationList.get(i);
+        filteredDestinationforDestination.add(dest);
+        String destinationCityName = fullDestinationStateList.get(i);
+        filteredDestinationCityNameforDestination.add(destinationCityName);
+      }
+    }
+  }
+  void filteredFlightsByOriginAndDestination(String selectedOrigin, String selectedDestination) {
+    for (int i = 0; i < fullDestinationList.size(); i++) {
+      if (fullDestinationList.get(i).equals(selectedDestination))
+      {
+        if (fullOriginList.get(i).equals(selectedOrigin))
+        {
+          filteredOriginforOriginAndDestination.add(selectedOrigin);               //Implemented By Julius 28/03/24
+          filteredDestinationforOriginAndDestination.add(selectedDestination);
+          String date = fullDateList.get(i);
+          filteredDatesforOriginAndDestination.add(date);
+          String carrier= fullCarrierList.get(i);
+          filteredCarrierforOriginAndDestination.add(carrier);
+          String OriginState = fullOriginStateList.get(i);
+          filteredOriginCityNameforOriginAndDestination.add(OriginState);
+          String dest = fullDestinationList.get(i);
+          filteredDestinationforOriginAndDestination.add(dest);
+          String destinationCityName = fullDestinationStateList.get(i);
+          filteredDestinationCityNameforOriginAndDestination.add(destinationCityName);
+        }
+      }
+    }
+  }
   /*
     Johnny implemented getDateFrequencies method
-    on 26/03
-    This method returns a map containing the total number of flights on each date
-  */
+   on 26/03
+   This method returns a map containing the total number of flights on each date
+   */
   Map getDateFrequencies(ArrayList<String> fullDateList) {
     removeTimeAndYear(fullDateList);
     Map<String, Integer> dateFrequencies = new HashMap<>();
     for (String date : fullDateList) {
       if (dateFrequencies.containsKey(date)) {
         dateFrequencies.put(date, dateFrequencies.get(date) + 1);
-      }
-      else {
+      } else {
         dateFrequencies.put(date, 1);
       }
     }
     /* //--- For debugging ---
-    removeTimeAndYear(this.dateList);
-    int totalFlights = 0;
-    for (String date : this.dateList) {
-      print(date + ": " + dateFrequencies.get(date) + "; ");
-      totalFlights += dateFrequencies.get(date);
-    }
-    print("Total Flights: " + totalFlights + ". ");
-    */
+     removeTimeAndYear(this.dateList);
+     int totalFlights = 0;
+     for (String date : this.dateList) {
+     print(date + ": " + dateFrequencies.get(date) + "; ");
+     totalFlights += dateFrequencies.get(date);
+     }
+     print("Total Flights: " + totalFlights + ". ");
+     */
     return dateFrequencies;
   }
 }
