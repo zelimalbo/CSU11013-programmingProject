@@ -11,7 +11,7 @@ PFont stdFont;
 
 Table totalData;
 
-barCharts barCharts;
+barCharts myChart;
 pieCharts pieCharts;
 
 NavBar NavBar;
@@ -42,8 +42,7 @@ void setup() {
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
-  //barCharts = new barCharts();
-  //barCharts.setup();
+
   pieCharts = new pieCharts();
   
   // --- HeatMap Screen ---
@@ -64,15 +63,21 @@ void setup() {
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
   currentScreen = lineGraphScreen;
+  
+  // Initialize dimensions and position for the chart
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+
+  // Initialize myChart with the frequencies data
+  myChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, frequencies);
 }
 
 void draw() {
   background(245);
   noStroke();
   //heatMap.draw();
-  //barCharts.dateOnly();
-  //barCharts.originOnly();
-  //barCharts.draw();
   //pieCharts.lateOnly();
   //pieCharts.drawPieLegend();
   fill(245);
@@ -81,11 +86,12 @@ void draw() {
   rect(0, 0, 300, SCREENY);
   
   currentScreen.draw();
-  //barCharts.dateOnly();
   //pieCharts.lateOnly();
   println(tempNavBar.getPickScreensInt());
   changeScreen(tempNavBar.getPickScreensInt());
   disappearingDates(tempNavBar.getDatesInt());
+  
+  myChart.draw();
 }
 
 

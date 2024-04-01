@@ -20,8 +20,8 @@ class HeatMap {
     this.xpos = xpos;
     this.ypos = ypos;
     
-    legendFont = loadFont("Calibri-24.vlw");
-    titleFont = loadFont("Calibri-Bold-36.vlw");
+    //legendFont = loadFont("Calibri-24.vlw");
+    //titleFont = loadFont("Calibri-Bold-36.vlw");
     
     usa = us;
     
@@ -54,7 +54,7 @@ class HeatMap {
     
     fill(255);
     textAlign(CENTER, CENTER);
-    textFont(titleFont);
+    //textFont(titleFont);
     text("Number Of Flights (Arrivals and Departures) in US States", xpos+(SCREEN_WIDTH/2), 75);
     
     shape(usa, xpos, ypos);
@@ -92,7 +92,7 @@ class HeatMap {
     noStroke();
     fill(255);
     textAlign(LEFT, BOTTOM);
-    textFont(legendFont);
+    //textFont(legendFont);
     text(minValue, xpos, ypos);
     textAlign(RIGHT, BOTTOM);
     text(maxValue, xpos+legendWidth, ypos);
