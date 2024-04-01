@@ -188,11 +188,11 @@ class DataSorting
   }
 
   /*
-    Johnny Implemented getStateFrequencies method
+   Johnny Implemented getStateFrequencies method
    on 24/03.
    This method returns a map containing the total number of flights
    including departures and arrivals in each US state.
-   */
+  */
   Map getStateFrequencies(ArrayList<String> fullOriginStateList, ArrayList<String> fullDestinationStateList) {
     Map<String, Integer> stateFrequencies = new HashMap<>();
     for (String state : fullOriginStateList) {
@@ -276,10 +276,10 @@ class DataSorting
     }
   }
   /*
-    Johnny implemented getDateFrequencies method
+   Johnny implemented getDateFrequencies method
    on 26/03
    This method returns a map containing the total number of flights on each date
-   */
+  */
   Map getDateFrequencies(ArrayList<String> fullDateList) {
     removeTimeAndYear(fullDateList);
     Map<String, Integer> dateFrequencies = new HashMap<>();
@@ -300,5 +300,22 @@ class DataSorting
      print("Total Flights: " + totalFlights + ". ");
      */
     return dateFrequencies;
+  }
+  
+  /*
+    Johnny implemented getFlightsByAirline method
+    on 01/04
+    This method returns a map containing the total flights per airline
+  */
+  Map getFlightsByCarrier(ArrayList<String> fullCarrierList) {
+    Map<String, Integer> flightsByCarrier = new HashMap<>();
+    for (String carrier : fullCarrierList) {
+      if (flightsByCarrier.containsKey(carrier)) {
+        flightsByCarrier.put(carrier, flightsByCarrier.get(carrier) + 1);
+      } else {
+        flightsByCarrier.put(carrier, 1);
+      }
+    }
+    return flightsByCarrier;
   }
 }

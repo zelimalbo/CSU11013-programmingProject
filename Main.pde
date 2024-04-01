@@ -132,7 +132,7 @@ void keyPressed() {
           input.label = String.valueOf(intInput);
         }
       }
-      if (key == ENTER && intInput >= 1 && intInput <= input.maxlen) {
+      if (key == ENTER && intInput >= 1 && intInput <= currentScreen.dataTable.totalPages) {
         currentScreen.dataTable.currentPage = intInput;
       }
     }
