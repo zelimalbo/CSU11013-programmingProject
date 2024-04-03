@@ -3,10 +3,13 @@ class Screen {
   boolean isTable;
   boolean isHeatMap;
   boolean isLineGraph;
+  boolean ispieCharts;
   color backgroundColor;
   DataTable dataTable;
   HeatMap heatMap;
   LineGraph lineGraph;
+  pieCharts PieCharts;
+
 
   Screen(color backgroundColor) {
     screenWidgets = new ArrayList();
@@ -27,6 +30,10 @@ class Screen {
     isLineGraph = true;
     this.lineGraph = lineGraph;
   }
+  Screen(pieCharts PieCharts) {
+    ispieCharts = true;
+    this.PieCharts = PieCharts;
+  }
 
   void add(Widget w) {
     screenWidgets.add(w);
@@ -41,6 +48,9 @@ class Screen {
     }
     else if (isLineGraph) {
       lineGraph.draw();
+    }
+   else if (ispieCharts){
+      PieCharts.draw();
     }
     else {
       background(backgroundColor);

@@ -3,7 +3,7 @@ import controlP5.*;
 import java.util.*;
 import java.util.Collections;
 
-Screen currentScreen, tableScreen, heatMapScreen, lineGraphScreen;
+Screen currentScreen, tableScreen, heatMapScreen, lineGraphScreen, pieChartScreen;
 
 PShape usa;
 HeatMap heatMap;
@@ -13,7 +13,7 @@ PFont stdFont;
 Table totalData;
 
 barCharts barCharts;
-pieCharts pieCharts;
+//pieCharts pieCharts;
 
 NavBar NavBar;
 NavBar navBar;
@@ -23,6 +23,8 @@ int variableName = 5;
 DataTable dataTable;
 
 LineGraph lineGraph;
+
+pieCharts PieCharts;
 
 void setup() {
   totalData = loadTable("flights_full.csv", "header");          //Already loaded in DataSorting. Could be moved around
@@ -59,10 +61,15 @@ void setup() {
   Map<String, Integer> dateFrequencies = data.getDateFrequencies(data.fullDateList);
   lineGraph = new LineGraph(NAV_BAR_WIDTH + (SCREEN_WIDTH-600)/2, (SCREENY-600)/2, 600, 600, dateFrequencies);
   lineGraphScreen = new Screen(lineGraph);
+
+// --- PieChart Screen ---
+ PieCharts = new pieCharts(700, 300, 300, dateFrequencies);
+ pieChartScreen = new Screen(PieCharts);
   
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
    currentScreen = lineGraphScreen;
+  //currentScreen = pieChartScreen;
 }
 
 void draw() {
@@ -151,4 +158,9 @@ void changeScreen(int screenSelection){
   if(screenSelection == 2){
     currentScreen = lineGraphScreen;
   }
+/*
+if (screenSelection == 3) {
+    currentScreen = pieChartScreen
+  }
+*/
 }
