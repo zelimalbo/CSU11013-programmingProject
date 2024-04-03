@@ -35,7 +35,7 @@ void setup() {
   //Cleaned up Main by moving back into NavBar 20/2/23
   tempNavBar = new NavBar();
   tempNavBar.allLists = new ControlP5(this);
-  //tempNavBar.originList = new ControlP5(this);      Can get rid of, was all redundant
+  //tempNavBar.originList = new ControlP5(this);
   //tempNavBar.destinationList = new ControlP5(this);
   //tempNavBar.searchButton = new ControlP5(this);
   //tempNavBar.miscLists = new ControlP5(this);
@@ -132,7 +132,7 @@ void keyPressed() {
           input.label = String.valueOf(intInput);
         }
       }
-      if (key == ENTER && intInput >= 1 && intInput <= currentScreen.dataTable.totalPages) {
+      if (key == ENTER && intInput >= 1 && intInput <= input.maxlen) {
         currentScreen.dataTable.currentPage = intInput;
       }
     }
