@@ -44,6 +44,11 @@ class NavBar {
 
     DataSorting data = new DataSorting();
     data.setup(totalData);
+    
+    data.filteredFlightsByOriginAndDestination("LAX", "JFK");
+    String word = data.filteredOriginforOriginAndDestination.get(10);
+    
+    println(word);
     ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
     Origin.add(0, "--All--");

@@ -1,3 +1,4 @@
+
 class DataSorting
 {
   NavBar navBar;
@@ -59,16 +60,25 @@ class DataSorting
   ArrayList<String> filteredOriginCityNameforDestination = new ArrayList<>();
   ArrayList<String> filteredDestinationforDestination = new ArrayList<>();
   ArrayList<String> filteredDestinationCityNameforDestination = new ArrayList<>();
+
   ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>();
-  ArrayList<String> filteredOriginsforOriginAndDestination = new ArrayList<>();
   ArrayList<String> filteredDatesforOriginAndDestination = new ArrayList<>();
   ArrayList<String> filteredCarrierforOriginAndDestination = new ArrayList<>();
   ArrayList<String> filteredOriginCityNameforOriginAndDestination = new ArrayList<>();
   ArrayList<String> filteredDestinationforOriginAndDestination = new ArrayList<>();
   ArrayList<String> filteredDestinationCityNameforOriginAndDestination = new ArrayList<>();
+
+  ArrayList<String> filteredOriginsForDateRangeArrayList = new ArrayList<>();
+  ArrayList<String> filteredDatesForDateRangeArrayList = new ArrayList<>();
+  ArrayList<String> filteredCarrierForDateRangeArrayList = new ArrayList<>();
+  ArrayList<String> filteredOriginCityNameForDateRangeArrayList = new ArrayList<>();
+  ArrayList<String> filteredDestinationForDateRangeArrayList = new ArrayList<>();
+  ArrayList<String> filteredDestinationCityNameForDateRangeArrayList = new ArrayList<>();
+
+
   public DataSorting() {
   }
-  
+
   void setup(Table data)  //Written here by Julius 14/03 9:40
   {
     this.data = data;
@@ -191,7 +201,7 @@ class DataSorting
    on 24/03.
    This method returns a map containing the total number of flights
    including departures and arrivals in each US state.
-  */
+   */
   Map getStateFrequencies(ArrayList<String> fullOriginStateList, ArrayList<String> fullDestinationStateList) {
     Map<String, Integer> stateFrequencies = new HashMap<>();
     for (String state : fullOriginStateList) {
@@ -273,11 +283,42 @@ class DataSorting
       }
     }
   }
+  void filteredFlightsByDate(int startDate, int endDate) //implemented by julius 03/04/24
+  {
+    String startDateString = dateList.get(startDate);
+    int startDateIndex =0;
+    for (int i = 0; i<fullDateList.size(); i++)
+    {
+      String testDate = fullDateList.get(i);
+      if (testDate.equals(startDateString))
+      {
+        startDateIndex = i;
+        i = fullDateList.size();
+      }
+    }
+    String endDateString = dateList.get(endDate);
+    int endDateIndex=0;
+    for (int i = fullDateList.size(); i>0; i--)
+    {
+      String testDate = fullDateList.get(i);
+      if (testDate.equals(endDateString))
+      {
+        endDateIndex = i;
+        i = 0;
+      }
+    }
+    filteredOriginsForDateRangeArrayList.addAll(fullOriginList.subList(startDateIndex, endDateIndex));
+    filteredDatesForDateRangeArrayList.addAll(fullDateList.subList(startDateIndex, endDateIndex));
+    filteredCarrierForDateRangeArrayList.addAll(fullCarrierList.subList(startDateIndex, endDateIndex));
+    filteredOriginCityNameForDateRangeArrayList.addAll(fullOriginStateList.subList(startDateIndex, endDateIndex));
+    filteredDestinationForDateRangeArrayList.addAll(fullDestinationList.subList(startDateIndex, endDateIndex));
+    filteredDestinationCityNameForDateRangeArrayList.addAll(fullDestinationStateList.subList(startDateIndex, endDateIndex));
+  }
   /*
    Johnny implemented getDateFrequencies method
    on 26/03
    This method returns a map containing the total number of flights on each date
-  */
+   */
   Map getDateFrequencies(ArrayList<String> fullDateList) {
     removeTimeAndYear(fullDateList);
     Map<String, Integer> dateFrequencies = new HashMap<>();
@@ -299,12 +340,11 @@ class DataSorting
      */
     return dateFrequencies;
   }
-  
   /*
     Johnny implemented getFlightsByAirline method
-    on 01/04
-    This method returns a map containing the total flights per airline
-  */
+   on 01/04
+   This method returns a map containing the total flights per airline
+   */
   Map getFlightsByCarrier(ArrayList<String> fullCarrierList) {
     Map<String, Integer> flightsByCarrier = new HashMap<>();
     for (String carrier : fullCarrierList) {
