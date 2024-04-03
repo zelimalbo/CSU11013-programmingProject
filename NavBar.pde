@@ -5,8 +5,6 @@ class NavBar {
   //The Data below is current hardcoded for proof of concept however in later implementations the different arrayLists will be sorted and correctly made in DataSorting
 
   ControlP5 allLists;
-  ControlP5 originList;
-  ControlP5 destinationList;
   ControlP5 searchButton;
   ControlP5 miscLists;
   String destinationString = null;
@@ -29,32 +27,41 @@ class NavBar {
   DataSorting data = new DataSorting();
   void setup() {
 
-  ////miscLists.addTab("misc")
-  ////   .activateEvent(true)
-  ////   .setLabel("Misc")
-  ////   .setId(2);
-     
-  //miscLists.addTab("locations")
-  //   .activateEvent(true)
-  //   .setLabel("Locations")
-  //   .setId(3);
-     
-  //miscLists.addTab("dates")
-  //   .activateEvent(true)
-  //   .setLabel("Dates")
-  //   .setId(4);
+    ////miscLists.addTab("misc")
+    ////   .activateEvent(true)
+    ////   .setLabel("Misc")
+    ////   .setId(2);
+
+    //miscLists.addTab("locations")
+    //   .activateEvent(true)
+    //   .setLabel("Locations")
+    //   .setId(3);
+
+    //miscLists.addTab("dates")
+    //   .activateEvent(true)
+    //   .setLabel("Dates")
+    //   .setId(4);
 
     DataSorting data = new DataSorting();
     data.setup(totalData);
-    List Origin = data.originList;
+    ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
-    List Destination = data.destinationList;
+    Origin.add(0, "--All--");
+    ArrayList<String> Destination = new ArrayList<>(data.destinationList);
     Collections.sort(Destination);
-    List DatesArray = data.dateList;
-    data.removeTimeAndYear(data.dateList);
+    Destination.add(0, "--All--");
+    ArrayList<String> DatesArray = new ArrayList<>(data.dateList); // Create a new list with the same elements as data.dateList
+    ArrayList<String> TooArray = new ArrayList<>(data.dateList); // Do the same for TooArray
+    ArrayList<String> FromArray = new ArrayList<>(data.dateList);
+    data.removeTimeAndYear(DatesArray);
+    data.removeTimeAndYear(TooArray);
+    data.removeTimeAndYear(FromArray);
     DatesArray.add(0, "--Select Range--");
-    List Carriers = data.carrierList;
+    TooArray.add(0, "--Too--");
+    FromArray.add(0, "--From--");
+    ArrayList<String> Carriers = new ArrayList<>(data.carrierList);
     Collections.sort(Carriers);
+    Carriers.add(0, "--All--");
 
     this.allLists.addScrollableList("PickScreens")
       .setPosition(100, 500)
@@ -90,7 +97,7 @@ class NavBar {
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
-      .addItems(DatesArray)
+      .addItems(TooArray)
       .moveTo("dates")
       //.setValue(0)
       .close()
@@ -102,14 +109,14 @@ class NavBar {
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
-      .addItems(DatesArray)
+      .addItems(FromArray)
       .moveTo("dates")
       //.setValue(0)
       .close()
       ;
 
     this.allLists.addScrollableList("Origin")
-      .setPosition(40, 350)
+      .setPosition(40, 150)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -120,7 +127,7 @@ class NavBar {
       ;
 
     this.allLists.addScrollableList("Destination")
-      .setPosition(160, 350)
+      .setPosition(160, 150)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -251,121 +258,4 @@ class NavBar {
     Origin(originInt);
     return originString;
   }
-
-  //public void cleanNav(int navBarSelect) {
-  //  if (navBarSelect==0) {
-
-  //    miscLists.getController("PickScreens").setVisible(false);
-  //    miscLists.getController("PickScreens").setValue(0);
-
-  //    dateList.getController("Dates").setVisible(false);
-  //    dateList.getController("Dates").setValue(0);
-
-  //    dateList.getController("Too").setVisible(false);
-  //    dateList.getController("Too").setValue(0);
-
-  //    dateList.getController("From").setVisible(false);
-  //    dateList.getController("From").setValue(0);
-
-  //    originList.getController("Origin").setVisible(false);
-  //    originList.getController("Origin").setValue(0);
-
-  //    destinationList.getController("Destination").setVisible(false);
-  //    destinationList.getController("Destination").setValue(0);
-
-  //    miscLists.getController("Is Late").setVisible(false);
-  //    miscLists.getController("Is Late").setValue(0);
-
-  //    miscLists.getController("Carriers").setVisible(false);
-  //    miscLists.getController("Carriers").setValue(0);
-  //  } 
-  //  else if (navBarSelect==1) {
-  //    miscLists.getController("PickScreens").setVisible(true);
-
-  //    dateList.getController("Dates").setVisible(false);
-  //    dateList.getController("Dates").setValue(0);
-
-  //    dateList.getController("Too").setVisible(false);
-  //    dateList.getController("Too").setValue(0);
-
-  //    dateList.getController("From").setVisible(false);
-  //    dateList.getController("From").setValue(0);
-
-  //    originList.getController("Origin").setVisible(false);
-  //    originList.getController("Origin").setValue(0);
-
-  //    destinationList.getController("Destination").setVisible(false);
-  //    destinationList.getController("Destination").setValue(0);
-
-  //    miscLists.getController("Is Late").setVisible(false);
-  //    miscLists.getController("Is Late").setValue(0);
-
-  //    miscLists.getController("Carriers").setVisible(false);
-  //    miscLists.getController("Carriers").setValue(0);
-  //  } 
-  //  else if (navBarSelect==2) {
-  //    miscLists.getController("PickScreens").setVisible(false);
-  //    miscLists.getController("PickScreens").setValue(0);
-
-  //    dateList.getController("Dates").setVisible(true);
-
-  //    originList.getController("Origin").setVisible(false);
-  //    originList.getController("Origin").setValue(0);
-
-  //    destinationList.getController("Destination").setVisible(false);
-  //    destinationList.getController("Destination").setValue(0);
-
-  //    miscLists.getController("Is Late").setVisible(false);
-  //    miscLists.getController("Is Late").setValue(0);
-
-  //    miscLists.getController("Carriers").setVisible(false);
-  //    miscLists.getController("Carriers").setValue(0);
-  //  }
-  //  else if (navBarSelect==3) {
-  //    miscLists.getController("PickScreens").setVisible(false);
-  //    miscLists.getController("PickScreens").setValue(0);
-
-  //    dateList.getController("Dates").setVisible(false);
-  //    dateList.getController("Dates").setValue(0);
-
-  //    dateList.getController("Too").setVisible(false);
-  //    dateList.getController("Too").setValue(0);
-
-  //    dateList.getController("From").setVisible(false);
-  //    dateList.getController("From").setValue(0);
-
-  //    originList.getController("Origin").setVisible(true);
-
-  //    destinationList.getController("Destination").setVisible(true);
-
-  //    miscLists.getController("Is Late").setVisible(false);
-  //    miscLists.getController("Is Late").setValue(0);
-
-  //    miscLists.getController("Carriers").setVisible(true);
-  //  }
-  //  else if (navBarSelect==4) {
-  //    miscLists.getController("PickScreens").setVisible(false);
-  //    miscLists.getController("PickScreens").setValue(0);
-
-  //    dateList.getController("Dates").setVisible(false);
-  //    dateList.getController("Dates").setValue(0);
-
-  //    dateList.getController("Too").setVisible(false);
-  //    dateList.getController("Too").setValue(0);
-
-  //    dateList.getController("From").setVisible(false);
-  //    dateList.getController("From").setValue(0);
-
-  //    originList.getController("Origin").setVisible(false);
-  //    originList.getController("Origin").setValue(0);
-
-  //    destinationList.getController("Destination").setVisible(false);
-  //    destinationList.getController("Destination").setValue(0);
-
-  //    miscLists.getController("Is Late").setVisible(true);
-
-  //    miscLists.getController("Carriers").setVisible(false);
-  //    miscLists.getController("Carriers").setValue(0);
-  //  }
-  //}
 }
