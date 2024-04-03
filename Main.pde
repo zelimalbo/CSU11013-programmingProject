@@ -43,8 +43,6 @@ void setup() {
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
-  barCharts = new barCharts();
-  barCharts.setup();
   pieCharts = new pieCharts();
   
   // --- HeatMap Screen ---
