@@ -24,11 +24,11 @@ DataTable dataTable;
 LineGraph lineGraph;
 
 void setup() {
-  totalData = loadTable("flights2k.csv", "header");          //Already loaded in DataSorting. Could be moved around
+  totalData = loadTable("flights_full.csv", "header");          //Already loaded in DataSorting. Could be moved around
   stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
-  data.setup();
+  data.setup(totalData);
   println("There are " + data.numberOfFlights + " flights in the dataset");
 
   //Added NavBar Eoghan Gloster 14/2/23
@@ -161,5 +161,4 @@ void changeScreen(int screenSelection){
   if(screenSelection == 2){
     currentScreen = lineGraphScreen;
   }
-   
 }

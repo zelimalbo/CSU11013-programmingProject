@@ -45,7 +45,7 @@ class NavBar {
   //   .setId(4);
 
     DataSorting data = new DataSorting();
-    data.setup();
+    data.setup(totalData);
     List Origin = data.originList;
     Collections.sort(Origin);
     List Destination = data.destinationList;
