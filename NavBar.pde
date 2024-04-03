@@ -43,7 +43,7 @@ class NavBar {
     //   .setId(4);
 
     DataSorting data = new DataSorting();
-    data.setup();
+    data.setup(totalData);
     ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
     Origin.add(0, "--All--");

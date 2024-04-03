@@ -68,11 +68,11 @@ class DataSorting
   ArrayList<String> filteredDestinationCityNameforOriginAndDestination = new ArrayList<>();
   public DataSorting() {
   }
-
-  void setup()  //Written here by Julius 14/03 9:40
+  
+  void setup(Table data)  //Written here by Julius 14/03 9:40
   {
-
-    data = loadTable("flights_full.csv", "header");  //Updated to make arrayLists by Julius 20/03 9:10
+    this.data = data;
+    //Updated to make arrayLists by Julius 20/03 9:10
     for (TableRow row : data.rows()) {
       String origin = row.getString("ORIGIN");
       originList = addToArrayList(originList, origin);
@@ -133,7 +133,6 @@ class DataSorting
       String airportWithState = airport.get(i) + ", " + state.get(i);
       result.add(airportWithState);
     }
-
     return result;
   }
   ArrayList addToArrayList(ArrayList<String> list, String dataPointToBeAdded) //Implemented by Julius 20/03/24
@@ -211,7 +210,6 @@ class DataSorting
         print(state + ", ");
       }
     }
-
     return stateFrequencies;
   }
 

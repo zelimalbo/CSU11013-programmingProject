@@ -1,3 +1,4 @@
+
 import controlP5.*;
 import java.util.*;
 import java.util.Collections;
@@ -24,18 +25,18 @@ DataTable dataTable;
 LineGraph lineGraph;
 
 void setup() {
-  totalData = loadTable("flights2k.csv", "header");          //Already loaded in DataSorting. Could be moved around
+  totalData = loadTable("flights_full.csv", "header");          //Already loaded in DataSorting. Could be moved around
   stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
-  data.setup();
+  data.setup(totalData);
   println("There are " + data.numberOfFlights + " flights in the dataset");
 
   //Added NavBar Eoghan Gloster 14/2/23
   //Cleaned up Main by moving back into NavBar 20/2/23
   tempNavBar = new NavBar();
   tempNavBar.allLists = new ControlP5(this);
-  //tempNavBar.originList = new ControlP5(this);
+  //tempNavBar.originList = new ControlP5(this);      Can get rid of, was all redundant
   //tempNavBar.destinationList = new ControlP5(this);
   //tempNavBar.searchButton = new ControlP5(this);
   //tempNavBar.miscLists = new ControlP5(this);
@@ -132,7 +133,7 @@ void keyPressed() {
           input.label = String.valueOf(intInput);
         }
       }
-      if (key == ENTER && intInput >= 1 && intInput <= input.maxlen) {
+      if (key == ENTER && intInput >= 1 && intInput <= currentScreen.dataTable.totalPages) {
         currentScreen.dataTable.currentPage = intInput;
       }
     }
@@ -161,5 +162,4 @@ void changeScreen(int screenSelection){
   if(screenSelection == 2){
     currentScreen = lineGraphScreen;
   }
-   
 }
