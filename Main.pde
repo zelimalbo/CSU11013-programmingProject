@@ -34,11 +34,11 @@ void setup() {
   //Added NavBar Eoghan Gloster 14/2/23
   //Cleaned up Main by moving back into NavBar 20/2/23
   tempNavBar = new NavBar();
-  tempNavBar.dateList = new ControlP5(this);
-  tempNavBar.originList = new ControlP5(this);
-  tempNavBar.destinationList = new ControlP5(this);
-  tempNavBar.searchButton = new ControlP5(this);
-  tempNavBar.miscLists = new ControlP5(this);
+  tempNavBar.allLists = new ControlP5(this);
+  //tempNavBar.originList = new ControlP5(this);      Can get rid of, was all redundant
+  //tempNavBar.destinationList = new ControlP5(this);
+  //tempNavBar.searchButton = new ControlP5(this);
+  //tempNavBar.miscLists = new ControlP5(this);
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
@@ -85,7 +85,7 @@ void draw() {
   //pieCharts.lateOnly();
   println(tempNavBar.getPickScreensInt());
   changeScreen(tempNavBar.getPickScreensInt());
-  disappearingDates(tempNavBar.getDatesInt());
+  //tempNavBar.cleanNav(3);
 }
 
 
@@ -141,15 +141,15 @@ void keyPressed() {
   }
 }
 
-void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
-  if (dateSelection==0) {
-    tempNavBar.dateList.getController("Too").setVisible(true);
-    tempNavBar.dateList.getController("From").setVisible(true);
-  } else {
-    tempNavBar.dateList.getController("Too").setVisible(false);
-    tempNavBar.dateList.getController("From").setVisible(false);
-  }
-}
+//void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
+//  if (dateSelection==0) {
+//    tempNavBar.dateList.getController("Too").setVisible(true);
+//    tempNavBar.dateList.getController("From").setVisible(true);
+//  } else {
+//    tempNavBar.dateList.getController("Too").setVisible(false);
+//    tempNavBar.dateList.getController("From").setVisible(false);
+//  }
+//}
 
 void changeScreen(int screenSelection){
   if(screenSelection == 0){
