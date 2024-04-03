@@ -16,7 +16,7 @@ barCharts barCharts;
 pieCharts pieCharts;
 
 NavBar NavBar;
-NavBar tempNavBar;
+NavBar navBar;
 int variableName = 5;
 
 
@@ -34,13 +34,13 @@ void setup() {
 
   //Added NavBar Eoghan Gloster 14/2/23
   //Cleaned up Main by moving back into NavBar 20/2/23
-  tempNavBar = new NavBar();
-  tempNavBar.allLists = new ControlP5(this);
-  //tempNavBar.originList = new ControlP5(this);      Can get rid of, was all redundant
-  //tempNavBar.destinationList = new ControlP5(this);
-  //tempNavBar.searchButton = new ControlP5(this);
-  //tempNavBar.miscLists = new ControlP5(this);
-  tempNavBar.setup();
+  navBar = new NavBar();
+  navBar.allLists = new ControlP5(this);
+  //navBar.originList = new ControlP5(this);      Can get rid of, was all redundant
+  //navBar.destinationList = new ControlP5(this);
+  //navBar.searchButton = new ControlP5(this);
+  //navBar.miscLists = new ControlP5(this);
+  navBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
   pieCharts = new pieCharts();
@@ -82,9 +82,9 @@ void draw() {
   currentScreen.draw();
   //barCharts.dateOnly();
   //pieCharts.lateOnly();
-  println(tempNavBar.getPickScreensInt());
-  changeScreen(tempNavBar.getPickScreensInt());
-  //tempNavBar.cleanNav(3);
+  //println(navBar.getPickScreensInt());
+  changeScreen(navBar.getPickScreensInt());
+  //navBar.cleanNav(3);
 }
 
 
@@ -142,11 +142,11 @@ void keyPressed() {
 
 //void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
 //  if (dateSelection==0) {
-//    tempNavBar.dateList.getController("Too").setVisible(true);
-//    tempNavBar.dateList.getController("From").setVisible(true);
+//    navBar.dateList.getController("Too").setVisible(true);
+//    navBar.dateList.getController("From").setVisible(true);
 //  } else {
-//    tempNavBar.dateList.getController("Too").setVisible(false);
-//    tempNavBar.dateList.getController("From").setVisible(false);
+//    navBar.dateList.getController("Too").setVisible(false);
+//    navBar.dateList.getController("From").setVisible(false);
 //  }
 //}
 
