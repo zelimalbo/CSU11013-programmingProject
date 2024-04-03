@@ -45,7 +45,7 @@ void setup() {
   navBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
-  pieCharts = new pieCharts();
+  //pieCharts = new pieCharts();
   
   // --- HeatMap Screen ---
   usa = loadShape("us.svg");
