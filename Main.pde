@@ -11,7 +11,7 @@ PFont stdFont;
 
 Table totalData;
 
-barCharts myChart;
+barCharts barCharts;
 pieCharts pieCharts;
 
 NavBar NavBar;
@@ -24,25 +24,26 @@ DataTable dataTable;
 LineGraph lineGraph;
 
 void setup() {
-  totalData = loadTable("flights2k.csv", "header");          //Already loaded in DataSorting. Could be moved around
+  totalData = loadTable("flights_full.csv", "header");          //Already loaded in DataSorting. Could be moved around
   stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
-  data.setup();
+  data.setup(totalData);
   println("There are " + data.numberOfFlights + " flights in the dataset");
 
   //Added NavBar Eoghan Gloster 14/2/23
   //Cleaned up Main by moving back into NavBar 20/2/23
   tempNavBar = new NavBar();
-  tempNavBar.dateList = new ControlP5(this);
-  tempNavBar.originList = new ControlP5(this);
-  tempNavBar.destinationList = new ControlP5(this);
-  tempNavBar.searchButton = new ControlP5(this);
-  tempNavBar.miscLists = new ControlP5(this);
+  tempNavBar.allLists = new ControlP5(this);
+  //tempNavBar.originList = new ControlP5(this);      Can get rid of, was all redundant
+  //tempNavBar.destinationList = new ControlP5(this);
+  //tempNavBar.searchButton = new ControlP5(this);
+  //tempNavBar.miscLists = new ControlP5(this);
   tempNavBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
-
+  barCharts = new barCharts();
+  barCharts.setup();
   pieCharts = new pieCharts();
   
   // --- HeatMap Screen ---
@@ -62,36 +63,29 @@ void setup() {
   
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
-  currentScreen = lineGraphScreen;
-  
-  // Initialize dimensions and position for the chart
-  float chartX = 350;
-  float chartY = 300;
-  float chartWidth = 1000;
-  float chartHeight = 300;
-
-  // Initialize myChart with the frequencies data
-  myChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, frequencies);
+   currentScreen = lineGraphScreen;
 }
 
 void draw() {
   background(245);
   noStroke();
   //heatMap.draw();
+  //barCharts.dateOnly();
+  //barCharts.originOnly();
+  //barCharts.draw();
   //pieCharts.lateOnly();
   //pieCharts.drawPieLegend();
-  fill(245);
-  rect(0, 0, NAV_BAR_WIDTH, SCREENY);
+  //fill(245);
+  //rect(0, 0, NAV_BAR_WIDTH, SCREENY);
   fill(200);
   rect(0, 0, 300, SCREENY);
   
   currentScreen.draw();
+  //barCharts.dateOnly();
   //pieCharts.lateOnly();
   println(tempNavBar.getPickScreensInt());
   changeScreen(tempNavBar.getPickScreensInt());
-  disappearingDates(tempNavBar.getDatesInt());
-  
-  myChart.draw();
+  //tempNavBar.cleanNav(3);
 }
 
 
@@ -138,7 +132,7 @@ void keyPressed() {
           input.label = String.valueOf(intInput);
         }
       }
-      if (key == ENTER && intInput >= 1 && intInput <= input.maxlen) {
+      if (key == ENTER && intInput >= 1 && intInput <= currentScreen.dataTable.totalPages) {
         currentScreen.dataTable.currentPage = intInput;
       }
     }
@@ -147,15 +141,15 @@ void keyPressed() {
   }
 }
 
-void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
-  if (dateSelection==0) {
-    tempNavBar.dateList.getController("Too").setVisible(true);
-    tempNavBar.dateList.getController("From").setVisible(true);
-  } else {
-    tempNavBar.dateList.getController("Too").setVisible(false);
-    tempNavBar.dateList.getController("From").setVisible(false);
-  }
-}
+//void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
+//  if (dateSelection==0) {
+//    tempNavBar.dateList.getController("Too").setVisible(true);
+//    tempNavBar.dateList.getController("From").setVisible(true);
+//  } else {
+//    tempNavBar.dateList.getController("Too").setVisible(false);
+//    tempNavBar.dateList.getController("From").setVisible(false);
+//  }
+//}
 
 void changeScreen(int screenSelection){
   if(screenSelection == 0){
@@ -167,5 +161,4 @@ void changeScreen(int screenSelection){
   if(screenSelection == 2){
     currentScreen = lineGraphScreen;
   }
-   
 }

@@ -15,8 +15,8 @@ class LineGraph {
   ArrayList<Integer> points = new ArrayList();
   
   PFont labelFont = loadFont("Calibri-14.vlw");
-  //PFont titleFont = loadFont("Calibri-Bold-36.vlw");
-  //PFont headerFont = loadFont("Calibri-24.vlw");
+  PFont titleFont = loadFont("Calibri-Bold-36.vlw");
+  PFont headerFont = loadFont("Calibri-24.vlw");
   
   Map<String, Integer> frequencies;
   
@@ -94,9 +94,9 @@ class LineGraph {
     strokeWeight(1);
     
     textAlign(CENTER, CENTER);
-    //textFont(titleFont);
+    textFont(titleFont);
     text("Number of Flights Per Day", xpos + (graphWidth/2), ypos-50);
-    //textFont(headerFont);
+    textFont(headerFont);
     text("Day (January 2022)", xpos + (graphWidth/2), ypos+graphHeight+50);
     text("Number\nof\nFlights", xpos-125, ypos+300);
   }
