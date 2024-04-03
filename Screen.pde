@@ -1,15 +1,24 @@
+/*
+  Johnny implemented Screen class
+  03/04
+*/
 class Screen {
   ArrayList<Widget> screenWidgets;
+  
   boolean isTable;
   boolean isHeatMap;
   boolean isLineGraph;
-  boolean ispieCharts;
+  boolean isPieChart;
+  boolean isBarChart;
+  
   color backgroundColor;
+  
   DataTable dataTable;
   HeatMap heatMap;
   LineGraph lineGraph;
-  pieCharts PieCharts;
-
+  pieCharts pieChart;
+  barCharts barChart;
+  
 
   Screen(color backgroundColor) {
     screenWidgets = new ArrayList();
@@ -30,11 +39,17 @@ class Screen {
     isLineGraph = true;
     this.lineGraph = lineGraph;
   }
-  Screen(pieCharts PieCharts) {
-    ispieCharts = true;
-    this.PieCharts = PieCharts;
+  
+  Screen(pieCharts pieChart) {
+    isPieChart = true;
+    this.pieChart = pieChart;
   }
-
+  
+  Screen(barCharts barChart) {
+    isBarChart = true;
+    this.barChart = barChart;
+  }
+  
   void add(Widget w) {
     screenWidgets.add(w);
   }
@@ -49,8 +64,11 @@ class Screen {
     else if (isLineGraph) {
       lineGraph.draw();
     }
-   else if (ispieCharts){
-      PieCharts.draw();
+    else if (isPieChart) {
+      pieChart.draw();
+    }
+    else if (isBarChart) {
+      barChart.draw();
     }
     else {
       background(backgroundColor);
