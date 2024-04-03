@@ -98,6 +98,25 @@ void draw() {
   navBar.disappearingDates(navBar.getDatesInt());
 }
 
+void mouseMoved() {
+  /*
+    Johnny added mouse moved method on 03/04
+    Currently being used for highlighting buttons 
+  */
+  if (currentScreen.isTable) {
+    ArrayList buttons = currentScreen.dataTable.controls;
+    for (int i = 0; i < buttons.size()-1; i++) {
+      Widget button = (Widget) buttons.get(i);
+      int event = button.getEvent(mouseX, mouseY);
+      if (event != EVENT_NULL) {
+        button.mouseOver();
+      }
+      else {
+        button.mouseNotOver();
+      }
+    }
+  }
+}
 
 void mousePressed() {
   /*
@@ -106,6 +125,7 @@ void mousePressed() {
   */
   if (currentScreen.isTable) {
     currentScreen.getEvent(mouseX, mouseY);
+    
   }
 }
 
