@@ -158,6 +158,9 @@ void changeScreen(int screenSelection){
   if(screenSelection == 2){
     currentScreen = lineGraphScreen;
   }
+  if(screenSelection == 3){
+    currentScreen = pieChartScreen;
+  }
 /*
 if (screenSelection == 3) {
     currentScreen = pieChartScreen
