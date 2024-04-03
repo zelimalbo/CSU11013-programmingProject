@@ -28,7 +28,7 @@ class Widget {
   }
   
   void mouseOver() {
-    lineColor = color(255);
+    lineColor = color(#B4E5FF);
   }
   
   void mouseNotOver() {
@@ -37,7 +37,6 @@ class Widget {
   
   int getEvent(int mX, int mY) {
     if (mX>xpos && mX < xpos+widgetWidth && mY >ypos && mY <ypos+widgetHeight) {
-      print("yes");
       return event;
     }
     return EVENT_NULL;
