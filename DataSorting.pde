@@ -133,7 +133,6 @@ class DataSorting
       String airportWithState = airport.get(i) + ", " + state.get(i);
       result.add(airportWithState);
     }
-
     return result;
   }
   ArrayList addToArrayList(ArrayList<String> list, String dataPointToBeAdded) //Implemented by Julius 20/03/24
@@ -211,7 +210,6 @@ class DataSorting
         print(state + ", ");
       }
     }
-
     return stateFrequencies;
   }
 
