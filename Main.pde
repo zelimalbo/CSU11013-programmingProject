@@ -3,7 +3,7 @@ import controlP5.*;
 import java.util.*;
 import java.util.Collections;
 
-Screen currentScreen, tableScreen, heatMapScreen, lineGraphScreen;
+Screen currentScreen, tableScreen, heatMapScreen, lineGraphScreen, pieChartScreen;
 
 PShape usa;
 HeatMap heatMap;
@@ -13,7 +13,7 @@ PFont stdFont;
 Table totalData;
 
 barCharts barCharts;
-pieCharts pieCharts;
+//pieCharts pieCharts;
 
 NavBar NavBar;
 NavBar navBar;
@@ -23,6 +23,8 @@ int variableName = 5;
 DataTable dataTable;
 
 LineGraph lineGraph;
+
+pieCharts PieCharts;
 
 void setup() {
   totalData = loadTable("flights_full.csv", "header");          //Already loaded in DataSorting. Could be moved around
@@ -43,7 +45,7 @@ void setup() {
   navBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
-  pieCharts = new pieCharts();
+  //pieCharts = new pieCharts();
   
   // --- HeatMap Screen ---
   usa = loadShape("us.svg");
@@ -59,10 +61,15 @@ void setup() {
   Map<String, Integer> dateFrequencies = data.getDateFrequencies(data.fullDateList);
   lineGraph = new LineGraph(NAV_BAR_WIDTH + (SCREEN_WIDTH-600)/2, (SCREENY-600)/2, 600, 600, dateFrequencies);
   lineGraphScreen = new Screen(lineGraph);
+
+// --- PieChart Screen ---
+ PieCharts = new pieCharts(700, 300, 300, dateFrequencies);
+ pieChartScreen = new Screen(PieCharts);
   
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
    currentScreen = lineGraphScreen;
+  //currentScreen = pieChartScreen;
 }
 
 void draw() {
@@ -84,7 +91,7 @@ void draw() {
   //pieCharts.lateOnly();
   //println(navBar.getPickScreensInt());
   changeScreen(navBar.getPickScreensInt());
-  //navBar.cleanNav(3);
+  navBar.disappearingDates(navBar.getDatesInt());
 }
 
 
@@ -140,15 +147,6 @@ void keyPressed() {
   }
 }
 
-//void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
-//  if (dateSelection==0) {
-//    navBar.dateList.getController("Too").setVisible(true);
-//    navBar.dateList.getController("From").setVisible(true);
-//  } else {
-//    navBar.dateList.getController("Too").setVisible(false);
-//    navBar.dateList.getController("From").setVisible(false);
-//  }
-//}
 
 void changeScreen(int screenSelection){
   if(screenSelection == 0){
@@ -160,4 +158,12 @@ void changeScreen(int screenSelection){
   if(screenSelection == 2){
     currentScreen = lineGraphScreen;
   }
+  if(screenSelection == 3){
+    currentScreen = pieChartScreen;
+  }
+/*
+if (screenSelection == 3) {
+    currentScreen = pieChartScreen
+  }
+*/
 }
