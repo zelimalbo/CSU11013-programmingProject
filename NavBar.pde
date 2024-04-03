@@ -22,7 +22,7 @@ class NavBar {
   int screenInt;
 
   String[] boolArray = {"true", "false"};
-  String[] screenArray = {"Heat Map", "Table", "Line Graph"};
+  String[] screenArray = {"Heat Map", "Table", "Line Graph","Pie Charts"};
 
   DataSorting data = new DataSorting();
   void setup() {
