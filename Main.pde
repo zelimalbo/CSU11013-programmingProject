@@ -84,7 +84,7 @@ void draw() {
   //pieCharts.lateOnly();
   //println(navBar.getPickScreensInt());
   changeScreen(navBar.getPickScreensInt());
-  //navBar.cleanNav(3);
+  navBar.disappearingDates(navBar.getDatesInt());
 }
 
 
@@ -140,15 +140,6 @@ void keyPressed() {
   }
 }
 
-//void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
-//  if (dateSelection==0) {
-//    navBar.dateList.getController("Too").setVisible(true);
-//    navBar.dateList.getController("From").setVisible(true);
-//  } else {
-//    navBar.dateList.getController("Too").setVisible(false);
-//    navBar.dateList.getController("From").setVisible(false);
-//  }
-//}
 
 void changeScreen(int screenSelection){
   if(screenSelection == 0){

@@ -27,21 +27,6 @@ class NavBar {
   DataSorting data = new DataSorting();
   void setup() {
 
-    ////miscLists.addTab("misc")
-    ////   .activateEvent(true)
-    ////   .setLabel("Misc")
-    ////   .setId(2);
-
-    //miscLists.addTab("locations")
-    //   .activateEvent(true)
-    //   .setLabel("Locations")
-    //   .setId(3);
-
-    //miscLists.addTab("dates")
-    //   .activateEvent(true)
-    //   .setLabel("Dates")
-    //   .setId(4);
-
     DataSorting data = new DataSorting();
     data.setup(totalData);
     
@@ -69,13 +54,12 @@ class NavBar {
     Carriers.add(0, "--All--");
 
     this.allLists.addScrollableList("PickScreens")
-      .setPosition(100, 500)
+      .setPosition(100, 100)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(screenArray)
       .setValue(0)
-      .moveTo("misc")
       .close()
       ;
 
@@ -121,7 +105,7 @@ class NavBar {
       ;
 
     this.allLists.addScrollableList("Origin")
-      .setPosition(40, 150)
+      .setPosition(40, 100)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -132,7 +116,7 @@ class NavBar {
       ;
 
     this.allLists.addScrollableList("Destination")
-      .setPosition(160, 150)
+      .setPosition(160, 100)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -263,4 +247,14 @@ class NavBar {
     Origin(originInt);
     return originString;
   }
+  
+  public void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
+  if (dateSelection==0) {
+    this.allLists.getController("Too").setVisible(true);
+    this.allLists.getController("From").setVisible(true);
+  } else {
+    this.allLists.getController("Too").setVisible(false);
+    this.allLists.getController("From").setVisible(false);
+  }
+}
 }
