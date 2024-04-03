@@ -22,18 +22,19 @@ class NavBar {
   int screenInt;
 
   String[] boolArray = {"true", "false"};
-  String[] screenArray = {"Heat Map", "Table", "Line Graph","Pie Charts"};
+  String[] screenArray = {"Heat Map", "Table", "Line Graph","Pie Charts","Bar Charts"};
 
   DataSorting data = new DataSorting();
   void setup() {
 
-    DataSorting data = new DataSorting();
+    //DataSorting data = new DataSorting();
     data.setup(totalData);
+    
     
     data.filteredFlightsByOriginAndDestination("LAX", "JFK");
     String word = data.filteredOriginforOriginAndDestination.get(10);
     
-    println(word);
+    
     ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
     Origin.add(0, "--All--");
@@ -257,4 +258,12 @@ class NavBar {
     this.allLists.getController("From").setVisible(false);
   }
 }
+
+void destinationAndOrigin(){
+  String filteredDest = navBar.getDestinationString();
+  String filteredOrigin= navBar.getOriginString();
+  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(filteredOriginforOriginAndDestination, data.fullDestinationStateList);
+  barCharts barChart = new barCharts(this, 350, 300, 1000, 300, barChartAdjuster);
+}
+
 }

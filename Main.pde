@@ -13,7 +13,6 @@ Table totalData;
 
 int variableName = 5;
 
-NavBar NavBar;
 NavBar navBar;
 
 DataTable dataTable;
@@ -68,33 +67,30 @@ void setup() {
   float chartY = 300;
   float chartWidth = 1000;
   float chartHeight = 300;
-  barCharts barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, frequencies);
+  
+  ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>(data.filteredOriginforOriginAndDestination);
+  data.filteredFlightsByOriginAndDestination("LAX", "JFK");
+  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(filteredOriginforOriginAndDestination, data.fullDestinationStateList);
+  
+  barCharts barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
   barChartScreen = new Screen(barChart);
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
   //currentScreen = lineGraphScreen;
-  currentScreen = barChartScreen;
+ currentScreen = barChartScreen;
 }
 
 void draw() {
   background(245);
   noStroke();
-  //heatMap.draw();
-  //barCharts.dateOnly();
-  //barCharts.originOnly();
-  //barCharts.draw();
-  //pieCharts.lateOnly();
-  //pieCharts.drawPieLegend();
-  //fill(245);
-  //rect(0, 0, NAV_BAR_WIDTH, SCREENY);
   fill(200);
   rect(0, 0, 300, SCREENY);
   
   currentScreen.draw();
-  //barCharts.dateOnly();
-  //pieCharts.lateOnly();
-  //println(navBar.getPickScreensInt());
+  
   changeScreen(navBar.getPickScreensInt());
+  
+  
   navBar.disappearingDates(navBar.getDatesInt());
 }
 
@@ -165,9 +161,8 @@ void changeScreen(int screenSelection){
   if(screenSelection == 3){
     currentScreen = pieChartScreen;
   }
-/*
-if (screenSelection == 3) {
-    currentScreen = pieChartScreen
+
+if (screenSelection == 4) {
+    currentScreen = barChartScreen;
   }
-*/
 }
