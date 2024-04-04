@@ -2,44 +2,82 @@ import controlP5.*;
 import java.util.*;
 import java.util.Collections;
 
-final int SCREENX = 1400;
-final int SCREENY = 800;
-final int NAV_BAR_WIDTH = 300;
-final int GRAPH_HEIGHT = 600;
-final int GRAPH_WIDTH = 600;
-// Temporary test Data for testing histogram
-int[] testData = new int[]{12, 11, 111, 222, 160, 40, 25, 84, 94, 300, 7, 89};
+Screen currentScreen, tableScreen, heatMapScreen, lineGraphScreen, pieChartScreen, barChartScreen;
 
-// Shapes for map - Johnny Hancu 13/03
 PShape usa;
-PShape texas; // Test coloring an individual state
+HeatMap heatMap;
 
-barCharts barCharts;
-pieCharts pieCharts;
+PFont stdFont;
 
-NavBar NavBar;
+Table totalData;
 
-NavBar tempNavBar = new NavBar();
+int variableName = 5;
+
+NavBar navBar;
+
+DataTable dataTable;
+LineGraph lineGraph;
+pieCharts PieCharts;
+barCharts barChart;
 
 void setup() {
+  totalData = loadTable("flights_full.csv", "header");
+  stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
   DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
-  data.setup();
+  data.setup(totalData);
   println("There are " + data.numberOfFlights + " flights in the dataset");
 
   //Added NavBar Eoghan Gloster 14/2/23
   //Cleaned up Main by moving back into NavBar 20/2/23
-  tempNavBar.dateList = new ControlP5(this);
-  tempNavBar.originList = new ControlP5(this);
-  tempNavBar.destinationList = new ControlP5(this);
-  tempNavBar.searchButton = new ControlP5(this);
-  tempNavBar.setup();
+  navBar = new NavBar();
+  navBar.allLists = new ControlP5(this);
+  //navBar.originList = new ControlP5(this);      Can get rid of, was all redundant
+  //navBar.destinationList = new ControlP5(this);
+  //navBar.searchButton = new ControlP5(this);
+  //navBar.miscLists = new ControlP5(this);
+  navBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
-    
-  usa = loadShape("us.svg");
-  texas = usa.getChild("TX");
-  //barCharts = new barCharts();
+
   //pieCharts = new pieCharts();
+  
+  // Johnny implemented screens
+  // --- HeatMap Screen ---
+  usa = loadShape("us.svg");
+  Map<String, Integer> frequencies = data.getStateFrequencies(data.fullOriginStateList, data.fullDestinationStateList);
+  heatMap = new HeatMap(usa, frequencies, 300, 100);
+  heatMapScreen = new Screen(heatMap);
+  
+  // --- Data Table Screen ---
+  dataTable = new DataTable(totalData, new ArrayList<>(Arrays.asList(1,2,4,5,8,9,16,17,18)));
+  tableScreen = new Screen(dataTable);
+  
+  // --- Line Graph Screen ---
+  Map<String, Integer> dateFrequencies = data.getDateFrequencies(data.fullDateList);
+  lineGraph = new LineGraph(NAV_BAR_WIDTH + (SCREEN_WIDTH-600)/2, (SCREENY-600)/2, 600, 600, dateFrequencies);
+  lineGraphScreen = new Screen(lineGraph);
+
+  // --- Pie Chart Screen ---
+  PieCharts = new pieCharts(700, 300, 300, dateFrequencies);
+  pieChartScreen = new Screen(PieCharts);
+  
+  // --- Bar Chart Screen ---
+  // Initialize dimensions and position for the chart
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  
+  ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>(data.filteredOriginforOriginAndDestination);
+  data.filteredFlightsByOriginAndDestination("LAX", "JFK");
+  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(filteredOriginforOriginAndDestination, data.fullDestinationStateList);
+  
+  barCharts barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
+  barChartScreen = new Screen(barChart);
+  // --- Current Screen ---
+  //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
+  //currentScreen = lineGraphScreen;
+ currentScreen = barChartScreen;
 }
 
 void draw() {
@@ -47,19 +85,104 @@ void draw() {
   noStroke();
   fill(200);
   rect(0, 0, 300, SCREENY);
- 
-  // TEST MAP - Johnny 13/03
-  ///*
-  shape(usa, 300, 100);
-  texas.disableStyle();
-  fill(#74DBE5);
-  shape(texas, 300, 100);
-  //*/
-  //barCharts.dateOnly();
-  //pieCharts.lateOnly();
+  
+  currentScreen.draw();
+  
+  changeScreen(navBar.getPickScreensInt());
+  
+  
+  navBar.disappearingDates(navBar.getDatesInt());
 }
 
-void Dates(int dateIndex) {
-  /* request the selected item based on index n */
-  println(dateIndex);
+void mouseMoved() {
+  /*
+    Johnny added mouse moved method on 03/04
+    Currently being used for highlighting buttons 
+  */
+  if (currentScreen.isTable) {
+    ArrayList buttons = currentScreen.dataTable.controls;
+    for (int i = 0; i < buttons.size()-1; i++) {
+      Widget button = (Widget) buttons.get(i);
+      int event = button.getEvent(mouseX, mouseY);
+      if (event != EVENT_NULL) {
+        button.mouseOver();
+      }
+      else {
+        button.mouseNotOver();
+      }
+    }
+  }
+}
+
+void mousePressed() {
+  /*
+    Johnny added mouse press method on 20/03
+    Currently being used for buttons to go backward and forward in the table
+  */
+  if (currentScreen.isTable) {
+    currentScreen.getEvent(mouseX, mouseY);
+    
+  }
+}
+
+void keyPressed() {
+  /*
+    Johnny added key press method on 20/03
+    Currently being used for the table to search for pages
+  */
+  TextWidget input = (TextWidget) currentScreen.dataTable.controls.get(2);
+  if (currentScreen.isTable && currentScreen.dataTable.event == 2) {
+    try {
+      int intKey = Integer.parseInt(String.valueOf(key));
+      if (intKey <= 9 && intKey >= 0) {
+        if (input.label != "Find Page") {
+          input.append(key);
+        }
+        else {
+          if (intKey != 0) {
+            input.label = String.valueOf(key);
+          }
+        }
+      }
+    }
+    catch(NumberFormatException e) {
+    }
+    try {
+      int intInput = Integer.parseInt(input.label);
+      if (key == BACKSPACE && intInput >= 1) {
+        intInput /= 10;
+        if (intInput == 0) {
+          input.label = "Find Page";
+        }
+        else { 
+          input.label = String.valueOf(intInput);
+        }
+      }
+      if (key == ENTER && intInput >= 1 && intInput <= currentScreen.dataTable.totalPages) {
+        currentScreen.dataTable.currentPage = intInput;
+      }
+    }
+    catch (NumberFormatException e) {
+    }
+  }
+}
+
+
+void changeScreen(int screenSelection){
+  if(screenSelection == 0){
+    currentScreen = heatMapScreen;
+  }
+  if(screenSelection == 1){
+    currentScreen = tableScreen;
+  }
+  if(screenSelection == 2){
+    currentScreen = lineGraphScreen;
+  }
+  if(screenSelection == 3){
+    currentScreen = pieChartScreen;
+  }
+
+if (screenSelection == 4) {
+    currentScreen = barChartScreen;
+  }
 }

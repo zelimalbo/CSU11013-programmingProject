@@ -1,41 +1,52 @@
-//zelim
+import processing.core.PApplet;
+import processing.core.PFont;
+import java.util.Map;
+import java.util.Collections;
+
 class barCharts {
+    PApplet parent; // Reference to the parent Processing sketch
+    float chartX, chartY, chartWidth, chartHeight;
+    Map<String, Integer> frequencies;
+    int[] colors; // Use an array for colors
+    PFont font1;
 
-  void draw() {
-  }
+    // Adjusted Constructor
+    barCharts(PApplet parent, float chartX, float chartY, float chartWidth, float chartHeight, Map<String, Integer> frequencies) {
+        this.parent = parent;
+        this.chartX = chartX;
+        this.chartY = chartY;
+        this.chartWidth = chartWidth;
+        this.chartHeight = chartHeight;
+        this.frequencies = frequencies;
 
-  //draw a bar chart with customizable parameters
-  void drawBarChart(float chartX, float chartY, float chartWidth, float chartHeight, int[] data, color[] colors, String[] labels) {
-    if (data.length != colors.length || data.length != labels.length) {
-      println("Error: Data, colors, and labels arrays must have the same length.");
-      return;
+        // Initialize the font and colors within the constructor, using the parent reference
+        this.font1 = parent.createFont("Calibri", 14);
+        this.colors = new int[]{
+            parent.color(255, 0, 0),    // Red
+            parent.color(0, 255, 0),    // Green
+            parent.color(0, 0, 255),    // Blue
+            parent.color(255, 255, 0),  // Yellow
+            parent.color(255, 165, 0),  // Orange
+            parent.color(255, 0, 255),  // Magenta
+            parent.color(0, 255, 255)   // Cyan
+        };
     }
 
-    float maxDataValue = max(data);
-    float barWidth = chartWidth / data.length;
+    void draw() {
+        parent.textFont(font1);
+        int maxDataValue = (frequencies.isEmpty()) ? 0 : Collections.max(frequencies.values());
+        float barWidth = chartWidth / Math.max(frequencies.size(), 1);
+        int i = 0;
 
-    for (int i = 0; i < data.length; i++) {
-      float normalizedHeight = map(data[i], 0, maxDataValue, 0, chartHeight);
-      fill(colors[i]);
-      rect(chartX + i * barWidth, chartY + chartHeight - normalizedHeight, barWidth - 5, normalizedHeight);
-
-      fill(0);
-      textAlign(CENTER);
-      text(labels[i], chartX + i * barWidth + barWidth / 2, chartY + chartHeight + 15);
+        for (Map.Entry<String, Integer> entry : frequencies.entrySet()) {
+            float normalizedHeight = PApplet.map(entry.getValue(), 0, maxDataValue, 0, chartHeight);
+            parent.fill(colors[i % colors.length]);
+            parent.rect(chartX + i * barWidth, chartY + chartHeight - normalizedHeight, barWidth - 5, normalizedHeight);
+            parent.fill(0); // Black for text
+            parent.textAlign(PApplet.CENTER);
+            parent.text(entry.getKey(), chartX + i * barWidth + barWidth / 2, chartY + chartHeight + 20);
+            parent.text(entry.getValue().toString(), chartX + i * barWidth + barWidth / 2, chartY + chartHeight - normalizedHeight - 5);
+            i++;
+        }
     }
-  }
-
-  void dateOnly() {
-    int[] data = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 7, 8, 9, 20, 1, 2, 3, 4, 5, 6, 7, 8, 9, 30, 31};
-    color[] colors = {#800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16, #800e16};
-    String[] labels = {"1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31st"};
-
-    drawBarChart(400, 200, 900, 500, data, colors, labels); // Draw the chart with specified parameters
-  }
-
-  void originOnly() {
-  }
-
-  void destinationOnly() {
-  }
 }
