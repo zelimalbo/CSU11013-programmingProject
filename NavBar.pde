@@ -20,26 +20,28 @@ class NavBar {
   String carrierString = null;
   int carrierInt;
   int screenInt;
+  boolean buttonState = false;
 
   String[] boolArray = {"true", "false"};
-  String[] screenArray = {"Heat Map", "Table", "Line Graph","Pie Charts"};
+  String[] screenArray = {"Heat Map", "Table", "Line Graph", "Pie Charts", "Bar Charts"};
 
   DataSorting data = new DataSorting();
   void setup() {
 
-    DataSorting data = new DataSorting();
+    //DataSorting data = new DataSorting();
     data.setup(totalData);
-    
+
+
     data.filteredFlightsByOriginAndDestination("LAX", "JFK");
     String word = data.filteredOriginforOriginAndDestination.get(10);
-    
-    println(word);
+
+
     ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
     Origin.add(0, "--All--");
     ArrayList<String> Destination = new ArrayList<>(data.destinationList);
     Collections.sort(Destination);
-    Destination.add(0, "--All--");
+    //Destination.add(0, "--All--");
     ArrayList<String> DatesArray = new ArrayList<>(data.dateList); // Create a new list with the same elements as data.dateList
     ArrayList<String> TooArray = new ArrayList<>(data.dateList); // Do the same for TooArray
     ArrayList<String> FromArray = new ArrayList<>(data.dateList);
@@ -59,8 +61,34 @@ class NavBar {
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(screenArray)
-      .setValue(0)
+      .setValue(4)
       .close()
+      ;
+      
+    
+    this.allLists.addButton("loser")
+      .setPosition(50, 200)
+     .setSize(200, 50)
+     .setLabel("Press Me")
+     // Add event listeners for press and release
+     .onPress(new CallbackListener() {
+       public void controlEvent(CallbackEvent event) {
+         buttonState = true; // Set state to true when button is pressed
+         println("Button Pressed: " + buttonState);
+       }
+     })
+     .onRelease(new CallbackListener() {
+       public void controlEvent(CallbackEvent event) {
+         buttonState = false; // Set state to false when button is released
+         println("Button Released: " + buttonState);
+       }
+     });
+      
+    this.allLists.addTextlabel("label")
+      .setText("Select Screen")
+      .setPosition(95, 75) // Positioned above the dropdown
+      .setColorValue(0) // Color of the text
+      .setFont(createFont("Arial", 16))
       ;
 
     //this.searchButton.addButton("enter")
@@ -68,7 +96,7 @@ class NavBar {
     //  ;
 
     this.allLists.addScrollableList("Dates")
-      .setPosition(100, 50)
+      .setPosition(100, 100)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -79,28 +107,35 @@ class NavBar {
       .moveTo("dates")
       .close()
       ;
+      this.allLists.addTextlabel("datelabel")
+      .setText("Select Date")
+      .setPosition(100, 75) // Positioned above the dropdown
+      .setColorValue(0) // Color of the text
+      .setFont(createFont("Arial", 16))
+      .moveTo("dates")
+      ;
 
     this.allLists.addScrollableList("Too") //Will only appear when range is selected
       .setVisible(false)
-      .setPosition(0, 70)
+      .setPosition(0, 120)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(TooArray)
       .moveTo("dates")
-      //.setValue(0)
+      .setValue(2)
       .close()
       ;
 
     this.allLists.addScrollableList("From") //Will only appear when range is selected
       .setVisible(false)
-      .setPosition(200, 70)
+      .setPosition(200, 120)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(FromArray)
       .moveTo("dates")
-      //.setValue(0)
+      .setValue(5)
       .close()
       ;
 
@@ -114,6 +149,14 @@ class NavBar {
       //.setValue(0)
       .close()
       ;
+      this.allLists.addTextlabel("originlabel")
+      .setText("Select Origin")
+      .setPosition(40, 75) // Positioned above the dropdown
+      .setColorValue(0) // Color of the text
+      .setFont(createFont("Arial", 13))
+      .moveTo("locations")
+      ;
+
 
     this.allLists.addScrollableList("Destination")
       .setPosition(160, 100)
@@ -122,18 +165,32 @@ class NavBar {
       .setItemHeight(20)
       .addItems(Destination)
       .moveTo("locations")
-      //.setValue(0)
+      .setValue(5)
       .close()
+      ;
+      this.allLists.addTextlabel("destinationlabel")
+      .setText("Select Destination")
+      .setPosition(155, 75) // Positioned above the dropdown
+      .setColorValue(0) // Color of the text
+      .setFont(createFont("Arial", 13))
+      .moveTo("locations")
       ;
 
     this.allLists.addScrollableList("Is Late")
-      .setPosition(100, 150)
+      .setPosition(100, 100)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(boolArray)
       .moveTo("misc")
       .close()
+      ;
+      this.allLists.addTextlabel("latelabel")
+      .setText("Is Late")
+      .setPosition(100, 75) // Positioned above the dropdown
+      .setColorValue(0) // Color of the text
+      .setFont(createFont("Arial", 16))
+      .moveTo("misc")
       ;
 
     this.allLists.addScrollableList("Carriers")
@@ -145,6 +202,13 @@ class NavBar {
       .setValue(0)
       .moveTo("misc")
       .close()
+      ;
+      this.allLists.addTextlabel("carrierslabel")
+      .setText("Select Carriers")
+      .setPosition(100, 205) // Positioned above the dropdown
+      .setColorValue(0) // Color of the text
+      .setFont(createFont("Arial", 16))
+      .moveTo("misc")
       ;
   }
 
@@ -247,14 +311,14 @@ class NavBar {
     Origin(originInt);
     return originString;
   }
-  
+
   public void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
-  if (dateSelection==0) {
-    this.allLists.getController("Too").setVisible(true);
-    this.allLists.getController("From").setVisible(true);
-  } else {
-    this.allLists.getController("Too").setVisible(false);
-    this.allLists.getController("From").setVisible(false);
+    if (dateSelection==0) {
+      this.allLists.getController("Too").setVisible(true);
+      this.allLists.getController("From").setVisible(true);
+    } else {
+      this.allLists.getController("Too").setVisible(false);
+      this.allLists.getController("From").setVisible(false);
+    }
   }
-}
 }

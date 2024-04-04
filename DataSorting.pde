@@ -271,7 +271,7 @@ class DataSorting
     int endDateIndex=0;
     for (int i = fullDateList.size(); i>0; i--)
     {
-      String testDate = fullDateList.get(i);
+      String testDate = fullDateList.get(i-1);
       if (testDate.equals(endDateString))
       {
         endDateIndex = i;
