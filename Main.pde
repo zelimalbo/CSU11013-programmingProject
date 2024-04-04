@@ -1,4 +1,4 @@
-import controlP5.*;
+import controlP5.*; //<>//
 import java.util.*;
 import java.util.Collections;
 
@@ -20,11 +20,14 @@ LineGraph lineGraph;
 pieCharts PieCharts;
 barCharts barChart;
 
+DataSorting data = new DataSorting();
+Map<String, Integer> barChartAdjuster = new HashMap<String, Integer>();
+
 void setup() {
   totalData = loadTable("flights_full.csv", "header");
   stdFont = loadFont("Calibri-14.vlw");
   size(1400, 800);
-  DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
+  //DataSorting data = new DataSorting();   // Implemented DataSorting class Julius Jogela 14/03/24
   data.setup(totalData);
   println("There are " + data.numberOfFlights + " flights in the dataset");
 
@@ -40,18 +43,18 @@ void setup() {
   //Added NavBar Eoghan Gloster 14/2/23^^
 
   //pieCharts = new pieCharts();
-  
+
   // Johnny implemented screens
   // --- HeatMap Screen ---
   usa = loadShape("us.svg");
   Map<String, Integer> frequencies = data.getStateFrequencies(data.fullOriginStateList, data.fullDestinationStateList);
   heatMap = new HeatMap(usa, frequencies, 300, 100);
   heatMapScreen = new Screen(heatMap);
-  
+
   // --- Data Table Screen ---
-  dataTable = new DataTable(totalData, new ArrayList<>(Arrays.asList(1,2,4,5,8,9,16,17,18)));
+  dataTable = new DataTable(totalData, new ArrayList<>(Arrays.asList(1, 2, 4, 5, 8, 9, 16, 17, 18)));
   tableScreen = new Screen(dataTable);
-  
+
   // --- Line Graph Screen ---
   Map<String, Integer> dateFrequencies = data.getDateFrequencies(data.fullDateList);
   lineGraph = new LineGraph(NAV_BAR_WIDTH + (SCREEN_WIDTH-600)/2, (SCREENY-600)/2, 600, 600, dateFrequencies);
@@ -60,24 +63,24 @@ void setup() {
   // --- Pie Chart Screen ---
   PieCharts = new pieCharts(700, 300, 300, dateFrequencies);
   pieChartScreen = new Screen(PieCharts);
-  
+
   // --- Bar Chart Screen ---
   // Initialize dimensions and position for the chart
   float chartX = 350;
   float chartY = 300;
   float chartWidth = 1000;
   float chartHeight = 300;
-  
-  ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>(data.filteredOriginforOriginAndDestination);
-  data.filteredFlightsByOriginAndDestination("LAX", "JFK");
-  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(filteredOriginforOriginAndDestination, data.fullDestinationStateList);
-  
+
+  ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>(data.filteredOrigins);
+  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(data.filteredOrigins, data.fullDestinationStateList);
+
   barCharts barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
+
   barChartScreen = new Screen(barChart);
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
   //currentScreen = lineGraphScreen;
- currentScreen = barChartScreen;
+  currentScreen = barChartScreen;
 }
 
 void draw() {
@@ -85,20 +88,22 @@ void draw() {
   noStroke();
   fill(200);
   rect(0, 0, 300, SCREENY);
-  
+
   currentScreen.draw();
-  
+
   changeScreen(navBar.getPickScreensInt());
-  
-  
+
+
   navBar.disappearingDates(navBar.getDatesInt());
+
+  //destinationFilterOnly();
 }
 
 void mouseMoved() {
   /*
     Johnny added mouse moved method on 03/04
-    Currently being used for highlighting buttons 
-  */
+   Currently being used for highlighting buttons
+   */
   if (currentScreen.isTable) {
     ArrayList buttons = currentScreen.dataTable.controls;
     for (int i = 0; i < buttons.size()-1; i++) {
@@ -106,8 +111,7 @@ void mouseMoved() {
       int event = button.getEvent(mouseX, mouseY);
       if (event != EVENT_NULL) {
         button.mouseOver();
-      }
-      else {
+      } else {
         button.mouseNotOver();
       }
     }
@@ -115,21 +119,22 @@ void mouseMoved() {
 }
 
 void mousePressed() {
+  //destinationFilterOnly();
+  destinationAndOriginFilterOnly();
   /*
     Johnny added mouse press method on 20/03
-    Currently being used for buttons to go backward and forward in the table
-  */
+   Currently being used for buttons to go backward and forward in the table
+   */
   if (currentScreen.isTable) {
     currentScreen.getEvent(mouseX, mouseY);
-    
   }
 }
 
 void keyPressed() {
   /*
     Johnny added key press method on 20/03
-    Currently being used for the table to search for pages
-  */
+   Currently being used for the table to search for pages
+   */
   TextWidget input = (TextWidget) currentScreen.dataTable.controls.get(2);
   if (currentScreen.isTable && currentScreen.dataTable.event == 2) {
     try {
@@ -137,8 +142,7 @@ void keyPressed() {
       if (intKey <= 9 && intKey >= 0) {
         if (input.label != "Find Page") {
           input.append(key);
-        }
-        else {
+        } else {
           if (intKey != 0) {
             input.label = String.valueOf(key);
           }
@@ -153,8 +157,7 @@ void keyPressed() {
         intInput /= 10;
         if (intInput == 0) {
           input.label = "Find Page";
-        }
-        else { 
+        } else {
           input.label = String.valueOf(intInput);
         }
       }
@@ -168,21 +171,54 @@ void keyPressed() {
 }
 
 
-void changeScreen(int screenSelection){
-  if(screenSelection == 0){
+void changeScreen(int screenSelection) {
+  if (navBar.buttonState == true) {
+    println("test button");
     currentScreen = heatMapScreen;
   }
-  if(screenSelection == 1){
+  if (screenSelection == 1) {
     currentScreen = tableScreen;
   }
-  if(screenSelection == 2){
+  if (screenSelection == 2) {
     currentScreen = lineGraphScreen;
   }
-  if(screenSelection == 3){
+  if (screenSelection == 3) {
     currentScreen = pieChartScreen;
   }
 
-if (screenSelection == 4) {
+  if (screenSelection == 4) {
     currentScreen = barChartScreen;
   }
+}
+//Added By Eoghan Gloster 4/4/24
+
+public void destinationFilterOnly() {      //does soemthing for the moment
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+
+  String filteredDest = navBar.getDestinationString();        //i get the user destination
+  println(filteredDest);                                      //i get it and print
+
+  data.filteredFlightsByDestination(filteredDest);            //i filter the data by the destination requested
+  barChartAdjuster = data.getDateFrequencies(data.filteredOriginCityNameforDestination);  //i set the hashmap to the date frequences for the requested destination
+  barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
+}
+
+public void destinationAndOriginFilterOnly() {
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  
+  String filteredOrigin= navBar.getOriginString();
+  String filteredDest = navBar.getDestinationString();        //i get the user destination
+  println(filteredDest);                                      //i get it and print
+
+  data.filteredFlightsByOriginAndDestination("JFK","LAX");            //i filter the data by the destination requested
+  
+  println("-------------------"+data.filteredOriginCityNameforOriginAndDestination.get(0));
+  barChartAdjuster = data.getStateFrequencies(data.filteredOriginCityNameforOriginAndDestination,data.filteredDestinationCityNameforOriginAndDestination);  //i set the hashmap to the date frequences for the requested destination
+  barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
 }
