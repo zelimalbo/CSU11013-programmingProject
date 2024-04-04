@@ -1,33 +1,5 @@
-
 class DataSorting
 {
-  NavBar navBar;
-  DataSorting(NavBar navBar) {
-    this.navBar = navBar;
-  }
-  boolean isNavBarInitialized() {
-    return navBar != null;
-  }
-
-  void processSelection() {
-    if (isNavBarInitialized()) {
-
-      String selectedOrigin = navBar.getOriginString();
-      String selectedDestination = navBar.getDestinationString();
-
-
-      if (selectedOrigin != null && !selectedOrigin.isEmpty() && selectedDestination != null && !selectedDestination.isEmpty()) {
-        filteredFlightsByOrigin(selectedOrigin);
-        filteredFlightsByDestination(selectedDestination);
-      } else {
-
-        System.out.println("No selections made in NavBar.");
-      }
-    } else {
-
-      System.out.println("NavBar is not initialized.");
-    }
-  }
   Table data;
   int numberOfFlights;
   ArrayList<String> originList = new ArrayList<String>();          //ONLY ONE INSTANCE OF EACH IN THESE STRINGS USED FOR DROP DOWN MENUS
@@ -74,7 +46,6 @@ class DataSorting
   ArrayList<String> filteredOriginCityNameForDateRangeArrayList = new ArrayList<>();
   ArrayList<String> filteredDestinationForDateRangeArrayList = new ArrayList<>();
   ArrayList<String> filteredDestinationCityNameForDateRangeArrayList = new ArrayList<>();
-
 
   public DataSorting() {
   }
