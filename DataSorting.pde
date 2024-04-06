@@ -175,7 +175,7 @@ class DataSorting
     }
     return stateFrequencies;
   }
-  // Overloaded getStateFrequencies method to allow for getting frequencies of both origins and destinations or one of them.
+  // Overloaded getStateFrequencies method to allow for getting frequencies of both origins and destinations or just one of them.
   Map getStateFrequencies(ArrayList<String> fullList) {
     Map<String, Integer> frequencies = new HashMap<>();
     for (String state : fullList) {
@@ -215,8 +215,43 @@ class DataSorting
       }
     }
   }
-
+  
+  void filteredFlightsByOriginState(String selectedOrigin) {
+    filteredOrigins = new ArrayList();
+    filteredDestinations = new ArrayList();
+    filteredOriginStates = new ArrayList();
+    filteredDestinationStates = new ArrayList();
+    filteredDates = new ArrayList();
+    filteredCarriers = new ArrayList();
+    
+    for (int i = 0; i < fullOriginList.size(); i++) {
+      if (fullOriginList.get(i).equals(selectedOrigin))
+      {
+        filteredOriginStates.add(selectedOrigin); //Implemented By Julius 28/03/24
+        String date = fullDateList.get(i);
+        filteredDates.add(date);
+        String carrier= fullCarrierList.get(i);
+        filteredCarriers.add(carrier);
+        String origins = fullOriginList.get(i);
+        filteredOrigins.add(origins);
+        String dest = fullDestinationList.get(i);
+        filteredDestinations.add(dest);
+        String destinationState = fullDestinationStateList.get(i);
+        filteredDestinationStates.add(destinationState);
+      }
+    }
+  }
+  
+  /* --- Currently not being used ---
+    
   void filteredFlightsByDestination(String selectedDestination) {
+    filteredOrigins = new ArrayList();
+    filteredDestinations = new ArrayList();
+    filteredOriginStates = new ArrayList();
+    filteredDestinationStates = new ArrayList();
+    filteredDates = new ArrayList();
+    filteredCarriers = new ArrayList();
+    
     for (int i = 0; i < fullDestinationList.size(); i++) {
       if (fullDestinationList.get(i).equals(selectedDestination))
       {
@@ -234,6 +269,7 @@ class DataSorting
       }
     }
   }
+  
   void filteredFlightsByOriginAndDestination(String selectedOrigin, String selectedDestination) {
     for (int i = 0; i < fullDestinationList.size(); i++) {
       if (fullDestinationList.get(i).equals(selectedDestination))
@@ -256,6 +292,7 @@ class DataSorting
       }
     }
   }
+  */
   void filteredFlightsByDate(int startDate, int endDate) //implemented by julius 03/04/24
   {
     String startDateString = dateList.get(startDate);
