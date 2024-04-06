@@ -32,8 +32,8 @@ class NavBar {
     data.setup(totalData);
 
 
-    data.filteredFlightsByOriginAndDestination("LAX", "JFK");
-    String word = data.filteredOriginforOriginAndDestination.get(10);
+    //data.filteredFlightsByOriginAndDestination("LAX", "JFK");
+    //String word = data.filteredOriginforOriginAndDestination.get(10);
 
 
     ArrayList<String> Origin = new ArrayList<>(data.originList);

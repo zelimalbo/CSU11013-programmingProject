@@ -71,16 +71,14 @@ void setup() {
   float chartWidth = 1000;
   float chartHeight = 300;
 
-  ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>(data.filteredOrigins);
-  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(data.filteredOrigins, data.fullDestinationStateList);
-
+  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(data.fullOriginStateList, data.fullDestinationStateList);
   barCharts barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
-
   barChartScreen = new Screen(barChart);
+  
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
-  //currentScreen = lineGraphScreen;
-  currentScreen = barChartScreen;
+  currentScreen = lineGraphScreen;
+  //currentScreen = barChartScreen;
 }
 
 void draw() {
@@ -120,7 +118,8 @@ void mouseMoved() {
 
 void mousePressed() {
   //destinationFilterOnly();
-  destinationAndOriginFilterOnly();
+  //destinationAndOriginFilterOnly();
+  filterByOrigin();
   /*
     Johnny added mouse press method on 20/03
    Currently being used for buttons to go backward and forward in the table
@@ -190,8 +189,24 @@ void changeScreen(int screenSelection) {
     currentScreen = barChartScreen;
   }
 }
-//Added By Eoghan Gloster 4/4/24
 
+void filterByOrigin() {
+  String filterBy = navBar.getOriginString(); // Get the chosen origin from the drop down menu
+  if (filterBy != "--All--") {
+    float chartX = 350;
+    float chartY = 300;
+    float chartWidth = 1000;
+    float chartHeight = 300;
+    println(filterBy);                                   
+
+    data.filteredFlightsByOrigin(filterBy); // Filter the destinations using the given origin to get all destination airports from that origin
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinations);  // frequencies of destination airports
+    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies); // Display results on bar chart
+  }
+}
+
+//Added By Eoghan Gloster 4/4/24
+/*
 public void destinationFilterOnly() {      //does soemthing for the moment
   float chartX = 350;
   float chartY = 300;
@@ -222,3 +237,4 @@ public void destinationAndOriginFilterOnly() {
   barChartAdjuster = data.getStateFrequencies(data.filteredOriginCityNameforOriginAndDestination,data.filteredDestinationCityNameforOriginAndDestination);  //i set the hashmap to the date frequences for the requested destination
   barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
 }
+*/
