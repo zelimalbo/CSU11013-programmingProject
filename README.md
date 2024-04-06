@@ -5,3 +5,4 @@ Johnny Hancu hancuj@tcd.ie <br />
 Adam Aaron aarona@tcd.ie <br />
 Julius Jogela jogelaj@tcd.ie <br />
 Zelimhan Albogachiev albogacz@tcd.ie <br />
+Jude Hards hardsj@tcd.ie
