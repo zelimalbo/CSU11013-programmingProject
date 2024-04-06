@@ -1,4 +1,4 @@
-import controlP5.*; //<>// //<>//
+import controlP5.*;
 import java.util.*;
 import java.util.Collections;
 
@@ -71,14 +71,16 @@ void setup() {
   float chartWidth = 1000;
   float chartHeight = 300;
 
-  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(data.fullOriginStateList, data.fullDestinationStateList);
-  barCharts barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
-  barChartScreen = new Screen(barChart);
+  ArrayList<String> filteredOriginforOriginAndDestination = new ArrayList<>(data.filteredOrigins);
+  Map<String, Integer> barChartAdjuster = data.getStateFrequencies(data.filteredOrigins, data.fullDestinationStateList);
 
+  barCharts barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
+
+  barChartScreen = new Screen(barChart);
   // --- Current Screen ---
   //   ***FOR TESTING CHANGE CURRENT SCREEN TO SCREEN YOU WISH TO TEST***
-  currentScreen = lineGraphScreen;
-  //currentScreen = barChartScreen;
+  //currentScreen = lineGraphScreen;
+  currentScreen = barChartScreen;
 }
 
 void draw() {
@@ -94,8 +96,7 @@ void draw() {
 
   navBar.disappearingDates(navBar.getDatesInt());
 
-  //filterByOrigin();
-  filterByState();
+  //destinationFilterOnly();
 }
 
 void mouseMoved() {
@@ -118,7 +119,7 @@ void mouseMoved() {
 }
 
 void mousePressed() {
-  //destinationFilterOnly();
+  destinationFilterOnly();
   //destinationAndOriginFilterOnly();
   /*
     Johnny added mouse press method on 20/03
@@ -189,19 +190,50 @@ void changeScreen(int screenSelection) {
     currentScreen = barChartScreen;
   }
 }
+//Added By Eoghan Gloster 4/4/24
 
-void filterByOrigin() {
-  String filterBy = navBar.getOriginString(); // Get the chosen origin from the drop down menu
-  if (filterBy != "--All--") {
-    float chartX = 350;
-    float chartY = 300;
-    float chartWidth = 1000;
-    float chartHeight = 300;
-    println(filterBy);
+public void destinationFilterOnly() {      //does soemthing for the moment
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
 
-    data.filteredFlightsByOrigin(filterBy); // Filter the destinations using the given origin to get all destination airports from that origin
-    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinations);  // frequencies of destination airports
-    filteredFrequencies = data.sortMap(filteredFrequencies);
-    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies); // Display results on bar chart
-  }
+  String filteredDest = navBar.getDestinationString();        //i get the user destination
+  println(filteredDest);                                      //i get it and print
+
+  data.filteredFlightsByDestination(filteredDest);            //i filter the data by the destination requested
+  barChartAdjuster = data.getDateFrequencies(data.filteredOriginCityNameforDestination);  //i set the hashmap to the date frequences for the requested destination
+  barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
+}
+
+public void destinationAndOriginFilterOnly() {
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  
+  String filteredOrigin= navBar.getOriginString();
+  String filteredDest = navBar.getDestinationString();        //i get the user destination
+  println(filteredDest);                                      //i get it and print
+  println(filteredOrigin); 
+  
+  //data.filteredFlightsByOriginAndDestination(filteredOrigin,filteredDest);            //i filter the data by the destination requested
+  data.filteredFlightsByOriginAndDestination("JFK","LAX");
+  
+  //println("-------------------"+data.filteredOriginCityNameforOriginAndDestination.get(0));
+  barChartAdjuster = data.getStateFrequencies(data.filteredOriginCityNameforOriginAndDestination,data.filteredDestinationCityNameforOriginAndDestination);  //i set the hashmap to the date frequences for the requested destination
+  barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, barChartAdjuster);
+}
+
+public void carrierBarChart() {
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  
+  String filteredCarrier= navBar.getCarrierString();      //i get the user destinatio
+  
+  //data.filteredFlightsByOriginAndDestination(filteredOrigin,filteredDest);            //i filter the data by the destination requested
+  
+  
 }
