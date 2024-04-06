@@ -34,11 +34,23 @@ class barCharts {
 
     void draw() {
         parent.textFont(font1);
-        int maxDataValue = (frequencies.isEmpty()) ? 0 : Collections.max(frequencies.values());
-        float barWidth = chartWidth / Math.max(frequencies.size(), 1);
+        
+        Map <String, Integer> topEntries = new LinkedHashMap();
+        
+        int j = 0;
+        for (String entry : frequencies.keySet()) {
+            if (j >= 10) {
+              break;
+            }
+            topEntries.put(entry, frequencies.get(entry));
+            j++;
+        }
+        
+        int maxDataValue = (topEntries.isEmpty()) ? 0 : Collections.max(topEntries.values());
+        float barWidth = chartWidth / Math.max(topEntries.size(), 1);
         int i = 0;
 
-        for (Map.Entry<String, Integer> entry : frequencies.entrySet()) {
+        for (Map.Entry<String, Integer> entry : topEntries.entrySet()) {
             float normalizedHeight = PApplet.map(entry.getValue(), 0, maxDataValue, 0, chartHeight);
             parent.fill(colors[i % colors.length]);
             parent.rect(chartX + i * barWidth, chartY + chartHeight - normalizedHeight, barWidth - 5, normalizedHeight);

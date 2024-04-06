@@ -1,3 +1,6 @@
+/*
+  Data Sorting class implemented by Julius, Jude and Johnny
+*/
 class DataSorting
 {
   Table data;
@@ -18,8 +21,9 @@ class DataSorting
   ArrayList<String> fullCarrierList = new ArrayList<String>();
   ArrayList<String> fullDestinationList = new ArrayList<String>();
   ArrayList<String> fullDestinationStateList = new ArrayList<String>();
-
-  ArrayList<String> filteredOrigins;
+  
+  // Johnny editted DataSorting on 06/04 to fix previous issues with data sorting class
+  ArrayList<String> filteredOrigins;            
   ArrayList<String> filteredDestinations;
 
   ArrayList<String> filteredOriginStates;
@@ -324,9 +328,9 @@ class DataSorting
   
   /*
     Johnny implemented getFlightsByAirline method
-   on 01/04
-   This method returns a map containing the total flights per airline
-   */
+    on 01/04
+    This method returns a map containing the total flights per airline
+  */
   Map getFlightsByCarrier(ArrayList<String> fullCarrierList) {
     Map<String, Integer> flightsByCarrier = new HashMap<>();
     for (String carrier : fullCarrierList) {
@@ -337,5 +341,23 @@ class DataSorting
       }
     }
     return flightsByCarrier;
+  }
+  
+  /*
+    Johnny implemented sortMap method
+    on 06/04
+    This method takes in a Map<String, Integer> and returns the map
+    sorted in desending order.
+    This map will be used to show the data points with the highest frequency
+    on the bar chart (e.g. Top 10 Destinations from JFK)
+  */
+  Map sortMap(Map<String, Integer> unsortedMap) {
+    Map<String, Integer> sortedMap = new LinkedHashMap();
+    List<Map.Entry<String, Integer>> list = new ArrayList<>(unsortedMap.entrySet());
+    list.sort(Map.Entry.comparingByValue(Collections.reverseOrder()));
+    for (Map.Entry<String, Integer> entry : list) {
+      sortedMap.put(entry.getKey(), entry.getValue());
+    }
+    return sortedMap;
   }
 }
