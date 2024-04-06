@@ -7,8 +7,8 @@ class NavBar {
   ControlP5 allLists;
   ControlP5 searchButton;
   ControlP5 miscLists;
-  String OriginStateString = null;
-  int OriginStateInt = 0;
+  String destinationString = null;
+  int destinationInt = 0;
   String datesString = null;
   int datesInt = 0;
   String startDatesString = null;
@@ -21,7 +21,6 @@ class NavBar {
   int carrierInt;
   int screenInt;
   boolean buttonState = false;
-  int isLateInt;
 
   String[] boolArray = {"true", "false"};
   String[] screenArray = {"Heat Map", "Table", "Line Graph", "Pie Charts", "Bar Charts"};
@@ -32,11 +31,17 @@ class NavBar {
     //DataSorting data = new DataSorting();
     data.setup(totalData);
 
+
+    data.filteredFlightsByOriginAndDestination("LAX", "JFK");
+    String word = data.filteredOriginforOriginAndDestination.get(10);
+
+
     ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
-    Origin.add(0, "--All--");
-    ArrayList<String> OriginState = new ArrayList<>(data.originStateList);
-    Collections.sort(OriginState);
+    //Origin.add(0, "--All--");
+    ArrayList<String> Destination = new ArrayList<>(data.destinationList);
+    Collections.sort(Destination);
+    //Destination.add(0, "--All--");
     ArrayList<String> DatesArray = new ArrayList<>(data.dateList); // Create a new list with the same elements as data.dateList
     ArrayList<String> TooArray = new ArrayList<>(data.dateList); // Do the same for TooArray
     ArrayList<String> FromArray = new ArrayList<>(data.dateList);
@@ -59,28 +64,26 @@ class NavBar {
       .setValue(4)
       .close()
       ;
-
-
+      
+    
     this.allLists.addButton("loser")
       .setPosition(50, 200)
-      .setSize(200, 50)
-      .setLabel("Press Me")
-      // Add event listeners for press and release
-      .onPress(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        buttonState = true; // Set state to true when button is pressed
-        println("Button Pressed: " + buttonState);
-      }
-    }
-    )
-    .onRelease(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        buttonState = false; // Set state to false when button is released
-        println("Button Released: " + buttonState);
-      }
-    }
-    );
-
+     .setSize(200, 50)
+     .setLabel("Press Me")
+     // Add event listeners for press and release
+     .onPress(new CallbackListener() {
+       public void controlEvent(CallbackEvent event) {
+         buttonState = true; // Set state to true when button is pressed
+         println("Button Pressed: " + buttonState);
+       }
+     })
+     .onRelease(new CallbackListener() {
+       public void controlEvent(CallbackEvent event) {
+         buttonState = false; // Set state to false when button is released
+         println("Button Released: " + buttonState);
+       }
+     });
+      
     this.allLists.addTextlabel("label")
       .setText("Select Screen")
       .setPosition(95, 75) // Positioned above the dropdown
@@ -104,7 +107,7 @@ class NavBar {
       .moveTo("dates")
       .close()
       ;
-    this.allLists.addTextlabel("datelabel")
+      this.allLists.addTextlabel("datelabel")
       .setText("Select Date")
       .setPosition(100, 75) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
@@ -143,10 +146,10 @@ class NavBar {
       .setItemHeight(20)
       .addItems(Origin)
       .moveTo("locations")
-      //.setValue(0)
+      .setValue(2)
       .close()
       ;
-    this.allLists.addTextlabel("originlabel")
+      this.allLists.addTextlabel("originlabel")
       .setText("Select Origin")
       .setPosition(40, 75) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
@@ -155,18 +158,18 @@ class NavBar {
       ;
 
 
-    this.allLists.addScrollableList("OriginState")
+    this.allLists.addScrollableList("Destination")
       .setPosition(160, 100)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
-      .addItems(OriginState)
+      .addItems(Destination)
       .moveTo("locations")
       .setValue(5)
       .close()
       ;
-    this.allLists.addTextlabel("OriginStatelabel")
-      .setText("Select Origin State")
+      this.allLists.addTextlabel("destinationlabel")
+      .setText("Select Destination")
       .setPosition(155, 75) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
       .setFont(createFont("Arial", 13))
@@ -182,7 +185,7 @@ class NavBar {
       .moveTo("misc")
       .close()
       ;
-    this.allLists.addTextlabel("latelabel")
+      this.allLists.addTextlabel("latelabel")
       .setText("Is Late")
       .setPosition(100, 75) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
@@ -200,7 +203,7 @@ class NavBar {
       .moveTo("misc")
       .close()
       ;
-    this.allLists.addTextlabel("carrierslabel")
+      this.allLists.addTextlabel("carrierslabel")
       .setText("Select Carriers")
       .setPosition(100, 205) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
@@ -208,15 +211,6 @@ class NavBar {
       .moveTo("misc")
       ;
   }
-
-  void isLate() {
-    isLateInt = (int)allLists.get(ScrollableList.class, "isLate").getValue();
-  }
-  int getIsLateInt() {
-    isLate();
-    return isLateInt;
-  }
-
 
   void PickScreens() {
     screenInt = (int)allLists.get(ScrollableList.class, "PickScreens").getValue();
@@ -238,9 +232,9 @@ class NavBar {
   }
 
 
-  void OriginState(int index) {
-    OriginStateString = allLists.get(ScrollableList.class, "OriginState").getItem(index).get("name").toString();
-    OriginStateInt = (int)allLists.get(ScrollableList.class, "OriginState").getValue();
+  void Destination(int index) {
+    destinationString = allLists.get(ScrollableList.class, "Destination").getItem(index).get("name").toString();
+    destinationInt = (int)allLists.get(ScrollableList.class, "Destination").getValue();
   }
 
   void Dates(int index) {
@@ -263,9 +257,9 @@ class NavBar {
     originInt = (int)allLists.get(ScrollableList.class, "Origin").getValue();
   }
 
-  public int getOriginStateInt() {
-    OriginState(OriginStateInt);
-    return OriginStateInt;
+  public int getDestinationInt() {
+    Destination(destinationInt);
+    return destinationInt;
   }
 
   public int getDatesInt() {
@@ -293,9 +287,9 @@ class NavBar {
     return carrierString;
   }
 
-  public String getOriginStateString() {
-    OriginState( OriginStateInt);
-    return OriginStateString;
+  public String getDestinationString() {
+    Destination(destinationInt);
+    return destinationString;
   }
 
   public String getDatesString() {

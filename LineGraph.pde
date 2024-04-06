@@ -30,7 +30,12 @@ class LineGraph {
     maxValue = Collections.max(frequencies.values());
     minValue = Collections.min(frequencies.values());
     //print(maxValue);
+    
     xAxisSpacing = graphWidth / frequencies.size();
+    
+    // Johnny updated to make rounded y-axis labels on 04/04
+    float increment = maxValue / numberOfYLabels;
+    float orderOfMagnitude;
     
     if (maxValue % numberOfYLabels != 0) {
       int difference = numberOfYLabels - (maxValue % numberOfYLabels);
