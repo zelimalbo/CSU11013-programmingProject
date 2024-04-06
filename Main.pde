@@ -201,6 +201,7 @@ void filterByOrigin() {
 
     data.filteredFlightsByOrigin(filterBy); // Filter the destinations using the given origin to get all destination airports from that origin
     Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinations);  // frequencies of destination airports
+    filteredFrequencies = data.sortMap(filteredFrequencies);
     barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies); // Display results on bar chart
   }
 }
