@@ -95,7 +95,7 @@ void draw() {
   navBar.disappearingDates(navBar.getDatesInt());
 
   //filterByOrigin();
-  filterByState();
+  //filterByState();
 }
 
 void mouseMoved() {
