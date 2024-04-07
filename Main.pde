@@ -95,7 +95,9 @@ void draw() {
   navBar.disappearingDates(navBar.getDatesInt());
 
   //filterByOrigin();
-  filterByState();
+  //filterByState();
+  //filterByDateRange();
+  //filterByDate();
 }
 
 void mouseMoved() {
@@ -204,4 +206,58 @@ void filterByOrigin() {
     filteredFrequencies = data.sortMap(filteredFrequencies);
     barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies); // Display results on bar chart
   }
+}
+
+void filterByState() {
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  String filterByState = navBar.getOriginStateString(); // Get the chosen origin State from the drop down menu
+  println(filterByState);
+  if (filterByState != "--All--") {
+
+    data.filteredFlightsByOriginState(filterByState);
+
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredCarriers);
+    filteredFrequencies = data.sortMap(filteredFrequencies);
+    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
+  }
+}
+
+void filterByDate() {
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  int filterByDate = navBar.getDatesInt();
+  if (filterByDate != 0) {
+    data.filteredFlightsByDate(filterByDate, filterByDate);
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinationStates);//what i am showing tbd
+    filteredFrequencies = data.sortMap(filteredFrequencies);
+    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
+  }
+}
+
+void filterByDateRange() {
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  int filterByToo = navBar.getTooInt();
+  int filterByFrom = navBar.getFromInt();
+  if (navBar.getDatesInt() == 0) {
+    data.filteredFlightsByDate(filterByFrom, filterByToo);
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinationStates);//what i am showing tbd
+    filteredFrequencies = data.sortMap(filteredFrequencies);
+    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
+  }
+}
+
+void filterByCarrier() {
+  float chartX = 350;
+  float chartY = 300;
+  float chartWidth = 1000;
+  float chartHeight = 300;
+  String filterByCarrier = navBar.getCarrierString();
 }
