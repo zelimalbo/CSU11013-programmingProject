@@ -96,8 +96,6 @@ void draw() {
 
   //filterByOrigin();
   //filterByState();
-  //filterByDateRange();
-  //filterByDate();
 }
 
 void mouseMoved() {
