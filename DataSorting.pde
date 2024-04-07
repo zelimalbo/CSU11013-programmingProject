@@ -1,11 +1,28 @@
 /*
   Data Sorting class implemented by Julius, Jude and Johnny
-*/
-class DataSorting
+/**
+ * Flight data filter methods:
+ * - filteredFlightsByOrigin(String): Filters by origin, filling the 6 arrayLists below with relevant info.
+ * - filteredFlightsByOriginState(String): Filters by origin state, filling the 6 arrayLists below with relevant info.
+ * - filteredFlightsByDestination(String): Filters by destination, filling the 6 arrayLists below with relevant info.
+ * - filteredFlightsByOriginAndDestination(String, String): Filters by origin and destination, filling the 6 arrayLists below with relevant info.
+ * - filteredFlightsByDate(int, int): Filters by date range, filling the 6 arrayLists below with relevant info.
+ *   filteredOrigins 
+ *   filteredDestinations
+ *   filteredOriginStates
+ *   filteredDestinationStates
+ *   filteredDates
+ *   filteredCarriers 
+ *   These arrayLists are filled with the data from the relavant query.
+ *   Methods clear previous data in lists before filtering.
+ */
+
+
+class DataSorting //Organised and cleaned up by Julius 06/04/24
 {
   Table data;
   int numberOfFlights;
-  ArrayList<String> originList = new ArrayList<String>();          //ONLY ONE INSTANCE OF EACH IN THESE STRINGS USED FOR DROP DOWN MENUS
+  ArrayList<String> originList = new ArrayList<String>();          //For use in NavBar dropdown menus (Single instance of each data point)
   ArrayList<String> originStateList = new ArrayList<String>();
   ArrayList<String> dateList = new ArrayList<String>();
   ArrayList<String> carrierList = new ArrayList<String>();
@@ -15,57 +32,58 @@ class DataSorting
   ArrayList<Integer> scheduledDepartureTimeList = new ArrayList<>();
   ArrayList<Integer> actualDepartureTimeList = new ArrayList<>();
 
-  ArrayList<String> fullOriginList = new ArrayList<String>();
+  ArrayList<String> fullOriginList = new ArrayList<String>();        //All data points used for sorting data in methods.
   ArrayList<String> fullOriginStateList = new ArrayList<String>();
   ArrayList<String> fullDateList = new ArrayList<String>();
   ArrayList<String> fullCarrierList = new ArrayList<String>();
   ArrayList<String> fullDestinationList = new ArrayList<String>();
   ArrayList<String> fullDestinationStateList = new ArrayList<String>();
-  
+
   // Johnny editted DataSorting on 06/04 to fix previous issues with data sorting class
-  ArrayList<String> filteredOrigins;            
+  ArrayList<String> filteredOrigins;
   ArrayList<String> filteredDestinations;
 
   ArrayList<String> filteredOriginStates;
   ArrayList<String> filteredDestinationStates;
-  
+
   ArrayList<String> filteredDates;
   ArrayList<String> filteredCarriers;
 
-  void setup(Table data)  //Written here by Julius 14/03 9:40
+  void setup(Table data)  //Implemented here by Julius 14/03 9:40
   {
     this.data = data;
-    //Updated to make arrayLists by Julius 20/03 9:10
+    //Implemented to make arrayLists by Julius 20/03 9:10
     for (TableRow row : data.rows()) {
       String origin = row.getString("ORIGIN");
+      String date = row.getString("FL_DATE");
+      String carrier = row.getString("MKT_CARRIER");
+      String carrier_flight_number = row.getString("MKT_CARRIER_FL_NUM");
+      String origin_city = row.getString("ORIGIN_CITY_NAME");
+      String origin_state = row.getString("ORIGIN_STATE_ABR");
+      String destination = row.getString("DEST");
+      String destination_state = row.getString("DEST_STATE_ABR");
+
       originList = addToArrayList(originList, origin);
       fullOriginList.add(origin);
 
-      String date = row.getString("FL_DATE");
       dateList = addToArrayList(dateList, date);
       fullDateList.add(date);
 
-      String carrier = row.getString("MKT_CARRIER");
       carrierList = addToArrayList(carrierList, carrier);
       fullCarrierList.add(carrier);
 
-      String carrier_flight_number = row.getString("MKT_CARRIER_FL_NUM");
-      String origin_city = row.getString("ORIGIN_CITY_NAME");
-
-      String origin_state = row.getString("ORIGIN_STATE_ABR");
       originStateList = addToArrayList(originStateList, origin_state);
       fullOriginStateList.add(origin_state);
 
-      String destination = row.getString("DEST");
       destinationList = addToArrayList(destinationList, destination);
       fullDestinationList.add(destination);
 
-      String destination_state = row.getString("DEST_STATE_ABR");
       destinationStateList = addToArrayList(destinationStateList, destination_state);
       fullDestinationStateList.add(destination_state);
+
       numberOfFlights++;
 
-      int scheduledDepartureTimeData = row.getInt("CRS_DEP_TIME"); //Implemented by Julius 20/03/24
+      int scheduledDepartureTimeData = row.getInt("CRS_DEP_TIME");
       scheduledDepartureTimeList.add(scheduledDepartureTimeData);
 
       int actualDepartureTimeData = row.getInt("DEP_TIME");
@@ -73,11 +91,6 @@ class DataSorting
     }
     ArrayList<Boolean> isLate = isLateFlight(scheduledDepartureTimeList, actualDepartureTimeList);
     ArrayList<Boolean> isOnTimeOrEarly = isOnTimeOrEarlyFlight(scheduledDepartureTimeList, actualDepartureTimeList);
-  }
-
-  ArrayList<String> alphabeticalSorting(ArrayList<String> list) {
-    Collections.sort(list);
-    return list;
   }
 
   boolean checkIfFirstInstanceOfDataPoint(String addedDataPoint, ArrayList<String> dataArrayList) {
@@ -189,7 +202,7 @@ class DataSorting
     return frequencies;
   }
 
-  // functions for getting the ArrayLists implemented by jude
+  //Implemented By Julius 28/03/24
   void filteredFlightsByOrigin(String selectedOrigin) {
     filteredOrigins = new ArrayList();
     filteredDestinations = new ArrayList();
@@ -197,25 +210,26 @@ class DataSorting
     filteredDestinationStates = new ArrayList();
     filteredDates = new ArrayList();
     filteredCarriers = new ArrayList();
-    
+
     for (int i = 0; i < fullOriginList.size(); i++) {
       if (fullOriginList.get(i).equals(selectedOrigin))
       {
-        filteredOrigins.add(selectedOrigin); //Implemented By Julius 28/03/24
         String date = fullDateList.get(i);
-        filteredDates.add(date);
-        String carrier= fullCarrierList.get(i);
-        filteredCarriers.add(carrier);
+        String carrier = fullCarrierList.get(i);
         String OriginState = fullOriginStateList.get(i);
-        filteredOriginStates.add(OriginState);
         String dest = fullDestinationList.get(i);
-        filteredDestinations.add(dest);
         String destinationState = fullDestinationStateList.get(i);
+
+        filteredOrigins.add(selectedOrigin);
+        filteredDates.add(date);
+        filteredCarriers.add(carrier);
+        filteredOriginStates.add(OriginState);
+        filteredDestinations.add(dest);
         filteredDestinationStates.add(destinationState);
       }
     }
   }
-  
+  //Implemented By Julius 28/03/24
   void filteredFlightsByOriginState(String selectedOrigin) {
     filteredOrigins = new ArrayList();
     filteredDestinations = new ArrayList();
@@ -223,27 +237,26 @@ class DataSorting
     filteredDestinationStates = new ArrayList();
     filteredDates = new ArrayList();
     filteredCarriers = new ArrayList();
-    
+
     for (int i = 0; i < fullOriginList.size(); i++) {
       if (fullOriginList.get(i).equals(selectedOrigin))
       {
-        filteredOriginStates.add(selectedOrigin); //Implemented By Julius 28/03/24
         String date = fullDateList.get(i);
-        filteredDates.add(date);
-        String carrier= fullCarrierList.get(i);
-        filteredCarriers.add(carrier);
+        String carrier = fullCarrierList.get(i);
         String origins = fullOriginList.get(i);
-        filteredOrigins.add(origins);
         String dest = fullDestinationList.get(i);
-        filteredDestinations.add(dest);
         String destinationState = fullDestinationStateList.get(i);
+
+        filteredOriginStates.add(selectedOrigin);
+        filteredDates.add(date);
+        filteredCarriers.add(carrier);
+        filteredOrigins.add(origins);
+        filteredDestinations.add(dest);
         filteredDestinationStates.add(destinationState);
       }
     }
   }
-  
-  /* --- Currently not being used ---
-    
+
   void filteredFlightsByDestination(String selectedDestination) {
     filteredOrigins = new ArrayList();
     filteredDestinations = new ArrayList();
@@ -251,48 +264,58 @@ class DataSorting
     filteredDestinationStates = new ArrayList();
     filteredDates = new ArrayList();
     filteredCarriers = new ArrayList();
-    
+
     for (int i = 0; i < fullDestinationList.size(); i++) {
       if (fullDestinationList.get(i).equals(selectedDestination))
       {
-        filteredDestinations.add(selectedDestination); //Implemented By Julius 28/03/24
         String date = fullDateList.get(i);
-        filteredDates.add(date);
-        String carrier= fullCarrierList.get(i);
-        filteredCarriers.add(carrier);
+        String carrier = fullCarrierList.get(i);
         String originState = fullOriginStateList.get(i);
-        filteredOriginStates.add(originState);
-        String origin = fullDestinationList.get(i);
-        filteredOrigins.add(origin);
+        String origin = fullOriginList.get(i);
         String destinationState = fullDestinationStateList.get(i);
+
+        filteredDestinations.add(selectedDestination);
+        filteredDates.add(date);
+        filteredCarriers.add(carrier);
+        filteredOriginStates.add(originState);
+        filteredOrigins.add(origin);
         filteredDestinationStates.add(destinationState);
       }
     }
   }
-  
+  //Implemented By Julius 28/03/24
   void filteredFlightsByOriginAndDestination(String selectedOrigin, String selectedDestination) {
+
+    filteredOrigins = new ArrayList();
+    filteredDestinations = new ArrayList();
+    filteredOriginStates = new ArrayList();
+    filteredDestinationStates = new ArrayList();
+    filteredDates = new ArrayList();
+    filteredCarriers = new ArrayList();
+
     for (int i = 0; i < fullDestinationList.size(); i++) {
       if (fullDestinationList.get(i).equals(selectedDestination))
       {
         if (fullOriginList.get(i).equals(selectedOrigin))
         {
-          filteredOrigins.add(selectedOrigin);               //Implemented By Julius 28/03/24
-          filteredDestinations.add(selectedDestination);
           String date = fullDateList.get(i);
-          filteredDates.add(date);
-          String carrier= fullCarrierList.get(i);
-          filteredCarriers.add(carrier);
+          String carrier = fullCarrierList.get(i);
           String OriginState = fullOriginStateList.get(i);
-          filteredOriginStates.add(OriginState);
           String dest = fullDestinationList.get(i);
-          filteredDestinations.add(dest);
           String destinationState = fullDestinationStateList.get(i);
+
+          filteredOrigins.add(selectedOrigin);
+          filteredDestinations.add(selectedDestination);
+          filteredDates.add(date);
+          filteredCarriers.add(carrier);
+          filteredOriginStates.add(OriginState);
+          filteredDestinations.add(dest);
           filteredDestinationStates.add(destinationState);
         }
       }
     }
   }
-  */
+
   void filteredFlightsByDate(int startDate, int endDate) //implemented by julius 03/04/24
   {
     String startDateString = dateList.get(startDate);
@@ -350,7 +373,7 @@ class DataSorting
      */
     return dateFrequencies;
   }
-  
+
   Map getFrequencies(ArrayList<String> fullList) {
     Map <String, Integer> frequencies = new HashMap<>();
     for (String dataPoint : fullList) {
@@ -362,12 +385,12 @@ class DataSorting
     }
     return frequencies;
   }
-  
+
   /*
     Johnny implemented getFlightsByAirline method
-    on 01/04
-    This method returns a map containing the total flights per airline
-  */
+   on 01/04
+   This method returns a map containing the total flights per airline
+   */
   Map getFlightsByCarrier(ArrayList<String> fullCarrierList) {
     Map<String, Integer> flightsByCarrier = new HashMap<>();
     for (String carrier : fullCarrierList) {
@@ -379,15 +402,15 @@ class DataSorting
     }
     return flightsByCarrier;
   }
-  
+
   /*
     Johnny implemented sortMap method
-    on 06/04
-    This method takes in a Map<String, Integer> and returns the map
-    sorted in desending order.
-    This map will be used to show the data points with the highest frequency
-    on the bar chart (e.g. Top 10 Destinations from JFK)
-  */
+   on 06/04
+   This method takes in a Map<String, Integer> and returns the map
+   sorted in desending order.
+   This map will be used to show the data points with the highest frequency
+   on the bar chart (e.g. Top 10 Destinations from JFK)
+   */
   Map sortMap(Map<String, Integer> unsortedMap) {
     Map<String, Integer> sortedMap = new LinkedHashMap();
     List<Map.Entry<String, Integer>> list = new ArrayList<>(unsortedMap.entrySet());
