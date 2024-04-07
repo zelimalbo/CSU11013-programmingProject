@@ -5,8 +5,6 @@ class NavBar {
   //The Data below is current hardcoded for proof of concept however in later implementations the different arrayLists will be sorted and correctly made in DataSorting
 
   ControlP5 allLists;
-  ControlP5 searchButton;
-  ControlP5 miscLists;
   String OriginStateString = null;
   int OriginStateInt = 0;
   String datesString = null;
@@ -22,6 +20,7 @@ class NavBar {
   int screenInt;
   boolean buttonState = false;
   int isLateInt;
+  int activeTab = 0;
 
   String[] boolArray = {"true", "false"};
   String[] screenArray = {"Heat Map", "Table", "Line Graph", "Pie Charts", "Bar Charts"};
@@ -44,11 +43,14 @@ class NavBar {
     data.removeTimeAndYear(TooArray);
     data.removeTimeAndYear(FromArray);
     DatesArray.add(0, "--Select Range--");
-    TooArray.add(0, "--Too--");
-    FromArray.add(0, "--From--");
     ArrayList<String> Carriers = new ArrayList<>(data.carrierList);
     Collections.sort(Carriers);
     Carriers.add(0, "--All--");
+
+    allLists.getTab("default").activateEvent(true).setId(0);
+    allLists.addTab("dates").activateEvent(true).setId(1);
+    allLists.addTab("locations").activateEvent(true).setId(2);
+    allLists.addTab("misc").activateEvent(true).setId(3);
 
     this.allLists.addScrollableList("PickScreens")
       .setPosition(100, 100)
@@ -88,17 +90,13 @@ class NavBar {
       .setFont(createFont("Arial", 16))
       ;
 
-    //this.searchButton.addButton("enter")
-    //  .setPosition(100, 700)
-    //  ;
-
     this.allLists.addScrollableList("Dates")
       .setPosition(100, 100)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(DatesArray)
-      .setValue(0)
+      .setValue(1)
       //.setFont(createFont("Arial", 15))
       .align(100, 100, 100, 100)
       .moveTo("dates")
@@ -120,7 +118,7 @@ class NavBar {
       .setItemHeight(20)
       .addItems(TooArray)
       .moveTo("dates")
-      .setValue(2)
+      .setValue(1)
       .close()
       ;
 
@@ -132,7 +130,7 @@ class NavBar {
       .setItemHeight(20)
       .addItems(FromArray)
       .moveTo("dates")
-      .setValue(5)
+      .setValue(1)
       .close()
       ;
 
@@ -143,7 +141,6 @@ class NavBar {
       .setItemHeight(20)
       .addItems(Origin)
       .moveTo("locations")
-      //.setValue(0)
       .close()
       ;
     this.allLists.addTextlabel("originlabel")
@@ -162,7 +159,7 @@ class NavBar {
       .setItemHeight(20)
       .addItems(OriginState)
       .moveTo("locations")
-      .setValue(5)
+      .setValue(0)
       .close()
       ;
     this.allLists.addTextlabel("OriginStatelabel")
@@ -326,5 +323,14 @@ class NavBar {
       this.allLists.getController("Too").setVisible(false);
       this.allLists.getController("From").setVisible(false);
     }
+  }
+
+  void controlEvent(ControlEvent theControlEvent) {
+    if (theControlEvent.isTab()) {
+      activeTab = theControlEvent.getTab().getId();
+    }
+  }
+  public int getActiveTab() {
+    return activeTab;
   }
 }
