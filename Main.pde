@@ -35,10 +35,6 @@ void setup() {
   //Cleaned up Main by moving back into NavBar 20/2/23
   navBar = new NavBar();
   navBar.allLists = new ControlP5(this);
-  //navBar.originList = new ControlP5(this);      Can get rid of, was all redundant
-  //navBar.destinationList = new ControlP5(this);
-  //navBar.searchButton = new ControlP5(this);
-  //navBar.miscLists = new ControlP5(this);
   navBar.setup();
   //Added NavBar Eoghan Gloster 14/2/23^^
 
@@ -88,14 +84,25 @@ void draw() {
   rect(0, 0, 300, SCREENY);
 
   currentScreen.draw();
-
   changeScreen(navBar.getPickScreensInt());
-
-
   navBar.disappearingDates(navBar.getDatesInt());
 
-  //filterByOrigin();
-  //filterByState();
+
+
+  int currentTab = navBar.getActiveTab();
+  //println(currentTab);
+  if (currentTab==0) {
+  }
+  if (currentTab==2) {
+    //filterByOrigin();
+    filterByState();
+  }
+  if (currentTab==1) {
+    filterByDate();      //both work
+   // filterByDateRange();
+  }
+  if (currentTab==3) {
+  }
 }
 
 void mouseMoved() {
@@ -118,8 +125,6 @@ void mouseMoved() {
 }
 
 void mousePressed() {
-  //destinationFilterOnly();
-  //destinationAndOriginFilterOnly();
   /*
     Johnny added mouse press method on 20/03
    Currently being used for buttons to go backward and forward in the table
@@ -171,8 +176,7 @@ void keyPressed() {
 
 
 void changeScreen(int screenSelection) {
-  if (navBar.buttonState == true) {
-    println("test button");
+  if (screenSelection == 0) {
     currentScreen = heatMapScreen;
   }
   if (screenSelection == 1) {
@@ -212,7 +216,7 @@ void filterByState() {
   float chartWidth = 1000;
   float chartHeight = 300;
   String filterByState = navBar.getOriginStateString(); // Get the chosen origin State from the drop down menu
-  println(filterByState);
+  //println(filterByState);
   if (filterByState != "--All--") {
 
     data.filteredFlightsByOriginState(filterByState);
@@ -229,8 +233,10 @@ void filterByDate() {
   float chartWidth = 1000;
   float chartHeight = 300;
   int filterByDate = navBar.getDatesInt();
+  println("before");
   if (filterByDate != 0) {
-    data.filteredFlightsByDate(filterByDate, filterByDate);
+println(filterByDate);
+    data.filteredFlightsByDate(filterByDate-1, filterByDate-1);
     Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinationStates);//what i am showing tbd
     filteredFrequencies = data.sortMap(filteredFrequencies);
     barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
@@ -245,17 +251,14 @@ void filterByDateRange() {
   int filterByToo = navBar.getTooInt();
   int filterByFrom = navBar.getFromInt();
   if (navBar.getDatesInt() == 0) {
-    data.filteredFlightsByDate(filterByFrom, filterByToo);
-    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinationStates);//what i am showing tbd
+    data.filteredFlightsByDate(filterByToo, filterByFrom);
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredCarriers);//what i am showing tbd
     filteredFrequencies = data.sortMap(filteredFrequencies);
     barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
   }
 }
 
-void filterByCarrier() {
-  float chartX = 350;
-  float chartY = 300;
-  float chartWidth = 1000;
-  float chartHeight = 300;
-  String filterByCarrier = navBar.getCarrierString();
+void controlEvent(ControlEvent theControlEvent) {
+  // Forward the event to the NavBar instance
+  navBar.controlEvent(theControlEvent);
 }
