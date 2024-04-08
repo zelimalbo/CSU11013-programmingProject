@@ -2,7 +2,6 @@ import controlP5.*;
 import java.util.*;
 class NavBar {
   //Added A functional yet early navBar with three dropdowns. Eoghan Gloster. 13/3/23
-  //The Data below is current hardcoded for proof of concept however in later implementations the different arrayLists will be sorted and correctly made in DataSorting
 
   ControlP5 allLists;
   String OriginStateString = null;
@@ -19,11 +18,14 @@ class NavBar {
   int carrierInt;
   int screenInt;
   boolean buttonState = false;
-  int isLateInt;
   int activeTab = 0;
+  int filterInt = 0;
+  int originOrStateInt = 0;
+  int filterStateInt = 0;
 
-  String[] boolArray = {"true", "false"};
-  String[] screenArray = {"Heat Map", "Table", "Line Graph", "Pie Charts", "Bar Charts"};
+  String[] screenArray = {"Heat Map", "Table", "Line Graph", "Pie Charts"};
+  String[] whatToFilter ={"Origin Airport", "Destination Airport", "Origin State", "Destination State", "Carrier"};
+  String[] whatToFilterState ={"Destination Airport", "Destination State","Carrier"};
 
   DataSorting data = new DataSorting();
   void setup() {
@@ -33,7 +35,6 @@ class NavBar {
 
     ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
-    Origin.add(0, "--All--");
     ArrayList<String> OriginState = new ArrayList<>(data.originStateList);
     Collections.sort(OriginState);
     ArrayList<String> DatesArray = new ArrayList<>(data.dateList); // Create a new list with the same elements as data.dateList
@@ -50,7 +51,7 @@ class NavBar {
     allLists.getTab("default").activateEvent(true).setId(0);
     allLists.addTab("dates").activateEvent(true).setId(1);
     allLists.addTab("locations").activateEvent(true).setId(2);
-    allLists.addTab("misc").activateEvent(true).setId(3);
+   // allLists.addTab("carriers").activateEvent(true).setId(3);
 
     this.allLists.addScrollableList("PickScreens")
       .setPosition(100, 100)
@@ -58,30 +59,9 @@ class NavBar {
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(screenArray)
-      .setValue(4)
+      .setValue(0)
       .close()
       ;
-
-
-    this.allLists.addButton("loser")
-      .setPosition(50, 200)
-      .setSize(200, 50)
-      .setLabel("Press Me")
-      // Add event listeners for press and release
-      .onPress(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        buttonState = true; // Set state to true when button is pressed
-        println("Button Pressed: " + buttonState);
-      }
-    }
-    )
-    .onRelease(new CallbackListener() {
-      public void controlEvent(CallbackEvent event) {
-        buttonState = false; // Set state to false when button is released
-        println("Button Released: " + buttonState);
-      }
-    }
-    );
 
     this.allLists.addTextlabel("label")
       .setText("Select Screen")
@@ -97,7 +77,6 @@ class NavBar {
       .setItemHeight(20)
       .addItems(DatesArray)
       .setValue(1)
-      //.setFont(createFont("Arial", 15))
       .align(100, 100, 100, 100)
       .moveTo("dates")
       .close()
@@ -118,7 +97,7 @@ class NavBar {
       .setItemHeight(20)
       .addItems(TooArray)
       .moveTo("dates")
-      .setValue(1)
+      .setValue(0)
       .close()
       ;
 
@@ -134,26 +113,60 @@ class NavBar {
       .close()
       ;
 
-    this.allLists.addScrollableList("Origin")
-      .setPosition(40, 100)
+    this.allLists.addScrollableList("Filter")
+      .setPosition(100, 250)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
-      .addItems(Origin)
-      .moveTo("locations")
+      .addItems(whatToFilter)
+      .setValue(0)
+      .moveTo("dates")
       .close()
       ;
-    this.allLists.addTextlabel("originlabel")
-      .setText("Select Origin")
-      .setPosition(40, 75) // Positioned above the dropdown
+
+    this.allLists.addTextlabel("howtoFilter")
+      .setText("Filter By")
+      .setPosition(120, 225) // Positioned above the dropdown
+      .setColorValue(0) // Color of the text
+      .setFont(createFont("Arial", 16))
+      .moveTo("dates")
+      ;
+
+    this.allLists.addTextlabel("OriginStatelabel")
+      .setText("Filter Airport or Origin State")
+      .setPosition(0, 75) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
       .setFont(createFont("Arial", 13))
       .moveTo("locations")
       ;
 
+    this.allLists.addScrollableList("originOrState") //Will only appear when range is selected
+      .setPosition(0, 100)
+      .setSize(100, 100)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(Arrays.asList("By Airport", "By State"))
+      .moveTo("locations")
+      .setValue(0)
+      .close()
+      ;
+
+    this.allLists.addScrollableList("Origin")
+      .setVisible(false)
+      .setPosition(100, 170)
+      .setSize(100, 100)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(Origin)
+      .moveTo("locations")
+      .setValue(0)
+      .close()
+      ;
+
 
     this.allLists.addScrollableList("OriginState")
-      .setPosition(160, 100)
+      .setVisible(false)
+      .setPosition(100, 170)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -162,56 +175,43 @@ class NavBar {
       .setValue(0)
       .close()
       ;
-    this.allLists.addTextlabel("OriginStatelabel")
-      .setText("Select Origin State")
-      .setPosition(155, 75) // Positioned above the dropdown
+
+    this.allLists.addScrollableList("FilterState")
+      .setPosition(200, 100)
+      .setSize(100, 75)
+      .setBarHeight(20)
+      .setItemHeight(20)
+      .addItems(whatToFilterState)
+      .setValue(0)
+      .moveTo("locations")
+      .close()
+      ;
+
+    this.allLists.addTextlabel("howtoFilterState")
+      .setText("Filter By")
+      .setPosition(200, 75) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
       .setFont(createFont("Arial", 13))
       .moveTo("locations")
       ;
 
-    this.allLists.addScrollableList("Is Late")
-      .setPosition(100, 100)
-      .setSize(100, 100)
-      .setBarHeight(20)
-      .setItemHeight(20)
-      .addItems(boolArray)
-      .moveTo("misc")
-      .close()
-      ;
-    this.allLists.addTextlabel("latelabel")
-      .setText("Is Late")
-      .setPosition(100, 75) // Positioned above the dropdown
-      .setColorValue(0) // Color of the text
-      .setFont(createFont("Arial", 16))
-      .moveTo("misc")
-      ;
-
-    this.allLists.addScrollableList("Carriers")
-      .setPosition(100, 230)
-      .setSize(100, 100)
-      .setBarHeight(20)
-      .setItemHeight(20)
-      .addItems(Carriers)
-      .setValue(0)
-      .moveTo("misc")
-      .close()
-      ;
-    this.allLists.addTextlabel("carrierslabel")
-      .setText("Select Carriers")
-      .setPosition(100, 205) // Positioned above the dropdown
-      .setColorValue(0) // Color of the text
-      .setFont(createFont("Arial", 16))
-      .moveTo("misc")
-      ;
-  }
-
-  void isLate() {
-    isLateInt = (int)allLists.get(ScrollableList.class, "isLate").getValue();
-  }
-  int getIsLateInt() {
-    isLate();
-    return isLateInt;
+    //this.allLists.addScrollableList("Carriers")
+    //  .setPosition(100, 100)
+    //  .setSize(100, 100)
+    //  .setBarHeight(20)
+    //  .setItemHeight(20)
+    //  .addItems(Carriers)
+    //  .setValue(0)
+    //  .moveTo("carriers")
+    //  .close()
+    //  ;
+    //this.allLists.addTextlabel("carrierslabel")
+    //  .setText("Select Carriers")
+    //  .setPosition(90, 75) // Positioned above the dropdown
+    //  .setColorValue(0) // Color of the text
+    //  .setFont(createFont("Arial", 16))
+    //  .moveTo("carriers")
+    //  ;
   }
 
 
@@ -224,6 +224,31 @@ class NavBar {
     return screenInt;
   }
 
+  void originOrState() {
+    originOrStateInt = (int)allLists.get(ScrollableList.class, "originOrState").getValue();
+  }
+
+  public int originOrStateInts() {
+    originOrState();
+    return originOrStateInt;
+  }
+
+  void filter() {
+    filterInt = (int)allLists.get(ScrollableList.class, "Filter").getValue();
+  }
+  public int getFilterInt() {
+    filter();
+    return filterInt;
+  }
+  
+  void FilterState() {
+    filterStateInt = (int)allLists.get(ScrollableList.class, "FilterState").getValue();
+  }
+  public int getFilterStateInt() {
+    FilterState();
+    return filterStateInt;
+  }
+
   void Carriers(int index) {
     carrierString = allLists.get(ScrollableList.class, "Carriers").getItem(index).get("name").toString();
     carrierInt = (int)allLists.get(ScrollableList.class, "Carriers").getValue();
@@ -233,6 +258,8 @@ class NavBar {
     Carriers(carrierInt);
     return carrierInt;
   }
+
+
 
 
   void OriginState(int index) {
@@ -322,6 +349,17 @@ class NavBar {
     } else {
       this.allLists.getController("Too").setVisible(false);
       this.allLists.getController("From").setVisible(false);
+    }
+  }
+
+  public void disapearingSort(int sortSelection) {
+    if (sortSelection == 1) {
+      this.allLists.getController("OriginState").setVisible(true);
+      this.allLists.getController("Origin").setVisible(false);
+    }
+    if (sortSelection == 0) {
+      this.allLists.getController("OriginState").setVisible(false);
+      this.allLists.getController("Origin").setVisible(true);
     }
   }
 
