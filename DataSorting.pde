@@ -210,7 +210,6 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     filteredDestinationStates = new ArrayList();
     filteredDates = new ArrayList();
     filteredCarriers = new ArrayList();
-
     for (int i = 0; i < fullOriginList.size(); i++) {
       if (fullOriginList.get(i).equals(selectedOrigin))
       {
@@ -219,7 +218,6 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
         String OriginState = fullOriginStateList.get(i);
         String dest = fullDestinationList.get(i);
         String destinationState = fullDestinationStateList.get(i);
-
         filteredOrigins.add(selectedOrigin);
         filteredDates.add(date);
         filteredCarriers.add(carrier);
