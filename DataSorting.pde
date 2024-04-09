@@ -4,8 +4,8 @@
  * Flight data filter methods:
  * - filteredFlightsByOrigin(String): Filters by origin, filling the 6 arrayLists below with relevant info.
  * - filteredFlightsByOriginState(String): Filters by origin state, filling the 6 arrayLists below with relevant info.
- * - filteredFlightsByDestination(String): Filters by destination, filling the 6 arrayLists below with relevant info.
- * - filteredFlightsByOriginAndDestination(String, String): Filters by origin and destination, filling the 6 arrayLists below with relevant info.
+ * - filteredFlightsByDestination(String): Filters by destination, filling the 6 arrayLists below with relevant info.**Not currently in use**
+ * - filteredFlightsByOriginAndDestination(String, String): Filters by origin and destination, filling the 6 arrayLists below with relevant info. **Not currently in use**
  * - filteredFlightsByDate(int, int): Filters by date range, filling the 6 arrayLists below with relevant info.
  *   filteredOrigins 
  *   filteredDestinations
@@ -210,7 +210,6 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     filteredDestinationStates = new ArrayList();
     filteredDates = new ArrayList();
     filteredCarriers = new ArrayList();
-
     for (int i = 0; i < fullOriginList.size(); i++) {
       if (fullOriginList.get(i).equals(selectedOrigin))
       {
@@ -219,7 +218,6 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
         String OriginState = fullOriginStateList.get(i);
         String dest = fullDestinationList.get(i);
         String destinationState = fullDestinationStateList.get(i);
-
         filteredOrigins.add(selectedOrigin);
         filteredDates.add(date);
         filteredCarriers.add(carrier);
@@ -238,8 +236,9 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     filteredDates = new ArrayList();
     filteredCarriers = new ArrayList();
 
-    for (int i = 0; i < fullOriginList.size(); i++) {
-      if (fullOriginList.get(i).equals(selectedOrigin))
+    for (int i = 0; i < fullOriginStateList.size(); i++) {
+
+      if (fullOriginStateList.get(i).equals(selectedOrigin))
       {
         String date = fullDateList.get(i);
         String carrier = fullCarrierList.get(i);
@@ -318,6 +317,14 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
 
   void filteredFlightsByDate(int startDate, int endDate) //implemented by julius 03/04/24
   {
+    filteredOrigins = new ArrayList();
+    filteredDestinations = new ArrayList();
+    filteredOriginStates = new ArrayList();
+    filteredDestinationStates = new ArrayList();
+    filteredDates = new ArrayList();
+    filteredCarriers = new ArrayList();
+    removeTimeAndYear(dateList);
+    
     String startDateString = dateList.get(startDate);
     int startDateIndex =0;
     for (int i = 0; i<fullDateList.size(); i++)
