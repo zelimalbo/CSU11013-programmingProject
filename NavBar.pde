@@ -6,11 +6,8 @@ class NavBar {
   ControlP5 allLists;
   String OriginStateString = null;
   int OriginStateInt = 0;
-  String datesString = null;
   int datesInt = 0;
-  String startDatesString = null;
   int startDatesInt = 0;
-  String endDatesString = null;
   int endDatesInt = 0;
   String originString = null;
   int originInt = 0;
@@ -134,14 +131,14 @@ class NavBar {
 
     this.allLists.addTextlabel("OriginStatelabel")
       .setText("Filter by Airport or Origin State")
-      .setPosition(0, 75) // Positioned above the dropdown
+      .setPosition(70, 200) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
       .setFont(createFont("Arial", 13))
       .moveTo("locations")
       ;
 
     this.allLists.addScrollableList("originOrState") //Will only appear when range is selected
-      .setPosition(0, 100)
+      .setPosition(100, 220)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -153,7 +150,7 @@ class NavBar {
 
     this.allLists.addScrollableList("Origin")
       .setVisible(false)
-      .setPosition(100, 170)
+      .setPosition(100, 370)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -166,7 +163,7 @@ class NavBar {
 
     this.allLists.addScrollableList("OriginState")
       .setVisible(false)
-      .setPosition(100, 170)
+      .setPosition(100, 370)
       .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
@@ -177,8 +174,8 @@ class NavBar {
       ;
 
     this.allLists.addScrollableList("FilterState")
-      .setPosition(200, 100)
-      .setSize(100, 75)
+      .setPosition(100, 100)
+      .setSize(100, 100)
       .setBarHeight(20)
       .setItemHeight(20)
       .addItems(whatToFilterState)
@@ -189,12 +186,11 @@ class NavBar {
 
     this.allLists.addTextlabel("howtoFilterState")
       .setText("Filter By")
-      .setPosition(200, 75) // Positioned above the dropdown
+      .setPosition(120, 80) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
       .setFont(createFont("Arial", 13))
       .moveTo("locations")
       ;
-
   }
 
 
@@ -250,49 +246,35 @@ class NavBar {
     OriginStateInt = (int)allLists.get(ScrollableList.class, "OriginState").getValue();
   }
 
-  void Dates(int index) {
-    datesString = allLists.get(ScrollableList.class, "Dates").getItem(index).get("name").toString();
+  void Dates() {
     datesInt = (int)allLists.get(ScrollableList.class, "Dates").getValue();
   }
 
-  void Too(int index) {
-    endDatesString = allLists.get(ScrollableList.class, "Too").getItem(index).get("name").toString();
+  void Too() {
     endDatesInt = (int)allLists.get(ScrollableList.class, "Too").getValue();
   }
 
-  void From(int index) {
-    startDatesString = allLists.get(ScrollableList.class, "From").getItem(index).get("name").toString();
+  void From() {
     startDatesInt = (int)allLists.get(ScrollableList.class, "From").getValue();
   }
 
   void Origin(int index) {
     originString = allLists.get(ScrollableList.class, "Origin").getItem(index).get("name").toString();
-    originInt = (int)allLists.get(ScrollableList.class, "Origin").getValue();
-  }
-
-  public int getOriginStateInt() {
-    OriginState(OriginStateInt);
-    return OriginStateInt;
   }
 
   public int getDatesInt() {
-    Dates(datesInt);
+    Dates();
     return datesInt;
   }
 
   public int getTooInt() {
-    Too(endDatesInt);
+    Too();
     return endDatesInt;
   }
 
   public int getFromInt() {
-    From(startDatesInt);
+    From();
     return startDatesInt;
-  }
-
-  public int getOriginInt() {
-    Origin(originInt);
-    return originInt;
   }
 
   public String getCarrierString() {
@@ -303,21 +285,6 @@ class NavBar {
   public String getOriginStateString() {
     OriginState( OriginStateInt);
     return OriginStateString;
-  }
-
-  public String getDatesString() {
-    Dates(datesInt);
-    return datesString;
-  }
-
-  public String getTooString() {
-    Too(endDatesInt);
-    return endDatesString;
-  }
-
-  public String getFromString() {
-    From(startDatesInt);
-    return startDatesString;
   }
 
   public String getOriginString() {

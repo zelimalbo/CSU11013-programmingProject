@@ -288,7 +288,6 @@ void filterByDate() {
       Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredOriginStates);//what i am showing tbd
       filteredFrequencies = data.sortMap(filteredFrequencies);
       barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
-      println("making bar chart");
     }
     if (navBar.getFilterInt() == 3) {
       data.filteredFlightsByDate(filterByDate-1, filterByDate-1);
