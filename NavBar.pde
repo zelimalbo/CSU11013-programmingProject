@@ -195,23 +195,6 @@ class NavBar {
       .moveTo("locations")
       ;
 
-    //this.allLists.addScrollableList("Carriers")
-    //  .setPosition(100, 100)
-    //  .setSize(100, 100)
-    //  .setBarHeight(20)
-    //  .setItemHeight(20)
-    //  .addItems(Carriers)
-    //  .setValue(0)
-    //  .moveTo("carriers")
-    //  .close()
-    //  ;
-    //this.allLists.addTextlabel("carrierslabel")
-    //  .setText("Select Carriers")
-    //  .setPosition(90, 75) // Positioned above the dropdown
-    //  .setColorValue(0) // Color of the text
-    //  .setFont(createFont("Arial", 16))
-    //  .moveTo("carriers")
-    //  ;
   }
 
 
