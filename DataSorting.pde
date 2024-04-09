@@ -1,18 +1,21 @@
 /*
   Data Sorting class implemented by Julius, Jude and Johnny
 /**
+ *  Summary of DataSorting Class written by Julius 09/04/24
  * Flight data filter methods:
  * - filteredFlightsByOrigin(String): Filters by origin, filling the 6 arrayLists below with relevant info.
  * - filteredFlightsByOriginState(String): Filters by origin state, filling the 6 arrayLists below with relevant info.
  * - filteredFlightsByDestination(String): Filters by destination, filling the 6 arrayLists below with relevant info.**Not currently in use**
  * - filteredFlightsByOriginAndDestination(String, String): Filters by origin and destination, filling the 6 arrayLists below with relevant info. **Not currently in use**
  * - filteredFlightsByDate(int, int): Filters by date range, filling the 6 arrayLists below with relevant info.
- *   filteredOrigins 
+ *
+ *   filteredOrigins
  *   filteredDestinations
  *   filteredOriginStates
  *   filteredDestinationStates
  *   filteredDates
- *   filteredCarriers 
+ *   filteredCarriers
+ *
  *   These arrayLists are filled with the data from the relavant query.
  *   Methods clear previous data in lists before filtering.
  */
@@ -42,18 +45,15 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
   // Johnny editted DataSorting on 06/04 to fix previous issues with data sorting class
   ArrayList<String> filteredOrigins;
   ArrayList<String> filteredDestinations;
-
   ArrayList<String> filteredOriginStates;
   ArrayList<String> filteredDestinationStates;
-
   ArrayList<String> filteredDates;
   ArrayList<String> filteredCarriers;
 
-  void setup(Table data)  //Implemented here by Julius 14/03 9:40
+  void setup(Table data)                                                  //Implemented here by Julius 14/03 9:40
   {
-    this.data = data;
-    //Implemented to make arrayLists by Julius 20/03 9:10
-    for (TableRow row : data.rows()) {
+    this.data = data;                                                     //Implemented to make arrayLists by Julius 20/03 9:10
+    for (TableRow row : data.rows()) {                                    //setup adds all data from the flights.csv file into sorted seperated arrayLists.
       String origin = row.getString("ORIGIN");
       String date = row.getString("FL_DATE");
       String carrier = row.getString("MKT_CARRIER");
@@ -93,17 +93,17 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     ArrayList<Boolean> isOnTimeOrEarly = isOnTimeOrEarlyFlight(scheduledDepartureTimeList, actualDepartureTimeList);
   }
 
-  boolean checkIfFirstInstanceOfDataPoint(String addedDataPoint, ArrayList<String> dataArrayList) {
-    for (int i = 0; i < dataArrayList.size(); i++) {
-      if (addedDataPoint.equals(dataArrayList.get(i))) {
+  boolean checkIfFirstInstanceOfDataPoint(String addedDataPoint, ArrayList<String> dataArrayList) {     //This function is used in the addToArrayList
+    for (int i = 0; i < dataArrayList.size(); i++) {                                                    //method in order to have one instance of
+      if (addedDataPoint.equals(dataArrayList.get(i))) {                                                //each data point in an arrayList.
         return false;
       }
     }
     return true;
   }
 
-  ArrayList appendAirportWithState(ArrayList airport, ArrayList state)
-  {
+  ArrayList appendAirportWithState(ArrayList airport, ArrayList state)  //Not in use anymore, originally intended to display
+  {                                                                     //flight data appended, e.g LAX, CA.
     ArrayList<String> result = new ArrayList<>();
     for (int i = 0; i < airport.size(); i++) {
       String airportWithState = airport.get(i) + ", " + state.get(i);
@@ -111,9 +111,9 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     }
     return result;
   }
-  ArrayList addToArrayList(ArrayList<String> list, String dataPointToBeAdded) //Implemented by Julius 20/03/24
-  {
-    boolean firstInstance = checkIfFirstInstanceOfDataPoint(dataPointToBeAdded, list);
+  ArrayList addToArrayList(ArrayList<String> list, String dataPointToBeAdded)               //Implemented by Julius 20/03/24
+  {                                                                                         //Adds only one instance of data in each arrayList
+    boolean firstInstance = checkIfFirstInstanceOfDataPoint(dataPointToBeAdded, list);      //for use in NavBar dropdown menus and more.
     if (!firstInstance)
     {
       return list;
@@ -124,9 +124,9 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     }
   }
   ArrayList isLateFlight(ArrayList<Integer> scheduledDepartureTime, ArrayList<Integer> actualDepartureTime) //Implemented by Julius 20/03/24
-  {
-    ArrayList<Boolean> isLate = new ArrayList<>();
-    for (int index = 0; index< scheduledDepartureTime.size(); index++)
+  {                                                                                                         //Calculates if flight was late using
+    ArrayList<Boolean> isLate = new ArrayList<>();                                                          //scheduled departure time and actual
+    for (int index = 0; index< scheduledDepartureTime.size(); index++)                                      //departure time for display in tables.
     {
       if (scheduledDepartureTime.get(index) < actualDepartureTime.get(index))
       {
@@ -139,9 +139,9 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     return isLate;
   }
   ArrayList isOnTimeOrEarlyFlight(ArrayList<Integer> scheduledDepartureTime, ArrayList<Integer> actualDepartureTime) //Implemented by Julius 20/03/24
-  {
-    ArrayList<Boolean> isOnTimeOrEarly = new ArrayList<>();
-    for (int index = 0; index< scheduledDepartureTime.size(); index++)
+  {                                                                                                                  //Calculates if flight was early/on time using
+    ArrayList<Boolean> isOnTimeOrEarly = new ArrayList<>();                                                          //scheduled departure time and actual
+    for (int index = 0; index< scheduledDepartureTime.size(); index++)                                               //departure time for display in tables.
     {
       if (scheduledDepartureTime.get(index) > actualDepartureTime.get(index))
       {
@@ -153,7 +153,7 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     }
     return isOnTimeOrEarly;
   }
-  void removeTimeAndYear(ArrayList<String> dates) {
+  void removeTimeAndYear(ArrayList<String> dates) { //Implemented by Johnny to edit flight date strings.
     for (int i = 0; i < dates.size(); i++) {
       String date = dates.get(i);
       String[] parts = date.split(" ");
@@ -203,8 +203,8 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
   }
 
   //Implemented By Julius 28/03/24
-  void filteredFlightsByOrigin(String selectedOrigin) {
-    filteredOrigins = new ArrayList();
+  void filteredFlightsByOrigin(String selectedOrigin) {         //Creates arrayLists of data of filtered flight data only from selected Origin airport.
+    filteredOrigins = new ArrayList();                          //Called when selected in GUI.
     filteredDestinations = new ArrayList();
     filteredOriginStates = new ArrayList();
     filteredDestinationStates = new ArrayList();
@@ -228,8 +228,8 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     }
   }
   //Implemented By Julius 28/03/24
-  void filteredFlightsByOriginState(String selectedOrigin) {
-    filteredOrigins = new ArrayList();
+  void filteredFlightsByOriginState(String selectedOrigin) { //Creates arrayLists of data of filtered flight data only from selected Origin state.
+    filteredOrigins = new ArrayList();                       //Called when selected in GUI.
     filteredDestinations = new ArrayList();
     filteredOriginStates = new ArrayList();
     filteredDestinationStates = new ArrayList();
@@ -255,9 +255,9 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
       }
     }
   }
-
-  void filteredFlightsByDestination(String selectedDestination) {
-    filteredOrigins = new ArrayList();
+  //Implemented By Julius 28/03/24
+  void filteredFlightsByDestination(String selectedDestination) { //Creates arrayLists of data of filtered flight data only from selected destination airport.
+    filteredOrigins = new ArrayList();                            //Called when selected in GUI.
     filteredDestinations = new ArrayList();
     filteredOriginStates = new ArrayList();
     filteredDestinationStates = new ArrayList();
@@ -283,9 +283,8 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     }
   }
   //Implemented By Julius 28/03/24
-  void filteredFlightsByOriginAndDestination(String selectedOrigin, String selectedDestination) {
-
-    filteredOrigins = new ArrayList();
+  void filteredFlightsByOriginAndDestination(String selectedOrigin, String selectedDestination) { //Creates arrayLists of data of filtered flight data of flights from selected origin airport
+    filteredOrigins = new ArrayList();                                                            //to the selected destination. Called when selected in GUI.
     filteredDestinations = new ArrayList();
     filteredOriginStates = new ArrayList();
     filteredDestinationStates = new ArrayList();
@@ -315,16 +314,16 @@ class DataSorting //Organised and cleaned up by Julius 06/04/24
     }
   }
 
-  void filteredFlightsByDate(int startDate, int endDate) //implemented by julius 03/04/24
-  {
-    filteredOrigins = new ArrayList();
+  void filteredFlightsByDate(int startDate, int endDate)     //Implemented by Julius 03/04/24
+  {                                                          //Creates arrayLists of data of filtered flight data of flights within a range of dates or single date.
+    filteredOrigins = new ArrayList();                       //Called when selected in GUI.
     filteredDestinations = new ArrayList();
     filteredOriginStates = new ArrayList();
     filteredDestinationStates = new ArrayList();
     filteredDates = new ArrayList();
     filteredCarriers = new ArrayList();
     removeTimeAndYear(dateList);
-    
+
     String startDateString = dateList.get(startDate);
     int startDateIndex =0;
     for (int i = 0; i<fullDateList.size(); i++)
