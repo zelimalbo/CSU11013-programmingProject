@@ -106,10 +106,13 @@ void draw() {
     }
   }
   if (currentTab==1) {
-    if (navBar.getDatesInt()!=0) {
+    if (navBar.getDatesInt()>0) {
       filterByDate();
     }
-    filterByDateRange();
+    if(navBar.getDatesInt() == 0){
+      filterByDateRange();
+    }
+    
   }
   if (currentTab==3) {
   }
@@ -238,25 +241,23 @@ void filterByState() {
   float chartHeight = 300;
   String filterByState = navBar.getOriginStateString(); // Get the chosen origin State from the drop down menu
 
-  if (filterByState != "--All--") {
-    if (navBar.getFilterStateInt() == 0) {
-      data.filteredFlightsByOriginState(filterByState);
-      Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinations);//what i am showing tbd
-      filteredFrequencies = data.sortMap(filteredFrequencies);
-      barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
-    }
-    if (navBar.getFilterStateInt() == 1) {
-      data.filteredFlightsByOriginState(filterByState);
-      Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinationStates);//what i am showing tbd
-      filteredFrequencies = data.sortMap(filteredFrequencies);
-      barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
-    }
-    if (navBar.getFilterStateInt() == 2) {
-      data.filteredFlightsByOriginState(filterByState);
-      Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredCarriers);//what i am showing tbd
-      filteredFrequencies = data.sortMap(filteredFrequencies);
-      barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
-    }
+  if (navBar.getFilterStateInt() == 0) {
+    data.filteredFlightsByOriginState(filterByState);
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinations);//what i am showing tbd
+    filteredFrequencies = data.sortMap(filteredFrequencies);
+    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
+  }
+  if (navBar.getFilterStateInt() == 1) {
+    data.filteredFlightsByOriginState(filterByState);
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinationStates);//what i am showing tbd
+    filteredFrequencies = data.sortMap(filteredFrequencies);
+    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
+  }
+  if (navBar.getFilterStateInt() == 2) {
+    data.filteredFlightsByOriginState(filterByState);
+    Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredCarriers);//what i am showing tbd
+    filteredFrequencies = data.sortMap(filteredFrequencies);
+    barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
   }
 }
 
@@ -270,9 +271,8 @@ void filterByDate() {
   if (filterByDate != 0) {
 
     if (navBar.getFilterInt() == 0) {
-
       data.filteredFlightsByDate(filterByDate-1, filterByDate-1);
-      Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredOrigins);//what i am showing tbd
+      Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredDestinationStates);//what i am showing tbd
       filteredFrequencies = data.sortMap(filteredFrequencies);
       barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
     }
@@ -288,6 +288,7 @@ void filterByDate() {
       Map <String, Integer> filteredFrequencies = data.getFrequencies(data.filteredOriginStates);//what i am showing tbd
       filteredFrequencies = data.sortMap(filteredFrequencies);
       barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
+      println("making bar chart");
     }
     if (navBar.getFilterInt() == 3) {
       data.filteredFlightsByDate(filterByDate-1, filterByDate-1);
