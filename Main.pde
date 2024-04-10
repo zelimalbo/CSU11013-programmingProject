@@ -204,7 +204,7 @@ void changeScreen(int screenSelection) {
 }
 
 //Added by Eoghan
-// Allows for the user filtering to use
+// Allowss for all differnt types of filtering.
 
 void filterByOrigin() {
   float chartX = 350;
@@ -345,6 +345,7 @@ void filterByDateRange() {
     barChartScreen.barChart = new barCharts(this, chartX, chartY, chartWidth, chartHeight, filteredFrequencies);
   }
 }
+//forwards the controlEvent for switching tabs into main
 void controlEvent(ControlEvent theControlEvent) {
   navBar.controlEvent(theControlEvent);
 }

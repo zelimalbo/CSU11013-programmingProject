@@ -2,7 +2,7 @@ import controlP5.*;
 import java.util.*;
 class NavBar {
   //Added A functional yet early navBar with three dropdowns. Eoghan Gloster. 13/3/23
-
+  //Below is all inzitlization of needed variables, and various arrays
   ControlP5 allLists;
   String OriginStateString = null;
   int OriginStateInt = 0;
@@ -29,7 +29,7 @@ class NavBar {
 
     //DataSorting data = new DataSorting();
     data.setup(totalData);
-
+    //Calling data class to get needed arrays for the display in the drop downs
     ArrayList<String> Origin = new ArrayList<>(data.originList);
     Collections.sort(Origin);
     ArrayList<String> OriginState = new ArrayList<>(data.originStateList);
@@ -45,11 +45,12 @@ class NavBar {
     Collections.sort(Carriers);
     Carriers.add(0, "--All--");
 
+    //Creating Tabs for each drop down
     allLists.getTab("default").activateEvent(true).setId(0);
     allLists.addTab("dates").activateEvent(true).setId(1);
     allLists.addTab("locations").activateEvent(true).setId(2);
-   // allLists.addTab("carriers").activateEvent(true).setId(3);
 
+    //Below is the implementation of the ControlP5 class, between labels, and drop down lists
     this.allLists.addScrollableList("PickScreens")
       .setPosition(100, 100)
       .setSize(100, 100)
@@ -193,7 +194,7 @@ class NavBar {
       ;
   }
 
-
+  //ControlP5 implementation with lots of getter and setter functions
   void PickScreens() {
     screenInt = (int)allLists.get(ScrollableList.class, "PickScreens").getValue();
   }
@@ -291,7 +292,8 @@ class NavBar {
     Origin(originInt);
     return originString;
   }
-
+  
+  //This is what allows the dropdown lists with the date and date range appear and disappear
   public void disappearingDates(int dateSelection) {                     //ADDED BY EOGHAN VERY IMPORTANT
     if (dateSelection==0) {
       this.allLists.getController("Too").setVisible(true);
