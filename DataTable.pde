@@ -1,7 +1,17 @@
 /* 
-  Implemented DataTable class to visualize a table on screen.
-  Johnny
-  20/03
+ * Johnny implemented DataTable class to visualize a table on screen
+ * on 20/03
+ *
+ * To initialize a table use the constructor:
+ *  DataTable(Table data, ArrayList includedColumns)
+ *  where,
+ *  data is a table containing the data you want to display in the table,
+ *  and includedColumns is an ArrayList including the columns in data you wish to include in the table
+ *
+ * To draw a table use the .draw() method
+ *
+ * The getEvent method checks if the forward or backward buttons are pressed and increments or decrements
+ * the currentPage variable to change what page of the table is currently being shown
 */
 
 class DataTable {
@@ -23,6 +33,7 @@ class DataTable {
   final int SEARCH = 2;
   PFont tableFont = loadFont("Calibri-14.vlw");
   PFont footerFont = loadFont("Calibri-20.vlw");
+  
   /*
   Include 
   column 1 - date
@@ -67,6 +78,7 @@ class DataTable {
   }
   
   void draw() {
+    strokeWeight(1);
     textAlign(CENTER, CENTER);
     textFont(tableFont);
     fill(#B4E5FF);
