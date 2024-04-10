@@ -131,7 +131,7 @@ class NavBar {
       ;
 
     this.allLists.addTextlabel("OriginStatelabel")
-      .setText("Filter Airport or Origin State")
+      .setText("Filter by Airport or Origin State")
       .setPosition(70, 200) // Positioned above the dropdown
       .setColorValue(0) // Color of the text
       .setFont(createFont("Arial", 13))
