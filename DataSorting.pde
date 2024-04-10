@@ -18,8 +18,24 @@
  *
  *   These arrayLists are filled with the data from the relavant query.
  *   Methods clear previous data in lists before filtering.
+ *
+ * getFrequencies methods implemented by Johnny:
+ *   getStateFrequencies(ArrayList<String> fullOriginStateList, ArrayList<String> fullDestinationStateList)
+ *    - takes in two arrayLists (origin states and destination states) and returns a map containg the total number
+ *      of flights in each state (arrivals and departures)
+ *   getStateFrequencies(ArrayList<String> fullList)
+ *    - takes in an ArrayList and returns a map containing the frequency of each state in the given ArrayList
+ *   getDateFrequencies(ArrayList<String> fullDateList)
+ *    - takes in an ArrayList and returns a map containing the number of flights on each date in the given ArrayList
+ *   getFrequencies(ArrayList<String> fullList)
+ *    - takes in an ArrayList and returns a map containing the frequency of each data point in the given ArrayList
+ *   
+ * sortMap(Map<String, Integer> unsortedMap) method implemented by Johnny
+ *  - returns a sorted map
+ *
+ * getFlightsByCarrier(ArrayList<String> fullCarrierList) implemented by Johnny
+ *  - returns a map containing airlines and the number of flights operated by that airline
  */
-
 
 class DataSorting //Organised and cleaned up by Julius 06/04/24
 {
