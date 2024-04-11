@@ -1,6 +1,18 @@
-/*
-  Johnny implemented LineGraph class
-  on 26/03
+/**
+  * Johnny implemented LineGraph class
+  * on 26/03
+  *
+  * This class is currently being used in Main to display the frequencies of flights each day.
+  * This class can be used to represent other frequencies if required.
+  *
+  * To initialize a line graph use the constructor:
+  *  LineGraph(int xpos, int ypos, int graphHeight, int graphWidth, Map<String, Integer> frequencies)
+  *  where,
+  *  xpos and ypos are the x and y coordinates respectively of the top left corner of the graph,
+  *  graphHeight and graphWidth are the dimensions of the graph,
+  *  and frequencies is a map containing single occurances of data and their frequency, i.e. 01/01/2023: 20000
+  *
+  * To draw the line graph use the .draw() method
 */
 class LineGraph {
   
@@ -27,21 +39,11 @@ class LineGraph {
     this.graphWidth = graphWidth;
     this.frequencies = frequencies;
     
+    // Calculate the spacing of points on the x-axis
     maxValue = Collections.max(frequencies.values());
     minValue = Collections.min(frequencies.values());
-    //print(maxValue);
     
     xAxisSpacing = graphWidth / frequencies.size();
-    
-    // Johnny updated to make rounded y-axis labels on 04/04
-    float increment = maxValue / numberOfYLabels;
-    float orderOfMagnitude;
-    
-    if (maxValue % numberOfYLabels != 0) {
-      int difference = numberOfYLabels - (maxValue % numberOfYLabels);
-      maxValue = maxValue + difference;
-    }
-    //print(maxValue);
     
     yAxisIncrement = maxValue/numberOfYLabels;
     
@@ -49,6 +51,7 @@ class LineGraph {
       labels.add(yAxisIncrement * i);
     }
     
+    // Get y coordinates of data points
     for (String dataPoint : frequencies.keySet()) {
       int point = (int) map(frequencies.get(dataPoint), 0, maxValue, 700, 100+topMargin);
       print(frequencies.get(dataPoint) + ", ");
@@ -92,7 +95,6 @@ class LineGraph {
       stroke(0);
       strokeWeight(0.1);
       line(xpos+increment+xAxisSpacing+(xAxisSpacing/2), ypos, xpos+increment+xAxisSpacing+(xAxisSpacing/2), ypos+graphHeight);
-      //print(points.get(i) + " ");
       previousPoint = points.get(i);
       increment += xAxisSpacing;
     }

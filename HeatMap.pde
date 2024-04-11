@@ -1,6 +1,21 @@
-/* 
-  Johnny implemented HeatMap Class
-  on 26/03
+/**
+  * Johnny implemented HeatMap Class
+  * on 26/03
+  *
+  * This class is being used to show the frequency of arrivals and departures in each US state compared to other US states.
+  * 
+  * To intiliaze a heat map use the constructor:
+  *  HeatMap(PShape us, Map<String, Integer> frequencies, int xpos, int ypos) 
+  *  where,
+  *  us is a PShape of the map of the USA,
+  *  frequencies frequencies is a map containing each state and the number of flights in that state,
+  *  xpos and ypos are the x and y coordinates respectively of the top left corner of the heat map
+  *
+  * To draw a heat map use the .draw() method
+  *
+  * The drawLegend(int xpos, int ypos, int legendHeight, int legendWidth, int minValue, int maxValue) method is used within
+  * the draw() method to draw a gradient from the colour representing the lowest frequencies of flights to the colour representing
+  * the highest frequency of flights
 */
 class HeatMap {
   
@@ -25,11 +40,10 @@ class HeatMap {
     
     usa = us;
     
+    // Calculate each states colour based on their frequencies
     maxValue = Collections.max(frequencies.values());
     minValue = Collections.min(frequencies.values());
     
-    /*For Debugging:
-    int statesno = 0;*/
     for (String state : frequencies.keySet()) {
       int frequency = frequencies.get(state);
       
@@ -40,12 +54,7 @@ class HeatMap {
       color stateColor = color(255, brightness, brightness);
       
       states.put(state, new State(usa.getChild(state), stateColor));
-      /*For debugging:
-      statesno++;
-      print(state + ": " + frequency + ". ");*/
     }
-    /*For debugging:
-    print(statesno);*/
   }
   
   void draw() {
